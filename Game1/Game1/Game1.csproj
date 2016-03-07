@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+	<Compile Include="MapTile.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Mascot.cs" />
     <Compile Include="Program.cs" />

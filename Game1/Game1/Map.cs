@@ -19,7 +19,7 @@ namespace Game1
             name = nm;
         }
 
-        //getter for name
+        //properties
         public string Name
         {
             get { return name; }
