@@ -10,23 +10,74 @@ namespace Game1
     {
         // attributes
         private string unitType; // type of unit being created; used in the Constructor
-        private int health; // max hit points for a given unit 
+        private int totalHealth; // max hit points for a given unit 
+        private int currHealth; // how much health is remaining
         private int attack; // how much damage the unit can do 
         private int defense; // inherit protection from attacks
         private int move; // uses action points; number of spaces the unit can move on a given turn 
-        private int actionPoints; // how many points the unit has on a turn; how many it uses for an action
+        private int totalMovePoints; // how many movement points the unit has total
+        private int currMovePoints; // how many move points the unit has now
         private string school; // determines characteristics and color
         private int mapX;
         private int mapY; // both store position on the map
-        private string debuff; // given by certain tiles; stores name of debuff/description
-        private int debuffInt; // what the numnber of the debuff is 
         private Boolean alive; // if false, unit is dead 
         private string special; // used in UseAbility method, if unit has one
 
         // methods 
         public Unit(string unitType) // creates the units with specific params
         {
-            // sets units stats
+            if(unitType == "Hockey")
+            {
+                totalMovePoints = 4;
+                totalHealth = 10;
+                attack = 5;
+                defense = 1;
+                alive = true;
+            }
+            if(unitType == "Lacrosse")
+            {
+                totalMovePoints = 4;
+                totalHealth = 10;
+                attack = 5;
+                defense = 1;
+                alive = true; 
+            }
+            if(unitType == "Football")
+            {
+                totalMovePoints = 4;
+                totalHealth = 15;
+                attack = 3;
+                defense = 0;
+                special = "Bulk Up";
+                alive = true; 
+            }
+            if(unitType == "Outdoor Club")
+            {
+                totalMovePoints = 4;
+                totalHealth = 7;
+                attack = 4;
+                defense = 0;
+                special = "Movement Stage";
+                alive = true; 
+            }
+            if(unitType == "Frat" || unitType == "Sorority")
+            {
+                totalMovePoints = 4;
+                totalHealth = 5;
+                attack = 2;
+                defense = 0;
+                special = "Newfound Strength";
+                alive = true; 
+            }
+            if(unitType == "EMS Club")
+            {
+                totalMovePoints = 4;
+                totalHealth = 10;
+                attack = 2;
+                defense = 1;
+                special = "Heal";
+                alive = true;  
+            }
         }
 
         public int GetPositionX()
@@ -40,16 +91,15 @@ namespace Game1
         }
         public int Attack() // used when attacking a unit; returns an int 
         {
-            int damageDelt = attack - debuffInt;
-            return damageDelt;  
+            return attack; 
         }
 
         public void ChangeHealth(int damage) // changes unit health when attacked
         {
-            health = health - damage; 
-            if(health <= 0) // damage kills the unit
+            currHealth = currHealth - damage; 
+            if(currHealth <= 0) // damage kills the unit
             {
-                health = 0; 
+                currHealth = 0; 
                 alive = false; 
             }
         }
@@ -57,9 +107,9 @@ namespace Game1
         public int Move(int actionPoints)
         {
             // check actionPoints remaining 
-            if (actionPoints <= 0)
+            if (currMovePoints <= 0)
             {
-                return; // cannot move due to lack of actionPoints
+                return 0; // cannot move due to lack of actionPoints
             }
             else
             { return move; }
