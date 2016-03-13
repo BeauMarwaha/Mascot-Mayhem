@@ -172,30 +172,29 @@ namespace Game1
         //draws the game board based on the size of the screen
         public void DrawMap(SpriteBatch sB)
         {
-            //foreach (MapTile mapT in mainMap.Tiles)
             for(int row = 0; row < 10; row++)
             {
                 for (int col = 0; col < 10; col++)
                 {
                     if (mainMap.GetTile(row,col).TerrainType == "Field")
                     {
-                        spriteBatch.Draw(fieldTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Green);
+                        spriteBatch.Draw(fieldTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Green);
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "River")
                     {
-                        spriteBatch.Draw(riverTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Blue);
+                        spriteBatch.Draw(riverTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Blue);
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "Pavement")
                     {
-                        spriteBatch.Draw(pavementTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Black);
+                        spriteBatch.Draw(pavementTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Black);
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "Forest")
                     {
-                        spriteBatch.Draw(forestTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Pink);
+                        spriteBatch.Draw(forestTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Pink);
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "Win Tile")
                     {
-                        spriteBatch.Draw(winTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Purple);
+                        spriteBatch.Draw(winTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Purple);
                     }
                 }
             }
@@ -237,39 +236,39 @@ namespace Game1
                 }
                 for (int col = 0; col < 10; col++)//row 1
                 {
-                    newTiles[1, col] = new MapTile(1, col, splitLine0[col]);
+                    newTiles[1, col] = new MapTile(1, col, splitLine1[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 2
                 {
-                    newTiles[2, col] = new MapTile(2, col, splitLine0[col]);
+                    newTiles[2, col] = new MapTile(2, col, splitLine2[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 3
                 {
-                    newTiles[3, col] = new MapTile(3, col, splitLine0[col]);
+                    newTiles[3, col] = new MapTile(3, col, splitLine3[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 4
                 {
-                    newTiles[4, col] = new MapTile(4, col, splitLine0[col]);
+                    newTiles[4, col] = new MapTile(4, col, splitLine4[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 5
                 {
-                    newTiles[5, col] = new MapTile(5, col, splitLine0[col]);
+                    newTiles[5, col] = new MapTile(5, col, splitLine5[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 6
                 {
-                    newTiles[6, col] = new MapTile(6, col, splitLine0[col]);
+                    newTiles[6, col] = new MapTile(6, col, splitLine6[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 7
                 {
-                    newTiles[7, col] = new MapTile(7, col, splitLine0[col]);
+                    newTiles[7, col] = new MapTile(7, col, splitLine7[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 8
                 {
-                    newTiles[8, col] = new MapTile(8, col, splitLine0[col]);
+                    newTiles[8, col] = new MapTile(8, col, splitLine8[col]);
                 }
                 for (int col = 0; col < 10; col++)//row 9
                 {
-                    newTiles[9, col] = new MapTile(9, col, splitLine0[col]);
+                    newTiles[9, col] = new MapTile(9, col, splitLine9[col]);
                 }
 
                 // close the file

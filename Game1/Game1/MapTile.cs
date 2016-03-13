@@ -23,11 +23,7 @@ namespace Game1
             yCord = y;
             filled = false;
 
-            terrainType = "Field";
-            movementCost = 1;
-            defBonus = 1;
-
-            /*if (terrain == "Field")
+            if (terrain == "Field")
             {
                 terrainType = terrain;
                 movementCost = 1;
@@ -56,7 +52,7 @@ namespace Game1
                 terrainType = terrain;
                 movementCost = 1;
                 defBonus = 0;
-            }*/
+            }
         }
 
         public string TerrainType
