@@ -78,6 +78,22 @@ namespace Game1
                 special = "Heal";
                 alive = true;  
             }
+            if (unitType == "Ritchie")
+            {
+                totalMovePoints = 4;
+                totalHealth = 10;
+                attack = 5;
+                defense = 1;
+                alive = true;
+            }
+            if (unitType == "Rocky")
+            {
+                totalMovePoints = 4;
+                totalHealth = 10;
+                attack = 5;
+                defense = 1;
+                alive = true;
+            }
         }
 
         public int GetPositionX()

@@ -23,6 +23,25 @@ namespace Game1
         Map mainMap;
         College college1;
         College college2;
+        
+        SpriteFont font;
+        //units
+        Texture2D hockeyPlayerPic;
+        Texture2D lacrossePlayerPic;
+        Texture2D footballPlayerPic;
+        Texture2D archeryClubPlayerPic;
+        Texture2D outdoorClubPlayerPic;
+        Texture2D fraternityPlayerPic;
+        Texture2D emsClubPlayerPic;
+        Texture2D ritchieMascotPic;
+        Texture2D rockyMascotPic;
+
+        //tiles
+        Texture2D fieldTilePic;
+        Texture2D riverTilePic;
+        Texture2D pavementTilePic;
+        Texture2D forestTilePic;
+        Texture2D winTilePic;
 
         public Game1()
         {
@@ -39,8 +58,9 @@ namespace Game1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            curState = GameState.Menu;
+            curState = GameState.MapSelect;
 
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -54,6 +74,25 @@ namespace Game1
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            font = Content.Load<SpriteFont>("mainFont");
+
+            //units - NOTE: currently using placeholder pictures
+            hockeyPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            lacrossePlayerPic = Content.Load<Texture2D>("SpaceShip");
+            footballPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            archeryClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            outdoorClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            fraternityPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            emsClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            ritchieMascotPic = Content.Load<Texture2D>("SpaceShip");
+            rockyMascotPic = Content.Load<Texture2D>("SpaceShip");
+
+            //tiles - NOTE: currently using placeholder pictures
+            fieldTilePic = Content.Load<Texture2D>("SpaceCoin");
+            riverTilePic = Content.Load<Texture2D>("SpaceCoin");
+            pavementTilePic = Content.Load<Texture2D>("SpaceCoin");
+            forestTilePic = Content.Load<Texture2D>("SpaceCoin");
+            winTilePic = Content.Load<Texture2D>("SpaceCoin");
         }
 
         /// <summary>
@@ -83,11 +122,11 @@ namespace Game1
                     break;
 
                 case GameState.MapSelect:
-                    
+                    LoadMap("test");
+                    curState = GameState.Game;
                     break;
 
                 case GameState.TeamSelect:
-
                     break;
 
                 case GameState.Game:
@@ -103,9 +142,11 @@ namespace Game1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
             //check for the current game state
             switch (curState)
             {
@@ -113,16 +154,51 @@ namespace Game1
                     break;
 
                 case GameState.MapSelect:
+
                     break;
 
                 case GameState.TeamSelect:
                     break;
 
                 case GameState.Game:
+                    DrawMap(spriteBatch);
                     break;
             }
 
+            spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        //draws the game board based on the size of the screen
+        public void DrawMap(SpriteBatch sB)
+        {
+            //foreach (MapTile mapT in mainMap.Tiles)
+            for(int row = 0; row < 10; row++)
+            {
+                for (int col = 0; col < 10; col++)
+                {
+                    if (mainMap.GetTile(row,col).TerrainType == "Field")
+                    {
+                        spriteBatch.Draw(fieldTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Green);
+                    }
+                    else if (mainMap.GetTile(row, col).TerrainType == "River")
+                    {
+                        spriteBatch.Draw(riverTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Blue);
+                    }
+                    else if (mainMap.GetTile(row, col).TerrainType == "Pavement")
+                    {
+                        spriteBatch.Draw(pavementTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Black);
+                    }
+                    else if (mainMap.GetTile(row, col).TerrainType == "Forest")
+                    {
+                        spriteBatch.Draw(forestTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Pink);
+                    }
+                    else if (mainMap.GetTile(row, col).TerrainType == "Win Tile")
+                    {
+                        spriteBatch.Draw(winTilePic, new Rectangle(mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Purple);
+                    }
+                }
+            }
         }
 
         //loads a map from an external file
@@ -207,5 +283,7 @@ namespace Game1
 
             mainMap = new Map(fileName, newTiles);
         }
+
+
     }
 }

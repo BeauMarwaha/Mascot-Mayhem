@@ -8,19 +8,26 @@ namespace Game1
     class MapTile
     {
         // Attributes
-        string terrainType;  // gives the map tile its terrain
-        int movementCost;  // gives the map tile its movement cost consistant with terrain type
-        int defBonus;  // gives a defensive bonus consistant with terrain type
-        bool filled;  // variable to toggle whether a unit is standing on the tile or not
-        int xCord;  // x-coordinate of the map tile
-        int yCord;  // y-coordinate of the map tile
+        private string terrainType;  // gives the map tile its terrain
+        private int movementCost;  // gives the map tile its movement cost consistant with terrain type
+        private int defBonus;  // gives a defensive bonus consistant with terrain type
+        private bool filled;  // variable to toggle whether a unit is standing on the tile or not
+        private int xCord;  // x-coordinate of the map tile
+        private int yCord;  // y-coordinate of the map tile
+
 
         // Methods
         public MapTile(int x, int y, string terrain)  // Parameterized constructor. Pulls from Map class
         {
             xCord = x;
             yCord = y;
-            if (terrain == "Field")
+            filled = false;
+
+            terrainType = "Field";
+            movementCost = 1;
+            defBonus = 1;
+
+            /*if (terrain == "Field")
             {
                 terrainType = terrain;
                 movementCost = 1;
@@ -49,7 +56,7 @@ namespace Game1
                 terrainType = terrain;
                 movementCost = 1;
                 defBonus = 0;
-            }
+            }*/
         }
 
         public string TerrainType
@@ -59,7 +66,7 @@ namespace Game1
 
         public int MovementCost
         {
-            get { return MovementCost; }
+            get { return movementCost; }
         }
 
         public int DefBonus
@@ -70,6 +77,7 @@ namespace Game1
         public bool Filled
         {
             get { return filled; }
+            set { filled = value; }
         }
 
         public int XCord

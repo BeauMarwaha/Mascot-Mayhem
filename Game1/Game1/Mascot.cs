@@ -11,7 +11,7 @@ namespace Game1
         string mascotSpecial;
 
         // parameterized constructor 
-        public Mascot(int ap, int hlt, int att, int def, int mv, string schl, string nm, string ms) : base(ap, hlt, att, def, mv, schl, nm)
+        public Mascot(string unitName, string ms) : base(unitName)
         {
             mascotSpecial = ms;
         }
@@ -22,12 +22,12 @@ namespace Game1
             if (mascotSpecial == "Super hit") // names of specials are just place holders
             {
                 // code to change health of enemy unit
-                actionPoints = actionPoints - 1; // general code to deduct an action point
+                //actionPoints = actionPoints - 1; // general code to deduct an action point
             }
             else if (mascotSpecial == "Super heal")
             {
                 // code to add health to a cetain unit
-                actionPoints = actionPoints - 1; // deduct action point
+                //actionPoints = actionPoints - 1; // deduct action point
             }
 
             // etc. etc.

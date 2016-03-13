@@ -30,6 +30,12 @@ namespace Game1
         {
             get { return Tiles; }
         }
+
+        //return a specific tile
+        public MapTile GetTile(int x, int y)
+        {
+            return tiles[x, y];
+        }
         
         //calculates possible tile movements based on a certain number of movement points and starting location
         public List<MapTile> PossibleMoves(int mP, int x, int y)
@@ -83,5 +89,6 @@ namespace Game1
 
             return possibleMoves;
         }
+
     }
 }
