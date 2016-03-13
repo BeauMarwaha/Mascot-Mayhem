@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-//Author: Beau Marwaha
+//Author(s): Beau Marwaha
 //Purpose: Represents a full map to be used in game
 namespace Game1
 {

@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+//Author(s): Beau Marwaha
+//Purpose: Runs the game
 namespace Game1
 {
     /// <summary>
@@ -11,6 +13,10 @@ namespace Game1
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        //extra atributes
+        enum GameState { Menu, MapSelect, TeamSelect, Game};
+        GameState curState;
 
         public Game1()
         {
@@ -63,6 +69,21 @@ namespace Game1
                 Exit();
 
             // TODO: Add your update logic here
+            //check for the current game state
+            switch (curState)
+            {
+                case GameState.Menu:
+                    break;
+
+                case GameState.MapSelect:
+                    break;
+
+                case GameState.TeamSelect:
+                    break;
+
+                case GameState.Game:
+                    break;
+            }
 
             base.Update(gameTime);
         }
@@ -76,6 +97,21 @@ namespace Game1
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            //check for the current game state
+            switch (curState)
+            {
+                case GameState.Menu:
+                    break;
+
+                case GameState.MapSelect:
+                    break;
+
+                case GameState.TeamSelect:
+                    break;
+
+                case GameState.Game:
+                    break;
+            }
 
             base.Draw(gameTime);
         }
