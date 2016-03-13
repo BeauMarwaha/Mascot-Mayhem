@@ -34,7 +34,7 @@ namespace Game1
                 defense = 1;
                 alive = true;
             }
-            if(unitType == "Lacrosse")
+            else if(unitType == "Lacrosse")
             {
                 totalMovePoints = 4;
                 totalHealth = 10;
@@ -42,7 +42,7 @@ namespace Game1
                 defense = 1;
                 alive = true; 
             }
-            if(unitType == "Football")
+            else if(unitType == "Football")
             {
                 totalMovePoints = 4;
                 totalHealth = 15;
@@ -51,7 +51,7 @@ namespace Game1
                 special = "Bulk Up";
                 alive = true; 
             }
-            if(unitType == "Outdoor Club")
+            else if(unitType == "Outdoor Club")
             {
                 totalMovePoints = 4;
                 totalHealth = 7;
@@ -60,7 +60,7 @@ namespace Game1
                 special = "Movement Stage";
                 alive = true; 
             }
-            if(unitType == "Frat" || unitType == "Sorority")
+            else if(unitType == "Frat" || unitType == "Sorority")
             {
                 totalMovePoints = 4;
                 totalHealth = 5;
@@ -69,7 +69,7 @@ namespace Game1
                 special = "Newfound Strength";
                 alive = true; 
             }
-            if(unitType == "EMS Club")
+            else if(unitType == "EMS Club")
             {
                 totalMovePoints = 4;
                 totalHealth = 10;
