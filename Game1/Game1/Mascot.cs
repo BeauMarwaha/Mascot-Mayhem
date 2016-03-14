@@ -8,7 +8,7 @@ namespace Game1
     class Mascot:Unit
     {
         // attributes
-        string mascotSpecial;
+        private string mascotSpecial;
 
         // parameterized constructor 
         public Mascot(string unitName, string ms) : base(unitName)
@@ -31,6 +31,12 @@ namespace Game1
             }
 
             // etc. etc.
+        }
+
+        //properties
+        public string MascotSpecial
+        {
+            get { return mascotSpecial; }
         }
     }
 }

@@ -9,26 +9,37 @@ namespace Game1
     {
         // attributes
         // array for units to be loaded
-        Unit[] units;
+        private Unit[] units;
 
         // mascot unit to load
-        Mascot masc;
+        private Mascot mascot;
 
         // name for the college
-        string collName;
+        private string collegeName;
 
-        // default constructor // <- CHANGE I think this needs to be parameterized
-        public College()
+        // default constructor 
+        public College(Unit[] team, Mascot masc, string name)
         {
-           // set name of college
+            units = team;
+            mascot = masc;
+            collegeName = name;
+        }
+        
+        //properties
+        public Unit[] Units
+        {
+            get { return units; }
         }
 
-        // method to load in the un units
-        public void Load()
+        public Mascot Mascot
         {
-            // code here
+            get { return mascot; }
         }
 
+        public string CollegeName
+        {
+            get { return collegeName; }
+        }
          
     }
 }

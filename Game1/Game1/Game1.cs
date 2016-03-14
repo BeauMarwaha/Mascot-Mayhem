@@ -19,7 +19,8 @@ namespace Game1
         //extra atributes
         enum GameState { Menu, MapSelect, TeamSelect, Game};
         GameState curState;
-
+        MouseState mState;
+        MouseState mStatePrev;
         Map mainMap;
         College college1;
         College college2;
@@ -58,7 +59,7 @@ namespace Game1
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            curState = GameState.MapSelect;
+            curState = GameState.Menu;
 
             this.IsMouseVisible = true;
             base.Initialize();
@@ -115,23 +116,65 @@ namespace Game1
                 Exit();
 
             // TODO: Add your update logic here
+            mState = Mouse.GetState();
+            
             //check for the current game state
             switch (curState)
             {
                 case GameState.Menu:
+                    curState = GameState.MapSelect;
                     break;
 
                 case GameState.MapSelect:
-                    LoadMap("test");
-                    curState = GameState.Game;
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)))
+                    {
+                        LoadMap("test");
+                        curState = GameState.TeamSelect;
+                    }
                     break;
 
                 case GameState.TeamSelect:
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 300, 25)))
+                    {
+                        //create default collgege 1(RIT)
+                        Unit[] team1 = new Unit[10];
+                        team1[0] = new Unit("Hockey");
+                        team1[1] = new Unit("Hockey");
+                        team1[2] = new Unit("Hockey");
+                        team1[3] = new Unit("Hockey");
+                        team1[4] = new Unit("Football");
+                        team1[5] = new Unit("Football");
+                        team1[6] = new Unit("Outdoor Club");
+                        team1[7] = new Unit("Frat");
+                        team1[8] = new Unit("Sorority");
+                        team1[9] = new Unit("EMS Club");
+                        Mascot Ritchie = new Mascot("Ritchie", "Super hit");
+                        college1 = new College(team1, Ritchie, "RIT");
+
+                        //create default collgege 1(UofR)
+                        Unit[] team2 = new Unit[10];
+                        team2[0] = new Unit("Lacrosse");
+                        team2[1] = new Unit("Lacrosse");
+                        team2[2] = new Unit("Lacrosse");
+                        team2[3] = new Unit("Lacrosse");
+                        team2[4] = new Unit("Football");
+                        team2[5] = new Unit("Football");
+                        team2[6] = new Unit("Outdoor Club");
+                        team2[7] = new Unit("Frat");
+                        team2[8] = new Unit("Sorority");
+                        team2[9] = new Unit("EMS Club");
+                        Mascot Rocky = new Mascot("Rocky", "Super heal");
+                        college2 = new College(team2, Rocky, "UofR");
+
+                        curState = GameState.Game;
+                    }
                     break;
 
                 case GameState.Game:
                     break;
             }
+
+            mStatePrev = mState;
 
             base.Update(gameTime);
         }
@@ -154,10 +197,11 @@ namespace Game1
                     break;
 
                 case GameState.MapSelect:
-
+                    spriteBatch.DrawString(font, "Load Default Map", new Vector2(GraphicsDevice.Viewport.Width/2 - 100, GraphicsDevice.Viewport.Height/2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
                     break;
 
                 case GameState.TeamSelect:
+                    spriteBatch.DrawString(font, "Load Default Teams", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
                     break;
 
                 case GameState.Game:
@@ -283,6 +327,43 @@ namespace Game1
             mainMap = new Map(fileName, newTiles);
         }
 
+        public bool SingleLeftMousePress()
+        {
+            if (mState.LeftButton == ButtonState.Pressed && mStatePrev.LeftButton == ButtonState.Released) //check for one click
+            {
+                return true;
+            }
 
+            return false;
+        }
+
+        public bool SingleLeftMouseLocationPress(Rectangle loc)
+        {
+            if (mState.LeftButton == ButtonState.Pressed && mStatePrev.LeftButton == ButtonState.Released) //check for one click
+            {
+                if((mState.Position.X > loc.X) && (mState.Position.X < loc.X + loc.Width)) //check for correct x position
+                {
+                    if ((mState.Position.Y > loc.Y) && (mState.Position.Y < loc.Y + loc.Height)) //check for correct y position
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public Color ScrolledOver(Rectangle loc)
+        {
+            if ((mState.Position.X > loc.X) && (mState.Position.X < loc.X + loc.Width)) //check for correct x position
+            {
+                if ((mState.Position.Y > loc.Y) && (mState.Position.Y < loc.Y + loc.Height)) //check for correct y position
+                {
+                    return Color.Yellow;
+                }
+            }
+
+            return Color.White;
+        }
     }
 }

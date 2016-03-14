@@ -9,7 +9,7 @@ namespace Game1
     class Unit
     {
         // attributes
-        private string unitType; // type of unit being created; used in the Constructor
+        private string unitName; // type of unit being created; used in the Constructor
         private int totalHealth; // max hit points for a given unit 
         private int currHealth; // how much health is remaining
         private int attack; // how much damage the unit can do 
@@ -26,13 +26,15 @@ namespace Game1
         // methods 
         public Unit(string unitType) // creates the units with specific params
         {
+            unitName = unitType;
+
             if(unitType == "Hockey")
             {
                 totalMovePoints = 4;
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                alive = true;
+                special = null; //no special
             }
             else if(unitType == "Lacrosse")
             {
@@ -40,7 +42,7 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                alive = true; 
+                special = null; //no special
             }
             else if(unitType == "Football")
             {
@@ -49,7 +51,6 @@ namespace Game1
                 attack = 3;
                 defense = 0;
                 special = "Bulk Up";
-                alive = true; 
             }
             else if(unitType == "Outdoor Club")
             {
@@ -58,7 +59,6 @@ namespace Game1
                 attack = 4;
                 defense = 0;
                 special = "Movement Stage";
-                alive = true; 
             }
             else if(unitType == "Frat" || unitType == "Sorority")
             {
@@ -67,7 +67,6 @@ namespace Game1
                 attack = 2;
                 defense = 0;
                 special = "Newfound Strength";
-                alive = true; 
             }
             else if(unitType == "EMS Club")
             {
@@ -76,7 +75,6 @@ namespace Game1
                 attack = 2;
                 defense = 1;
                 special = "Heal";
-                alive = true;  
             }
             if (unitType == "Ritchie")
             {
@@ -84,7 +82,6 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                alive = true;
             }
             if (unitType == "Rocky")
             {
@@ -92,8 +89,11 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                alive = true;
             }
+
+            alive = true;
+            currHealth = totalHealth;
+            currMovePoints = totalMovePoints;
         }
 
         public int GetPositionX()
