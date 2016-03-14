@@ -14,13 +14,12 @@ namespace Game1
         private int currHealth; // how much health is remaining
         private int attack; // how much damage the unit can do 
         private int defense; // inherit protection from attacks
-        private int move; // uses action points; number of spaces the unit can move on a given turn 
         private int totalMovePoints; // how many movement points the unit has total
         private int currMovePoints; // how many move points the unit has now
         private string school; // determines characteristics and color
         private int mapX;
         private int mapY; // both store position on the map
-        private Boolean alive; // if false, unit is dead 
+        private bool alive; // if false, unit is dead 
         private string special; // used in UseAbility method, if unit has one
 
         // methods 
@@ -60,7 +59,15 @@ namespace Game1
                 defense = 0;
                 special = "Movement Stage";
             }
-            else if(unitType == "Frat" || unitType == "Sorority")
+            else if (unitType == "Archery Club")
+            {
+                totalMovePoints = 4;
+                totalHealth = 6;
+                attack = 3;
+                defense = 1;
+                special = "Long Shot";
+            }
+            else if(unitType == "Fraternity" || unitType == "Sorority")
             {
                 totalMovePoints = 4;
                 totalHealth = 5;
@@ -82,6 +89,7 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
+                special = null; //has a mascot special
             }
             if (unitType == "Rocky")
             {
@@ -89,6 +97,7 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
+                special = null; //has a mascot special
             }
 
             alive = true;
@@ -96,20 +105,77 @@ namespace Game1
             currMovePoints = totalMovePoints;
         }
 
-        public int GetPositionX()
+        //properties
+        public string UnitName
         {
-            return mapX;
+            get { return unitName; }
         }
 
-        public int GetPositionY() // gets where the unit is on the map, along with GetPositionX
+        public int TotalHealth
         {
-            return mapY; 
-        }
-        public int Attack() // used when attacking a unit; returns an int 
-        {
-            return attack; 
+            get { return totalHealth; }
         }
 
+        public int CurrHealth
+        {
+            get { return currHealth; }
+            set { currHealth = value; }
+        }
+
+        public int Attack
+        {
+            get { return attack; }
+            set { attack = value; }
+        }
+
+        public int Defense
+        {
+            get { return defense; }
+            set { defense = value; }
+        }
+
+        public int TotalMovePoints
+        {
+            get { return totalMovePoints; }
+        }
+
+        public int CurrMovePoints
+        {
+            get { return currMovePoints; }
+            set { currMovePoints = value; }
+        }
+
+        public string School
+        {
+            get { return school; }
+            set { school = value; }
+        }
+
+        public int MapX
+        {
+            get { return mapX; }
+            set { mapX = value; }
+        }
+
+        public int MapY
+        {
+            get { return mapX; }
+            set { mapX = value; }
+        }
+
+        public bool Alive
+        {
+            get { return alive; }
+            set { alive = value; }
+        }
+
+        public string Special
+        {
+            get { return special; }
+        }
+
+
+        //will need to look over these methods again*****************************************************************************************************
         public void ChangeHealth(int damage) // changes unit health when attacked
         {
             currHealth = currHealth - damage; 
@@ -119,22 +185,12 @@ namespace Game1
                 alive = false; 
             }
         }
-
-        public int Move(int actionPoints)
-        {
-            // check actionPoints remaining 
-            if (currMovePoints <= 0)
-            {
-                return 0; // cannot move due to lack of actionPoints
-            }
-            else
-            { return move; }
-        }
-
+        
         public void UseAbility(string ability)
         {
             // in the brackets will contain if statements that check the string passed in and do specific things based on it
         }
+        //*********************************************************************************************************************************************************
 
     }
 }

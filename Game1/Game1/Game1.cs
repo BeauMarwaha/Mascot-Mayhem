@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO; //needed for file IO
 using System;
+using System.Collections.Generic; //for dictionary
 
 //Author(s): Beau Marwaha
 //Purpose: Runs the game
@@ -24,7 +25,10 @@ namespace Game1
         Map mainMap;
         College college1;
         College college2;
-        
+
+        //used as a dictionary of all unit textures
+        Dictionary<string, Texture2D> unitSprites;
+
         SpriteFont font;
         //units
         Texture2D hockeyPlayerPic;
@@ -33,6 +37,7 @@ namespace Game1
         Texture2D archeryClubPlayerPic;
         Texture2D outdoorClubPlayerPic;
         Texture2D fraternityPlayerPic;
+        Texture2D sororityPlayerPic;
         Texture2D emsClubPlayerPic;
         Texture2D ritchieMascotPic;
         Texture2D rockyMascotPic;
@@ -60,6 +65,9 @@ namespace Game1
         {
             // TODO: Add your initialization logic here
             curState = GameState.Menu;
+            college1 = new College();
+            college2 = new College();
+            unitSprites = new Dictionary<string, Texture2D>();
 
             this.IsMouseVisible = true;
             base.Initialize();
@@ -79,14 +87,34 @@ namespace Game1
 
             //units - NOTE: currently using placeholder pictures
             hockeyPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Hockey", hockeyPlayerPic);
+
             lacrossePlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Lacrosse", lacrossePlayerPic);
+
             footballPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Football", footballPlayerPic);
+
             archeryClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Archery Club", archeryClubPlayerPic);
+
             outdoorClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Outdoor Club", outdoorClubPlayerPic);
+
             fraternityPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Fraternity", fraternityPlayerPic);
+
+            sororityPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Sorority", sororityPlayerPic);
+
             emsClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("EMS Club", emsClubPlayerPic);
+
             ritchieMascotPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Ritchie", ritchieMascotPic);
+
             rockyMascotPic = Content.Load<Texture2D>("SpaceShip");
+            unitSprites.Add("Rocky", rockyMascotPic);
 
             //tiles - NOTE: currently using placeholder pictures
             fieldTilePic = Content.Load<Texture2D>("SpaceCoin");
@@ -137,34 +165,10 @@ namespace Game1
                     if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 300, 25)))
                     {
                         //create default collgege 1(RIT)
-                        Unit[] team1 = new Unit[10];
-                        team1[0] = new Unit("Hockey");
-                        team1[1] = new Unit("Hockey");
-                        team1[2] = new Unit("Hockey");
-                        team1[3] = new Unit("Hockey");
-                        team1[4] = new Unit("Football");
-                        team1[5] = new Unit("Football");
-                        team1[6] = new Unit("Outdoor Club");
-                        team1[7] = new Unit("Frat");
-                        team1[8] = new Unit("Sorority");
-                        team1[9] = new Unit("EMS Club");
-                        Mascot Ritchie = new Mascot("Ritchie", "Super hit");
-                        college1 = new College(team1, Ritchie, "RIT");
+                        college1.LoadCollege("RIT", unitSprites);
 
-                        //create default collgege 1(UofR)
-                        Unit[] team2 = new Unit[10];
-                        team2[0] = new Unit("Lacrosse");
-                        team2[1] = new Unit("Lacrosse");
-                        team2[2] = new Unit("Lacrosse");
-                        team2[3] = new Unit("Lacrosse");
-                        team2[4] = new Unit("Football");
-                        team2[5] = new Unit("Football");
-                        team2[6] = new Unit("Outdoor Club");
-                        team2[7] = new Unit("Frat");
-                        team2[8] = new Unit("Sorority");
-                        team2[9] = new Unit("EMS Club");
-                        Mascot Rocky = new Mascot("Rocky", "Super heal");
-                        college2 = new College(team2, Rocky, "UofR");
+                        //create default collgege 2(UofR)
+                        college2.LoadCollege("UofR", unitSprites);
 
                         curState = GameState.Game;
                     }
@@ -205,7 +209,9 @@ namespace Game1
                     break;
 
                 case GameState.Game:
-                    DrawMap(spriteBatch);
+                    DrawMap(spriteBatch); //add check for map tile scrolled over later with final art pieces
+                    college1.DrawCollegeUnits(spriteBatch, GraphicsDevice);
+                    college2.DrawCollegeUnits(spriteBatch, GraphicsDevice);
                     break;
             }
 
@@ -326,7 +332,8 @@ namespace Game1
 
             mainMap = new Map(fileName, newTiles);
         }
-
+        
+        //check for a single left mouse click
         public bool SingleLeftMousePress()
         {
             if (mState.LeftButton == ButtonState.Pressed && mStatePrev.LeftButton == ButtonState.Released) //check for one click
@@ -337,6 +344,7 @@ namespace Game1
             return false;
         }
 
+        //check for a single left mouse click in a certain location
         public bool SingleLeftMouseLocationPress(Rectangle loc)
         {
             if (mState.LeftButton == ButtonState.Pressed && mStatePrev.LeftButton == ButtonState.Released) //check for one click
@@ -353,13 +361,14 @@ namespace Game1
             return false;
         }
 
+        //check to see if the mouse pointer in a certain location
         public Color ScrolledOver(Rectangle loc)
         {
             if ((mState.Position.X > loc.X) && (mState.Position.X < loc.X + loc.Width)) //check for correct x position
             {
                 if ((mState.Position.Y > loc.Y) && (mState.Position.Y < loc.Y + loc.Height)) //check for correct y position
                 {
-                    return Color.Yellow;
+                    return Color.Yellow; //highlight
                 }
             }
 
