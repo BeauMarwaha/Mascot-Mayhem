@@ -28,6 +28,7 @@ namespace Game1
         int turn; //college's turn
         int turnPhase; //individual units turn phase
         int selectedUnit; //index of selected unit in college.units
+        List<MapTile> possibleMoves;
 
         //used as a dictionary of all unit textures
         Dictionary<string, Texture2D> unitSprites;
@@ -75,6 +76,7 @@ namespace Game1
             turn = 1;
             turnPhase = 0;
             selectedUnit = -1;
+            possibleMoves = new List<MapTile>();
 
             this.IsMouseVisible = true;
             base.Initialize();
@@ -183,6 +185,13 @@ namespace Game1
                             mainMap.GetTile(i, 0).Filled = true;
                         }
 
+                        /*Used in testing of possible moves
+                        college1.Units[1].MapX = 5;
+                        college1.Units[1].MapY = 5;
+                        mainMap.GetTile(1, 0).Filled = false;
+                        mainMap.GetTile(5, 5).Filled = true;
+                        */
+
                         //create default collgege 2(UofR)
                         college2.LoadCollege("UofR", unitSprites, 2);
 
@@ -210,24 +219,53 @@ namespace Game1
                                 {
                                     if(turn == 1) //if first players turn
                                     {
-                                        for(int i = 0; i < 10; i++) //check each unit on team 1
+                                        switch (turnPhase)
                                         {
-                                            if(college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
-                                            {
-                                                selectedUnit = i;
-                                            }
+                                            case 0: //move
+                                                for (int i = 0; i < 10; i++) //check each unit on team 1
+                                                {
+                                                    if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
+                                                    {
+                                                        selectedUnit = i;
+                                                        possibleMoves = mainMap.PossibleMoves(college1.Units[selectedUnit].CurrMovePoints, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
+                                                    }
+                                                }
+                                                break;
+                                            case 1: //action
+                                                break;
                                         }
                                     }
                                     else if(turn == 2) //if second players turn
                                     {
-                                        for (int i = 0; i < 10; i++) //check each unit on team 2
+                                        switch (turnPhase)
                                         {
-                                            if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
-                                            {
-                                                selectedUnit = i;
-                                            }
+                                            case 0: //move
+                                                for (int i = 0; i < 10; i++) //check each unit on team 2
+                                                {
+                                                    if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
+                                                    {
+                                                        selectedUnit = i;
+                                                        possibleMoves = mainMap.PossibleMoves(college1.Units[selectedUnit].CurrMovePoints, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
+                                                    }
+                                                }
+                                                break;
+                                            case 1: //action
+                                                break;
                                         }
+                                        
                                     }
+                                }
+                                else if (possibleMoves.Contains(mainMap.GetTile(row, col))) //if a movement can be made
+                                {
+                                    mainMap.GetTile(college1.Units[selectedUnit].MapY, college1.Units[selectedUnit].MapX).Filled = false;
+                                    
+                                    college1.Units[selectedUnit].MapX = col;
+                                    college1.Units[selectedUnit].MapY = row;
+
+                                    mainMap.GetTile(college1.Units[selectedUnit].MapY, college1.Units[selectedUnit].MapX).Filled = true;
+
+                                    turnPhase = 1; //switch phase to action phase
+                                    possibleMoves.Clear();
                                 }
                                 else //if the spot is empty
                                 {
@@ -457,8 +495,6 @@ namespace Game1
                 switch (turnPhase)
                 {
                     case 0: //move
-                        List<MapTile> possibleMoves = new List<MapTile>();
-                        possibleMoves = mainMap.PossibleMoves(college1.Units[selectedUnit].CurrMovePoints, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
                         foreach(MapTile tile in possibleMoves) //highlight tiles
                         {
                             spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
@@ -472,7 +508,11 @@ namespace Game1
             {
                 switch (turnPhase)
                 {
-                    case 0: //move
+                    case 0: //
+                        foreach (MapTile tile in possibleMoves) //highlight tiles
+                        {
+                            spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
+                        }
                         break;
                     case 1: //action
                         break;
