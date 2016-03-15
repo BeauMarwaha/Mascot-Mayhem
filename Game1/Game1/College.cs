@@ -53,7 +53,7 @@ namespace Game1
         }
 
         //loads predefined college teams
-        public void LoadCollege(string name, Dictionary<string, Texture2D> sprites)
+        public void LoadCollege(string name, Dictionary<string, Texture2D> sprites, int team)
         {
             collegeName = name;
             unitSprites = sprites;
@@ -61,43 +61,53 @@ namespace Game1
             if(name == "RIT")
             {
                 units = new Unit[10];
-                units[0] = new Unit("Hockey");
-                units[1] = new Unit("Hockey");
-                units[2] = new Unit("Hockey");
-                units[3] = new Unit("Hockey");
-                units[4] = new Unit("Football");
-                units[5] = new Unit("Football");
-                units[6] = new Unit("Outdoor Club");
-                units[7] = new Unit("Fraternity");
-                units[8] = new Unit("Sorority");
-                units[9] = new Unit("EMS Club");
-                mascot = new Mascot("Ritchie", "Super hit");
+                units[0] = new Unit("Hockey", team);
+                units[1] = new Unit("Hockey", team);
+                units[2] = new Unit("Hockey", team);
+                units[3] = new Unit("Hockey", team);
+                units[4] = new Unit("Football", team);
+                units[5] = new Unit("Football", team);
+                units[6] = new Unit("Outdoor Club", team);
+                units[7] = new Unit("Fraternity", team);
+                units[8] = new Unit("Sorority", team);
+                units[9] = new Unit("EMS Club", team);
+                mascot = new Mascot("Ritchie", "Super hit", team);
             }
             else if (name == "UofR")
             {
                 units = new Unit[10];
-                units[0] = new Unit("Lacrosse");
-                units[1] = new Unit("Lacrosse");
-                units[2] = new Unit("Lacrosse");
-                units[3] = new Unit("Lacrosse");
-                units[4] = new Unit("Football");
-                units[5] = new Unit("Football");
-                units[6] = new Unit("Outdoor Club");
-                units[7] = new Unit("Fraternity");
-                units[8] = new Unit("Sorority");
-                units[9] = new Unit("EMS Club");
-                mascot = new Mascot("Rocky", "Super heal");
+                units[0] = new Unit("Lacrosse", team);
+                units[1] = new Unit("Lacrosse", team);
+                units[2] = new Unit("Lacrosse", team);
+                units[3] = new Unit("Lacrosse", team);
+                units[4] = new Unit("Football", team);
+                units[5] = new Unit("Football", team);
+                units[6] = new Unit("Outdoor Club", team);
+                units[7] = new Unit("Fraternity", team);
+                units[8] = new Unit("Sorority", team);
+                units[9] = new Unit("EMS Club", team);
+                mascot = new Mascot("Rocky", "Super heal", team);
             }
         }
 
         //draws the college units onto the screen
-        public void DrawCollegeUnits(SpriteBatch sB, GraphicsDevice gD)
+        public void DrawCollegeUnits(SpriteBatch sB, GraphicsDevice gD, int turn)
         {
             foreach(Unit unit in units)
             {
-                sB.Draw(unitSprites[unit.UnitName], new Rectangle(unit.MapX * gD.Viewport.Width / 10, unit.MapY * gD.Viewport.Height / 10, gD.Viewport.Width / 10, gD.Viewport.Height / 10), Color.White);
+                sB.Draw(unitSprites[unit.UnitName], new Rectangle(unit.MapX * gD.Viewport.Width / 10, unit.MapY * gD.Viewport.Height / 10, gD.Viewport.Width / 10, gD.Viewport.Height / 10), TurnCheck(unit, turn));
             }
         }
 
+        //darken units when it isn't their turn 
+        public Color TurnCheck(Unit unit, int turn)
+        {
+            if (unit.Team != turn) //check if its the unit's team's turn
+            {
+                return Color.Gray; //darken
+            }
+
+            return Color.White;
+        }
     }
 }

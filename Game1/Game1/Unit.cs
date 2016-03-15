@@ -17,15 +17,17 @@ namespace Game1
         private int totalMovePoints; // how many movement points the unit has total
         private int currMovePoints; // how many move points the unit has now
         private string school; // determines characteristics and color
+        private int team; //team number
         private int mapX;
         private int mapY; // both store position on the map
         private bool alive; // if false, unit is dead 
         private string special; // used in UseAbility method, if unit has one
 
         // methods 
-        public Unit(string unitType) // creates the units with specific params
+        public Unit(string unitType, int teamNumber) // creates the units with specific params
         {
             unitName = unitType;
+            team = teamNumber;
 
             if(unitType == "Hockey")
             {
@@ -122,6 +124,12 @@ namespace Game1
             set { currHealth = value; }
         }
 
+        public int Team
+        {
+            get { return team; }
+            set { team = value; }
+        }
+
         public int Attack
         {
             get { return attack; }
@@ -159,8 +167,8 @@ namespace Game1
 
         public int MapY
         {
-            get { return mapX; }
-            set { mapX = value; }
+            get { return mapY; }
+            set { mapY = value; }
         }
 
         public bool Alive

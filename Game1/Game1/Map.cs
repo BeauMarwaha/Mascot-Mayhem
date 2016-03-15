@@ -41,7 +41,7 @@ namespace Game1
         public List<MapTile> PossibleMoves(int mP, int x, int y)
         {
             List<MapTile> possibleMoves = new List<MapTile>();
-            int[,] movementCosts = new int[tiles.GetLength(1),tiles.GetLength(2)]; //will hold movement costs for each tile on the board
+            int[,] movementCosts = new int[tiles.GetLength(0),tiles.GetLength(1)]; //will hold movement costs for each tile on the board
             
             foreach(MapTile tile in tiles)
             {
@@ -52,36 +52,36 @@ namespace Game1
 
                 if(xDiff < 0) //if the tile's x-cord is below the target tile
                 {
-                    for (int i = xDiff + x; i <= 0; i++)
+                    for (int i = x - xDiff; i < 0; i++)
                     {
                         mvmtCost += tiles[i, tile.YCord].MovementCost;
                     }
                 }
                 else if (xDiff > 0) //if the tile's x-cord is above the target tile
                 {
-                    for (int i = xDiff + x; i >= 0; i--)
+                    for (int i = x + xDiff; i > 0; i--)
                     {
                         mvmtCost += tiles[i, tile.YCord].MovementCost;
                     }
                 }
 
-                if (yDiff < 0) //if the tile's x-cord is below the target tile
+                if (yDiff < 0) //if the tile's y-cord is below the target tile
                 {
-                    for (int i = yDiff + y + 1; i < 0; i++)
+                    for (int i = y - yDiff + 1; i < 0; i++)
                     {
                         mvmtCost += tiles[x, i].MovementCost;
                     }
                 }
-                else if (yDiff > 0) //if the tile's x-cord is above the target tile
+                else if (yDiff > 0) //if the tile's y-cord is above the target tile
                 {
-                    for (int i = yDiff + y - 1; i > 0; i--)
+                    for (int i = y + yDiff - 1; i > 0; i--)
                     {
                         mvmtCost += tiles[x, i].MovementCost;
                     }
                 }
 
                 //check if calculated mvmtCost is reachable within provided movement points
-                if(mvmtCost <= mP)
+                if(mvmtCost < mP && !tile.Filled)
                 {
                     possibleMoves.Add(tile);
                 }

@@ -25,11 +25,15 @@ namespace Game1
         Map mainMap;
         College college1;
         College college2;
+        int turn; //college's turn
+        int turnPhase; //individual units turn phase
+        int selectedUnit; //index of selected unit in college.units
 
         //used as a dictionary of all unit textures
         Dictionary<string, Texture2D> unitSprites;
 
         SpriteFont font;
+        Texture2D blank;
         //units
         Texture2D hockeyPlayerPic;
         Texture2D lacrossePlayerPic;
@@ -68,6 +72,9 @@ namespace Game1
             college1 = new College();
             college2 = new College();
             unitSprites = new Dictionary<string, Texture2D>();
+            turn = 1;
+            turnPhase = 0;
+            selectedUnit = -1;
 
             this.IsMouseVisible = true;
             base.Initialize();
@@ -84,6 +91,7 @@ namespace Game1
 
             // TODO: use this.Content to load your game content here
             font = Content.Load<SpriteFont>("mainFont");
+            blank = Content.Load<Texture2D>("blank");
 
             //units - NOTE: currently using placeholder pictures
             hockeyPlayerPic = Content.Load<Texture2D>("SpaceShip");
@@ -165,16 +173,70 @@ namespace Game1
                     if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 300, 25)))
                     {
                         //create default collgege 1(RIT)
-                        college1.LoadCollege("RIT", unitSprites);
+                        college1.LoadCollege("RIT", unitSprites, 1);
+
+                        //load default starting positions
+                        for(int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
 
                         //create default collgege 2(UofR)
-                        college2.LoadCollege("UofR", unitSprites);
+                        college2.LoadCollege("UofR", unitSprites, 2);
+
+                        //load default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
 
                         curState = GameState.Game;
                     }
                     break;
 
                 case GameState.Game:
+                    for (int row = 0; row < 10; row++) //check each map row
+                    {
+                        for (int col = 0; col < 10; col++) //check each map col
+                        {
+                            //check for a mouse click in that location
+                            if (SingleLeftMouseLocationPress(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10))) 
+                            {
+                                if(mainMap.GetTile(row, col).Filled) //if a unit is in that spot
+                                {
+                                    if(turn == 1) //if first players turn
+                                    {
+                                        for(int i = 0; i < 10; i++) //check each unit on team 1
+                                        {
+                                            if(college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
+                                            {
+                                                selectedUnit = i;
+                                            }
+                                        }
+                                    }
+                                    else if(turn == 2) //if second players turn
+                                    {
+                                        for (int i = 0; i < 10; i++) //check each unit on team 2
+                                        {
+                                            if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
+                                            {
+                                                selectedUnit = i;
+                                            }
+                                        }
+                                    }
+                                }
+                                else //if the spot is empty
+                                {
+                                    selectedUnit = -2;
+                                }
+                            }
+                        }
+                    }
+
                     break;
             }
 
@@ -209,9 +271,21 @@ namespace Game1
                     break;
 
                 case GameState.Game:
-                    DrawMap(spriteBatch); //add check for map tile scrolled over later with final art pieces
-                    college1.DrawCollegeUnits(spriteBatch, GraphicsDevice);
-                    college2.DrawCollegeUnits(spriteBatch, GraphicsDevice);
+                    DrawMap(); //add check for map tile scrolled over later with final art pieces
+                    college1.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn);
+                    college2.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn);
+
+                    if(selectedUnit != -1) //if a unit is selected
+                    {
+                        if(selectedUnit == -2) //bring up option menu
+                        {
+                            DrawOptionMenu();
+                        }
+                        else
+                        {
+                            DrawUnitActionInfo();
+                        }
+                    }
                     break;
             }
 
@@ -220,7 +294,7 @@ namespace Game1
         }
 
         //draws the game board based on the size of the screen
-        public void DrawMap(SpriteBatch sB)
+        public void DrawMap()
         {
             for(int row = 0; row < 10; row++)
             {
@@ -228,23 +302,23 @@ namespace Game1
                 {
                     if (mainMap.GetTile(row,col).TerrainType == "Field")
                     {
-                        spriteBatch.Draw(fieldTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Green);
+                        spriteBatch.Draw(fieldTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), ScrolledOver(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)));
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "River")
                     {
-                        spriteBatch.Draw(riverTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Blue);
+                        spriteBatch.Draw(riverTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), ScrolledOver(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)));
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "Pavement")
                     {
-                        spriteBatch.Draw(pavementTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Black);
+                        spriteBatch.Draw(pavementTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), ScrolledOver(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)));
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "Forest")
                     {
-                        spriteBatch.Draw(forestTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Pink);
+                        spriteBatch.Draw(forestTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), ScrolledOver(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)));
                     }
                     else if (mainMap.GetTile(row, col).TerrainType == "Win Tile")
                     {
-                        spriteBatch.Draw(winTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.Purple);
+                        spriteBatch.Draw(winTilePic, new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), ScrolledOver(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)));
                     }
                 }
             }
@@ -373,6 +447,50 @@ namespace Game1
             }
 
             return Color.White;
+        }
+
+        //draws unit action related info
+        private void DrawUnitActionInfo()
+        {
+            if(turn == 1)
+            {
+                switch (turnPhase)
+                {
+                    case 0: //move
+                        List<MapTile> possibleMoves = new List<MapTile>();
+                        possibleMoves = mainMap.PossibleMoves(college1.Units[selectedUnit].CurrMovePoints, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
+                        foreach(MapTile tile in possibleMoves) //highlight tiles
+                        {
+                            spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
+                        }
+                        break;
+                    case 1: //action
+                        break;
+                }
+            }
+            else if(turn == 2)
+            {
+                switch (turnPhase)
+                {
+                    case 0: //move
+                        break;
+                    case 1: //action
+                        break;
+                }
+            }
+        }
+
+        //draws option menu
+        private void DrawOptionMenu()
+        {
+            if (turn == 1)
+            {
+
+            }
+            else if (turn == 2)
+            {
+
+            }
         }
     }
 }
