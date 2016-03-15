@@ -61,6 +61,9 @@
     <Content Include="Content\blank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\menu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\SpaceCoin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

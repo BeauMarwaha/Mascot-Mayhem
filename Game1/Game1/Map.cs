@@ -90,5 +90,61 @@ namespace Game1
             return possibleMoves;
         }
 
+        //calculates possible attack targets based on an attack range and starting location
+        public List<MapTile> PossibleAttacks(int aR, int y, int x)
+        {
+            
+            List<MapTile> possibleMoves = new List<MapTile>();
+            /* Implement correct attack info later*********************************************************************************************************
+            int[,] movementCosts = new int[tiles.GetLength(0), tiles.GetLength(1)]; //will hold movement costs for each tile on the board
+
+            foreach (MapTile tile in tiles)
+            {
+                //represents the difference of the tile from the target tile
+                int xDiff = tile.XCord - x;
+                int yDiff = tile.YCord - y;
+                int mvmtCost = 0; //individual tile  movement cost
+
+                if (xDiff < 0) //if the tile's x-cord is below the target tile
+                {
+                    for (int i = x + xDiff + 1; i <= x; i++)
+                    {
+                        mvmtCost += tiles[i, tile.YCord].MovementCost;
+                    }
+                }
+                else if (xDiff > 0) //if the tile's x-cord is above the target tile
+                {
+                    for (int i = x + xDiff - 1; i >= x; i--)
+                    {
+                        mvmtCost += tiles[i, tile.YCord].MovementCost;
+                    }
+                }
+
+                if (yDiff < 0) //if the tile's y-cord is below the target tile
+                {
+                    for (int i = y + yDiff; i < y; i++)
+                    {
+                        mvmtCost += tiles[tile.XCord, i].MovementCost;
+                    }
+                }
+                else if (yDiff > 0) //if the tile's y-cord is above the target tile
+                {
+                    for (int i = y + yDiff; i > y; i--)
+                    {
+                        mvmtCost += tiles[tile.XCord, i].MovementCost;
+                    }
+                }
+
+                //check if calculated mvmtCost is reachable within provided movement points
+                if (mvmtCost <= aR && tile.Filled)
+                {
+                    possibleMoves.Add(tile);
+                }
+            }
+            */
+            return possibleMoves;
+           
+        }
+
     }
 }

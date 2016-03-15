@@ -22,6 +22,7 @@ namespace Game1
         private int mapY; // both store position on the map
         private bool alive; // if false, unit is dead 
         private string special; // used in UseAbility method, if unit has one
+        private bool turnDone;
 
         // methods 
         public Unit(string unitType, int teamNumber) // creates the units with specific params
@@ -105,6 +106,7 @@ namespace Game1
             alive = true;
             currHealth = totalHealth;
             currMovePoints = totalMovePoints;
+            turnDone = false;
         }
 
         //properties
@@ -175,6 +177,12 @@ namespace Game1
         {
             get { return alive; }
             set { alive = value; }
+        }
+
+        public bool TurnDone
+        {
+            get { return turnDone; }
+            set { turnDone = value; }
         }
 
         public string Special

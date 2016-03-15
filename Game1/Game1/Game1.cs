@@ -29,12 +29,14 @@ namespace Game1
         int turnPhase; //individual units turn phase
         int selectedUnit; //index of selected unit in college.units
         List<MapTile> possibleMoves;
+        List<MapTile> possibleAttacks;
 
         //used as a dictionary of all unit textures
         Dictionary<string, Texture2D> unitSprites;
 
         SpriteFont font;
         Texture2D blank;
+        Texture2D menu;
         //units
         Texture2D hockeyPlayerPic;
         Texture2D lacrossePlayerPic;
@@ -77,6 +79,7 @@ namespace Game1
             turnPhase = 0;
             selectedUnit = -1;
             possibleMoves = new List<MapTile>();
+            possibleAttacks = new List<MapTile>();
 
             this.IsMouseVisible = true;
             base.Initialize();
@@ -94,6 +97,7 @@ namespace Game1
             // TODO: use this.Content to load your game content here
             font = Content.Load<SpriteFont>("mainFont");
             blank = Content.Load<Texture2D>("blank");
+            menu = Content.Load<Texture2D>("menu");
 
             //units - NOTE: currently using placeholder pictures
             hockeyPlayerPic = Content.Load<Texture2D>("SpaceShip");
@@ -185,13 +189,6 @@ namespace Game1
                             mainMap.GetTile(i, 0).Filled = true;
                         }
 
-                        /*Used in testing of possible moves
-                        college1.Units[1].MapX = 5;
-                        college1.Units[1].MapY = 5;
-                        mainMap.GetTile(1, 0).Filled = false;
-                        mainMap.GetTile(5, 5).Filled = true;
-                        */
-
                         //create default collgege 2(UofR)
                         college2.LoadCollege("UofR", unitSprites, 2);
 
@@ -208,73 +205,186 @@ namespace Game1
                     break;
 
                 case GameState.Game:
-                    for (int row = 0; row < 10; row++) //check each map row
+                    if (selectedUnit == -2) //if the option menu is brought up
                     {
-                        for (int col = 0; col < 10; col++) //check each map col
+                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 13, 120, 25))) //resume game
                         {
-                            //check for a mouse click in that location
-                            if (SingleLeftMouseLocationPress(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10))) 
+                            selectedUnit = -1;
+                        }
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6, 120, 25))) //end turn
+                        {
+                            if (turn == 1) //if first players turn
                             {
-                                if(mainMap.GetTile(row, col).Filled) //if a unit is in that spot
+                                //switch turn
+                                selectedUnit = -1;
+                                turnPhase = 0;
+                                turn = 2;
+
+                                //reset all units turn done states
+                                foreach(Unit unit in college1.Units)
                                 {
-                                    if(turn == 1) //if first players turn
+                                    unit.TurnDone = false;
+                                }
+                            }
+                            else if (turn == 2) //if second players turn
+                            {
+                                //switch turn
+                                selectedUnit = -1;
+                                turnPhase = 0;
+                                turn = 1;
+
+                                //reset all units turn done states
+                                foreach (Unit unit in college2.Units)
+                                {
+                                    unit.TurnDone = false;
+                                }
+
+                            }
+                        }
+                        else if(SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4, 140, 25))) //main menu
+                        {
+                            curState = GameState.Menu;
+                        }
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3, 130, 25))) //exit game
+                        {
+                            this.Exit();
+                        }
+                    }
+                    else //normal play
+                    {
+                        for (int row = 0; row < 10; row++) //check each map row
+                        {
+                            for (int col = 0; col < 10; col++) //check each map col
+                            {
+                                //check for a mouse click in that location
+                                if (SingleLeftMouseLocationPress(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)))
+                                {
+                                    if (mainMap.GetTile(row, col).Filled) //if a unit is in that spot
                                     {
-                                        switch (turnPhase)
+                                        if (turn == 1) //if first players turn
                                         {
-                                            case 0: //move
-                                                for (int i = 0; i < 10; i++) //check each unit on team 1
-                                                {
-                                                    if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
+                                            switch (turnPhase)
+                                            {
+                                                case 0: //move
+                                                    for (int i = 0; i < 10; i++) //check each unit on team 1
                                                     {
-                                                        selectedUnit = i;
-                                                        possibleMoves = mainMap.PossibleMoves(college1.Units[selectedUnit].CurrMovePoints, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
+                                                        if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
+                                                        {
+                                                            selectedUnit = i;
+                                                            if (!college1.Units[selectedUnit].TurnDone) //check if that unit has already made their turn
+                                                            {
+                                                                possibleMoves = mainMap.PossibleMoves(college1.Units[selectedUnit].CurrMovePoints, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
+                                                            }
+
+                                                        }
                                                     }
-                                                }
-                                                break;
-                                            case 1: //action
-                                                break;
+                                                    break;
+                                                case 1: //action
+                                                    break;
+                                            }
+                                        }
+                                        else if (turn == 2) //if second players turn
+                                        {
+                                            switch (turnPhase)
+                                            {
+                                                case 0: //move
+                                                    for (int i = 0; i < 10; i++) //check each unit on team 2
+                                                    {
+                                                        if (college2.Units[i].MapX == col && college2.Units[i].MapY == row) //if the unit is in that space
+                                                        {
+                                                            selectedUnit = i;
+                                                            if (!college2.Units[selectedUnit].TurnDone) //check if that unit has already made their turn
+                                                            {
+                                                                possibleMoves = mainMap.PossibleMoves(college2.Units[selectedUnit].CurrMovePoints, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY);
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                case 1: //action
+                                                    break;
+                                            }
+
                                         }
                                     }
-                                    else if(turn == 2) //if second players turn
+                                    else if (possibleMoves.Contains(mainMap.GetTile(row, col))) //if a movement can be made
                                     {
-                                        switch (turnPhase)
+                                        turnPhase = 1; //switch phase to action phase
+
+                                        //set up possible attacks after movement
+                                        if (turn == 1) //if first players turn
                                         {
-                                            case 0: //move
-                                                for (int i = 0; i < 10; i++) //check each unit on team 2
-                                                {
-                                                    if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
-                                                    {
-                                                        selectedUnit = i;
-                                                        possibleMoves = mainMap.PossibleMoves(college1.Units[selectedUnit].CurrMovePoints, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
-                                                    }
-                                                }
-                                                break;
-                                            case 1: //action
-                                                break;
+                                            mainMap.GetTile(college1.Units[selectedUnit].MapY, college1.Units[selectedUnit].MapX).Filled = false;
+
+                                            college1.Units[selectedUnit].MapX = col;
+                                            college1.Units[selectedUnit].MapY = row;
+
+                                            mainMap.GetTile(college1.Units[selectedUnit].MapY, college1.Units[selectedUnit].MapX).Filled = true;
+
+                                            possibleAttacks = mainMap.PossibleAttacks(1, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
+                                            if (possibleAttacks.Count == 0) //if there are no possible attacks
+                                            {
+                                                //switch back to move phase so another unit can do their turn
+                                                turnPhase = 0; 
+                                                //end that units turn
+                                                college1.Units[selectedUnit].TurnDone = true;
+                                                selectedUnit = -1;
+                                            }
                                         }
-                                        
+                                        else if (turn == 2) //if second players turn
+                                        {
+                                            mainMap.GetTile(college2.Units[selectedUnit].MapY, college2.Units[selectedUnit].MapX).Filled = false;
+
+                                            college2.Units[selectedUnit].MapX = col;
+                                            college2.Units[selectedUnit].MapY = row;
+
+                                            mainMap.GetTile(college2.Units[selectedUnit].MapY, college2.Units[selectedUnit].MapX).Filled = true;
+
+                                            possibleAttacks = mainMap.PossibleAttacks(1, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY);
+                                            if (possibleAttacks.Count == 0) //if there are no possible attacks
+                                            {
+                                                //switch back to move phase so another unit can do their turn
+                                                turnPhase = 0; 
+                                                //end that units turn
+                                                college2.Units[selectedUnit].TurnDone = true;
+                                                selectedUnit = -1;
+                                            }
+                                        }
+
+                                        possibleMoves.Clear();
                                     }
-                                }
-                                else if (possibleMoves.Contains(mainMap.GetTile(row, col))) //if a movement can be made
-                                {
-                                    mainMap.GetTile(college1.Units[selectedUnit].MapY, college1.Units[selectedUnit].MapX).Filled = false;
-                                    
-                                    college1.Units[selectedUnit].MapX = col;
-                                    college1.Units[selectedUnit].MapY = row;
+                                    else if (possibleAttacks.Contains(mainMap.GetTile(row, col))) //if an attack can be made
+                                    {
+                                        //implement attacking logic here*******************************************************************************************************
 
-                                    mainMap.GetTile(college1.Units[selectedUnit].MapY, college1.Units[selectedUnit].MapX).Filled = true;
-
-                                    turnPhase = 1; //switch phase to action phase
-                                    possibleMoves.Clear();
-                                }
-                                else //if the spot is empty
-                                {
-                                    selectedUnit = -2;
+                                        turnPhase = 0; //switch phase to move phase
+                                        possibleAttacks.Clear();
+                                    }
+                                    else //if the spot is empty
+                                    {
+                                        if (turnPhase == 1 && selectedUnit > -1) //to cancel attack
+                                        {
+                                            turnPhase = 0;
+                                            //end that units turn
+                                            if (turn == 1) //if first players turn
+                                            {
+                                                college1.Units[selectedUnit].TurnDone = true;
+                                                selectedUnit = -1;
+                                            }
+                                            else if (turn == 2) //if second players turn
+                                            {
+                                                college2.Units[selectedUnit].TurnDone = true;
+                                                selectedUnit = -1;
+                                            }
+                                        }
+                                        else //bring up option menu
+                                        {
+                                            selectedUnit = -2;
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-
                     break;
             }
 
@@ -501,6 +611,10 @@ namespace Game1
                         }
                         break;
                     case 1: //action
+                        foreach (MapTile tile in possibleAttacks) //highlight tiles
+                        {
+                            spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
+                        }
                         break;
                 }
             }
@@ -508,13 +622,17 @@ namespace Game1
             {
                 switch (turnPhase)
                 {
-                    case 0: //
+                    case 0: //move
                         foreach (MapTile tile in possibleMoves) //highlight tiles
                         {
                             spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
                         }
                         break;
                     case 1: //action
+                        foreach (MapTile tile in possibleAttacks) //highlight tiles
+                        {
+                            spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
+                        }
                         break;
                 }
             }
@@ -523,6 +641,11 @@ namespace Game1
         //draws option menu
         private void DrawOptionMenu()
         {
+            spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 20, GraphicsDevice.Viewport.Height / 20, GraphicsDevice.Viewport.Width / 3, GraphicsDevice.Viewport.Height / 2), Color.White);
+            spriteBatch.DrawString(font, "Resume Game", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 13), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 13, 180, 25)));
+            spriteBatch.DrawString(font, "End Turn", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6, 120, 25)));
+            spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4, 140, 25)));
+            spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3, 130, 25)));
             if (turn == 1)
             {
 
