@@ -243,6 +243,12 @@ namespace Game1
                         }
                         else if(SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4, 140, 25))) //main menu
                         {
+                            //reset game
+                            selectedUnit = -1;
+                            turnPhase = 0;
+                            turn = 1;
+
+                            //change the game state back to menu
                             curState = GameState.Menu;
                         }
                         else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3, 130, 25))) //exit game
@@ -479,7 +485,7 @@ namespace Game1
             try
             {
                 //open the file with StreamReader
-                StreamReader input = new StreamReader(fileName + ".txt");
+                StreamReader input = new StreamReader("../../../Maps/" + fileName + ".txt");
 
                 //loop to read in and display each line
                 string[] line = new string[10];
