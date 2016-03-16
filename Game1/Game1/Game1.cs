@@ -170,7 +170,7 @@ namespace Game1
                 case GameState.MapSelect:
                     if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)))
                     {
-                        LoadMap("test");
+                        LoadMap("test"); //change this for different file name
                         curState = GameState.TeamSelect;
                     }
                     break;
