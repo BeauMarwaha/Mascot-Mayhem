@@ -87,6 +87,8 @@ namespace Game1
                 }
             }
 
+            //add the units spot (allows for no movement)
+            possibleMoves.Add(tiles[x,y]);
             return possibleMoves;
         }
 
@@ -94,7 +96,7 @@ namespace Game1
         public List<MapTile> PossibleAttacks(int aR, int y, int x)
         {
             
-            List<MapTile> possibleMoves = new List<MapTile>();
+            List<MapTile> possibleAttacks = new List<MapTile>();
             /* Implement correct attack info later*********************************************************************************************************
             int[,] movementCosts = new int[tiles.GetLength(0), tiles.GetLength(1)]; //will hold movement costs for each tile on the board
 
@@ -142,7 +144,7 @@ namespace Game1
                 }
             }
             */
-            return possibleMoves;
+            return possibleAttacks;
            
         }
 

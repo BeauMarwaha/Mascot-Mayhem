@@ -30,6 +30,7 @@ namespace Game1
         int selectedUnit; //index of selected unit in college.units
         List<MapTile> possibleMoves;
         List<MapTile> possibleAttacks;
+        bool displayRules;
 
         //used as a dictionary of all unit textures
         Dictionary<string, Texture2D> unitSprites;
@@ -37,6 +38,8 @@ namespace Game1
         SpriteFont font;
         Texture2D blank;
         Texture2D menu;
+        Texture2D rules;
+
         //units
         Texture2D hockeyPlayerPic;
         Texture2D lacrossePlayerPic;
@@ -80,6 +83,7 @@ namespace Game1
             selectedUnit = -1;
             possibleMoves = new List<MapTile>();
             possibleAttacks = new List<MapTile>();
+            displayRules = false;
 
             this.IsMouseVisible = true;
             base.Initialize();
@@ -98,6 +102,7 @@ namespace Game1
             font = Content.Load<SpriteFont>("mainFont");
             blank = Content.Load<Texture2D>("blank");
             menu = Content.Load<Texture2D>("menu");
+            rules = Content.Load<Texture2D>("rules");
 
             //units - NOTE: currently using placeholder pictures
             hockeyPlayerPic = Content.Load<Texture2D>("SpaceShip");
@@ -164,19 +169,46 @@ namespace Game1
             switch (curState)
             {
                 case GameState.Menu:
-                    curState = GameState.MapSelect;
+                    if (!displayRules)
+                    {
+                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 100, 140, 25))) //play game
+                        {
+                            //progress to map selection
+                            curState = GameState.MapSelect;
+                        }
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 20, GraphicsDevice.Viewport.Height / 2 - 55, 75, 25))) //rules
+                        {
+                            //display the rules image on the screen
+                            displayRules = true;
+                        }
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 10, 140, 25))) //exit game
+                        {
+                            //exit the game
+                            this.Exit();
+                        }
+                    }
+                    else
+                    {
+                        if (SingleLeftMouseLocationPress(new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))) //play game
+                        {
+                            //remove the rules image on the screen
+                            displayRules = false;
+                        }
+                    }
                     break;
 
                 case GameState.MapSelect:
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)))
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25))) //load default map
                     {
                         LoadMap("test"); //change this for different file name
+
+                        //progress to team selection
                         curState = GameState.TeamSelect;
                     }
                     break;
 
                 case GameState.TeamSelect:
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 300, 25)))
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 300, 25))) //load default teams
                     {
                         //create default collgege 1(RIT)
                         college1.LoadCollege("RIT", unitSprites, 1);
@@ -200,6 +232,7 @@ namespace Game1
                             mainMap.GetTile(i, 9).Filled = true;
                         }
 
+                        //progress to the game state
                         curState = GameState.Game;
                     }
                     break;
@@ -253,6 +286,7 @@ namespace Game1
                         }
                         else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3, 130, 25))) //exit game
                         {
+                            //exit the game
                             this.Exit();
                         }
                     }
@@ -265,7 +299,7 @@ namespace Game1
                                 //check for a mouse click in that location
                                 if (SingleLeftMouseLocationPress(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)))
                                 {
-                                    if (mainMap.GetTile(row, col).Filled) //if a unit is in that spot
+                                    if (mainMap.GetTile(row, col).Filled && !possibleMoves.Contains(mainMap.GetTile(row, col))) //if a unit is in that spot (2nd part of the if statement allows for a unit to not move during their turn)
                                     {
                                         if (turn == 1) //if first players turn
                                         {
@@ -360,7 +394,7 @@ namespace Game1
                                     }
                                     else if (possibleAttacks.Contains(mainMap.GetTile(row, col))) //if an attack can be made
                                     {
-                                        //implement attacking logic here*******************************************************************************************************
+                                        //implement attacking/defending logic here*******************************************************************************************************
 
                                         turnPhase = 0; //switch phase to move phase
                                         possibleAttacks.Clear();
@@ -414,6 +448,14 @@ namespace Game1
             switch (curState)
             {
                 case GameState.Menu:
+                    spriteBatch.DrawString(font, "Play Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 100), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 100, 140, 25)));
+                    spriteBatch.DrawString(font, "Rules", new Vector2(GraphicsDevice.Viewport.Width / 2 - 20, GraphicsDevice.Viewport.Height / 2 - 55), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 20, GraphicsDevice.Viewport.Height / 2 - 55, 75, 25)));
+                    spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 10), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 10, 140, 25)));
+                    if (displayRules)
+                    {
+                        spriteBatch.Draw(rules, new Rectangle(10, 10, GraphicsDevice.Viewport.Width - 20, GraphicsDevice.Viewport.Height - 100), Color.White);
+                        spriteBatch.DrawString(font, "Click Anywhere to exit the rules", new Vector2(GraphicsDevice.Viewport.Width/4, GraphicsDevice.Viewport.Height - 50), Color.White);
+                    }
                     break;
 
                 case GameState.MapSelect:
@@ -652,14 +694,6 @@ namespace Game1
             spriteBatch.DrawString(font, "End Turn", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6, 120, 25)));
             spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4, 140, 25)));
             spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3, 130, 25)));
-            if (turn == 1)
-            {
-
-            }
-            else if (turn == 2)
-            {
-
-            }
         }
     }
 }

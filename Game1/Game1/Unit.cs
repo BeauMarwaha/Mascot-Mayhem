@@ -22,7 +22,7 @@ namespace Game1
         private int mapY; // both store position on the map
         private bool alive; // if false, unit is dead 
         private string special; // used in UseAbility method, if unit has one
-        private bool turnDone;
+        private bool turnDone; //if a unit's turn is done
 
         // methods 
         public Unit(string unitType, int teamNumber) // creates the units with specific params
@@ -192,16 +192,6 @@ namespace Game1
 
 
         //will need to look over these methods again*****************************************************************************************************
-        public void ChangeHealth(int damage) // changes unit health when attacked
-        {
-            currHealth = currHealth - damage; 
-            if(currHealth <= 0) // damage kills the unit
-            {
-                currHealth = 0; 
-                alive = false; 
-            }
-        }
-        
         public void UseAbility(string ability)
         {
             // in the brackets will contain if statements that check the string passed in and do specific things based on it

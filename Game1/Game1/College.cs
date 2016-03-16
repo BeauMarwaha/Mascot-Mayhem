@@ -99,12 +99,16 @@ namespace Game1
             }
         }
 
-        //darken units when it isn't their turn 
+        //darken units when it isn't their turn or they have already used their move this turn
         public Color TurnCheck(Unit unit, int turn)
         {
-            if (unit.Team != turn) //check if its the unit's team's turn
+            if (unit.Team != turn) //check if its not that unit's team's turn
             {
                 return Color.Gray; //darken
+            }
+            else if (unit.TurnDone) //check if it's that unit's turn but they've already done their action this turn
+            {
+                return Color.LightGray; //slightly darken
             }
 
             return Color.White;
