@@ -105,42 +105,42 @@ namespace Game1
             rules = Content.Load<Texture2D>("rules");
 
             //units - NOTE: currently using placeholder pictures
-            hockeyPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            hockeyPlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Hockey", hockeyPlayerPic);
 
-            lacrossePlayerPic = Content.Load<Texture2D>("SpaceShip");
+            lacrossePlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Lacrosse", lacrossePlayerPic);
 
-            footballPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            footballPlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Football", footballPlayerPic);
 
-            archeryClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            archeryClubPlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Archery Club", archeryClubPlayerPic);
 
-            outdoorClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            outdoorClubPlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Outdoor Club", outdoorClubPlayerPic);
 
-            fraternityPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            fraternityPlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Fraternity", fraternityPlayerPic);
 
-            sororityPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            sororityPlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Sorority", sororityPlayerPic);
 
-            emsClubPlayerPic = Content.Load<Texture2D>("SpaceShip");
+            emsClubPlayerPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("EMS Club", emsClubPlayerPic);
 
-            ritchieMascotPic = Content.Load<Texture2D>("SpaceShip");
+            ritchieMascotPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Ritchie", ritchieMascotPic);
 
-            rockyMascotPic = Content.Load<Texture2D>("SpaceShip");
+            rockyMascotPic = Content.Load<Texture2D>("Chibi Base");
             unitSprites.Add("Rocky", rockyMascotPic);
 
             //tiles - NOTE: currently using placeholder pictures
-            fieldTilePic = Content.Load<Texture2D>("SpaceCoin");
-            riverTilePic = Content.Load<Texture2D>("SpaceCoin");
-            pavementTilePic = Content.Load<Texture2D>("SpaceCoin");
-            forestTilePic = Content.Load<Texture2D>("SpaceCoin");
-            winTilePic = Content.Load<Texture2D>("SpaceCoin");
+            fieldTilePic = Content.Load<Texture2D>("Grass Tile");
+            riverTilePic = Content.Load<Texture2D>("Grass Tile");
+            pavementTilePic = Content.Load<Texture2D>("Grass Tile");
+            forestTilePic = Content.Load<Texture2D>("Grass Tile");
+            winTilePic = Content.Load<Texture2D>("Grass Tile");
         }
 
         /// <summary>
@@ -418,6 +418,11 @@ namespace Game1
                                         }
                                         else //bring up option menu
                                         {
+                                            //fixes error with trying to move a unit, pausing the game, and then trying to immediately move it again
+                                            possibleMoves.Clear();
+                                            possibleAttacks.Clear();
+
+                                            //brings up option menu
                                             selectedUnit = -2;
                                         }
                                     }
@@ -638,7 +643,7 @@ namespace Game1
             {
                 if ((mState.Position.Y > loc.Y) && (mState.Position.Y < loc.Y + loc.Height)) //check for correct y position
                 {
-                    return Color.Yellow; //highlight
+                    return Color.Orange; //highlight
                 }
             }
 

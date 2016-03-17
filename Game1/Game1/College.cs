@@ -95,7 +95,15 @@ namespace Game1
         {
             foreach(Unit unit in units)
             {
-                sB.Draw(unitSprites[unit.UnitName], new Rectangle(unit.MapX * gD.Viewport.Width / 10, unit.MapY * gD.Viewport.Height / 10, gD.Viewport.Width / 10, gD.Viewport.Height / 10), TurnCheck(unit, turn));
+                if(unit.Team == 1) //flip image
+                {
+                    var origin = new Vector2(unitSprites[unit.UnitName].Width / 20f, unitSprites[unit.UnitName].Height / 20f); //for use with image flipping
+                    sB.Draw(unitSprites[unit.UnitName], new Rectangle(unit.MapX * gD.Viewport.Width / 10, unit.MapY * gD.Viewport.Height / 10, gD.Viewport.Width / 10, gD.Viewport.Height / 10), null, TurnCheck(unit, turn), 0f, origin, SpriteEffects.FlipHorizontally, 0f);
+                }
+                else //don't flip image
+                {
+                    sB.Draw(unitSprites[unit.UnitName], new Rectangle(unit.MapX * gD.Viewport.Width / 10, unit.MapY * gD.Viewport.Height / 10, gD.Viewport.Width / 10, gD.Viewport.Height / 10), TurnCheck(unit, turn));
+                }
             }
         }
 
