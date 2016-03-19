@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework; //for draw method
 using Microsoft.Xna.Framework.Graphics;
 
+//Author(s): Beau Marwaha, Jared Miller
+//Purpose: Represents a team of units in the game
 namespace Game1
 {
     class College

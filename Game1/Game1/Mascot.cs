@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//Author(s): Beau Marwaha, Jared Miller
+//Purpose: Represents a mascot unit
 namespace Game1
 {
     class Mascot:Unit

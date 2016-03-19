@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+//Author(s): Beau Marwaha, Cody Freeman
+//Purpose: Represents a generic unit
 namespace Game1
 {
     // class for a basic unit; contains all neccessary attributes and methods
