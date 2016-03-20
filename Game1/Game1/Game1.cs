@@ -5,7 +5,7 @@ using System.IO; //needed for file IO
 using System;
 using System.Collections.Generic; //for dictionary
 
-//Author(s): Beau Marwaha
+//Author(s): Beau Marwaha, Sean Hasse
 //Purpose: Runs the game
 namespace Game1
 {

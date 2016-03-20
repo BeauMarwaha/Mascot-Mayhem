@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 //Author(s): Sean Hasse, Beau Marwaha
-//Purpose: Runs the game
+//Purpose: Represents a individual Map Tile
 namespace Game1
 {
     class MapTile
