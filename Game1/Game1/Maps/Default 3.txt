@@ -1,0 +1,10 @@
+Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest
+Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest
+Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement
+Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement
+Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest
+Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest
+Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement
+Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement
+Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest
+Forest,Forest,Pavement,Pavement,Forest,Forest,Pavement,Pavement,Forest,Forest

@@ -1,0 +1,10 @@
+Forest,Field,Field,Field,Field,Field,Field,Field,Field,Forest
+Field,Forest,Field,Field,Field,Field,Field,Field,Forest,Field
+Field,Field,Forest,Field,Field,Field,Field,Forest,Field,Field
+Field,Field,Field,Forest,Forest,Forest,Forest,Field,Field,Field
+Field,Field,Field,Forest,Pavement,Pavement,Forest,Field,Field,Field
+Field,Field,Field,Forest,Pavement,Pavement,Forest,Field,Field,Field
+Field,Field,Field,Forest,Forest,Forest,Forest,Field,Field,Field
+Field,Field,Forest,Field,Field,Field,Field,Forest,Field,Field
+Field,Forest,Field,Field,Field,Field,Field,Field,Forest,Field
+Forest,Field,Field,Field,Field,Field,Field,Field,Field,Forest

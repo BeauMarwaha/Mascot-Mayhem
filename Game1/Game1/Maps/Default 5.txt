@@ -1,0 +1,10 @@
+River,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,Pavement,River
+River,Pavement,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,River
+River,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,Pavement,River
+River,Pavement,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,River
+Pavement,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,Pavement,Pavement
+Pavement,Pavement,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,Pavement
+River,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,Pavement,River
+River,Pavement,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,River
+River,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,Pavement,River
+River,Pavement,Pavement,Pavement,Pavement,Forest,Pavement,Pavement,Pavement,River

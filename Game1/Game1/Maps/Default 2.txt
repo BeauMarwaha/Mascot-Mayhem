@@ -1,0 +1,10 @@
+Field,Field,Field,Pavement,Pavement,Pavement,Pavement,Field,Field,Field
+Field,Field,Field,Pavement,Pavement,Pavement,Pavement,Field,Field,Field
+Field,Field,Field,River,River,River,River,Field,Field,Field
+Field,Field,Field,River,River,River,River,Field,Field,Field
+Field,Field,Field,Field,Field,Field,Field,Field,Field,Field
+Field,Field,Field,Field,Field,Field,Field,Field,Field,Field
+Field,Field,Field,River,River,River,River,Field,Field,Field
+Field,Field,Field,River,River,River,River,Field,Field,Field
+Field,Field,Field,Pavement,Pavement,Pavement,Pavement,Field,Field,Field
+Field,Field,Field,Pavement,Pavement,Pavement,Pavement,Field,Field,Field
