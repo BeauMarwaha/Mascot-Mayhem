@@ -18,7 +18,7 @@ namespace Game1
         SpriteBatch spriteBatch;
 
         //extra atributes
-        enum GameState { Menu, MapSelect, TeamSelect, Game};
+        enum GameState { Menu, TeamSelect, MapSelect, Game};
         GameState curState;
         MouseState mState;
         MouseState mStatePrev;
@@ -85,6 +85,7 @@ namespace Game1
             possibleAttacks = new List<MapTile>();
             displayRules = false;
 
+            this.Window.AllowUserResizing = true;
             this.IsMouseVisible = true;
             base.Initialize();
         }
@@ -173,8 +174,8 @@ namespace Game1
                     {
                         if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 100, 140, 25))) //play game
                         {
-                            //progress to map selection
-                            curState = GameState.MapSelect;
+                            //progress to team selection
+                            curState = GameState.TeamSelect;
                         }
                         else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 20, GraphicsDevice.Viewport.Height / 2 - 55, 75, 25))) //rules
                         {
@@ -197,23 +198,27 @@ namespace Game1
                     }
                     break;
 
-                case GameState.MapSelect:
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25))) //load default map
-                    {
-                        LoadMap("test"); //change this for different file name
-
-                        //progress to team selection
-                        curState = GameState.TeamSelect;
-                    }
-                    break;
-
                 case GameState.TeamSelect:
                     if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 300, 25))) //load default teams
                     {
                         //create default collgege 1(RIT)
                         college1.LoadCollege("RIT", unitSprites, 1);
+                        
+                        //create default collgege 2(UofR)
+                        college2.LoadCollege("UofR", unitSprites, 2);
+                        
+                        //progress to map selection
+                        curState = GameState.MapSelect;
+                    }
+                    break;
 
-                        //load default starting positions
+                case GameState.MapSelect:
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25))) //load default map
+                    {
+                        LoadMap("test"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
                         for(int i = 0; i < 10; i++)
                         {
                             college1.Units[i].MapX = 0;
@@ -221,10 +226,7 @@ namespace Game1
                             mainMap.GetTile(i, 0).Filled = true;
                         }
 
-                        //create default collgege 2(UofR)
-                        college2.LoadCollege("UofR", unitSprites, 2);
-
-                        //load default starting positions
+                        //set default starting positions
                         for (int i = 0; i < 10; i++)
                         {
                             college2.Units[i].MapX = 9;
@@ -232,11 +234,11 @@ namespace Game1
                             mainMap.GetTile(i, 9).Filled = true;
                         }
 
-                        //progress to the game state
+                        //progress to the game
                         curState = GameState.Game;
                     }
                     break;
-
+                    
                 case GameState.Game:
                     if (selectedUnit == -2) //if the option menu is brought up
                     {
@@ -482,7 +484,7 @@ namespace Game1
                         {
                             DrawOptionMenu();
                         }
-                        else
+                        else //draw a units info/highlight possible moves/attacks
                         {
                             DrawUnitActionInfo();
                         }

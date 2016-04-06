@@ -18,7 +18,7 @@ namespace Game1
             mascotSpecial = ms;
         }
 
-        // mehthod to use a mascots ability
+        // method to use a mascots ability
         public void UseMascotAbility()
         {
             if (mascotSpecial == "Super hit") // names of specials are just place holders
