@@ -27,10 +27,11 @@ namespace Game1
         private bool turnDone; //if a unit's turn is done
 
         // methods 
-        public Unit(string unitType, int teamNumber) // creates the units with specific params
+        public Unit(string unitType, int teamNumber, string schoolName) // creates the units with specific params
         {
             unitName = unitType;
             team = teamNumber;
+            school = schoolName; 
 
             if(unitType == "Hockey")
             {

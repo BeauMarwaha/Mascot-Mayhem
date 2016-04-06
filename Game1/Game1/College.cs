@@ -62,32 +62,34 @@ namespace Game1
 
             if(name == "RIT")
             {
+                string school = "RIT";
                 units = new Unit[10];
-                units[0] = new Unit("Hockey", team);
-                units[1] = new Unit("Hockey", team);
-                units[2] = new Unit("Hockey", team);
-                units[3] = new Unit("Hockey", team);
-                units[4] = new Unit("Football", team);
-                units[5] = new Unit("Football", team);
-                units[6] = new Unit("Outdoor Club", team);
-                units[7] = new Unit("Fraternity", team);
-                units[8] = new Unit("Sorority", team);
-                units[9] = new Unit("EMS Club", team);
+                units[0] = new Unit("Hockey", team, school);
+                units[1] = new Unit("Hockey", team, school);
+                units[2] = new Unit("Hockey", team, school);
+                units[3] = new Unit("Hockey", team, school);
+                units[4] = new Unit("Football", team, school);
+                units[5] = new Unit("Football", team, school);
+                units[6] = new Unit("Outdoor Club", team, school);
+                units[7] = new Unit("Fraternity", team, school);
+                units[8] = new Unit("Sorority", team, school);
+                units[9] = new Unit("EMS Club", team, school);
                 mascot = new Mascot("Ritchie", "Super hit", team);
             }
             else if (name == "UofR")
             {
+                string school = "U of R";
                 units = new Unit[10];
-                units[0] = new Unit("Lacrosse", team);
-                units[1] = new Unit("Lacrosse", team);
-                units[2] = new Unit("Lacrosse", team);
-                units[3] = new Unit("Lacrosse", team);
-                units[4] = new Unit("Football", team);
-                units[5] = new Unit("Football", team);
-                units[6] = new Unit("Outdoor Club", team);
-                units[7] = new Unit("Fraternity", team);
-                units[8] = new Unit("Sorority", team);
-                units[9] = new Unit("EMS Club", team);
+                units[0] = new Unit("Lacrosse", team, school);
+                units[1] = new Unit("Lacrosse", team, school);
+                units[2] = new Unit("Lacrosse", team, school);
+                units[3] = new Unit("Lacrosse", team, school);
+                units[4] = new Unit("Football", team, school);
+                units[5] = new Unit("Football", team, school);
+                units[6] = new Unit("Outdoor Club", team, school);
+                units[7] = new Unit("Fraternity", team, school);
+                units[8] = new Unit("Sorority", team, school);
+                units[9] = new Unit("EMS Club", team, school);
                 mascot = new Mascot("Rocky", "Super heal", team);
             }
         }
@@ -119,6 +121,14 @@ namespace Game1
             else if (unit.TurnDone) //check if it's that unit's turn but they've already done their action this turn
             {
                 return Color.LightGray; //slightly darken
+            }
+            else if(unit.School == "RIT")
+            {
+                return Color.Orange; 
+            }
+            else if(unit.School == "U of R")
+            {
+                return Color.Blue; 
             }
 
             return Color.White;
