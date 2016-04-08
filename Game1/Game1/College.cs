@@ -74,11 +74,11 @@ namespace Game1
                 units[7] = new Unit("Fraternity", team, school);
                 units[8] = new Unit("Sorority", team, school);
                 units[9] = new Unit("EMS Club", team, school);
-                mascot = new Mascot("Ritchie", "Super hit", team);
+                mascot = new Mascot("Ritchie", "Super hit", team, school);
             }
             else if (name == "UofR")
             {
-                string school = "U of R";
+                string school = "UofR";
                 units = new Unit[10];
                 units[0] = new Unit("Lacrosse", team, school);
                 units[1] = new Unit("Lacrosse", team, school);
@@ -90,7 +90,7 @@ namespace Game1
                 units[7] = new Unit("Fraternity", team, school);
                 units[8] = new Unit("Sorority", team, school);
                 units[9] = new Unit("EMS Club", team, school);
-                mascot = new Mascot("Rocky", "Super heal", team);
+                mascot = new Mascot("Rocky", "Super heal", team, school);
             }
         }
 
@@ -122,11 +122,11 @@ namespace Game1
             {
                 return Color.LightGray; //slightly darken
             }
-            else if(unit.School == "RIT")
+            else if(unit.School == "RIT") //RIT Team Colors
             {
                 return Color.Orange; 
             }
-            else if(unit.School == "U of R")
+            else if(unit.School == "UofR") //UofR Team Colors
             {
                 return Color.Blue; 
             }

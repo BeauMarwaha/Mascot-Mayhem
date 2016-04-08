@@ -13,7 +13,7 @@ namespace Game1
         private string mascotSpecial;
 
         // parameterized constructor 
-        public Mascot(string unitName, string ms, int teamNumber) : base(unitName, teamNumber)
+        public Mascot(string unitName, string ms, int teamNumber, string schoolName) : base(unitName, teamNumber, schoolName)
         {
             mascotSpecial = ms;
         }
