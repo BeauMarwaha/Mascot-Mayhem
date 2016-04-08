@@ -20,13 +20,15 @@ namespace Game1
         private int currMovePoints; // how many move points the unit has now
         private string school; // determines characteristics and color
         private int team; //team number
-        private int mapX;
-        private int mapY; // both store position on the map
+        private int mapX; //units x pos on the map
+        private int mapY; //units y pos on the map
         private bool alive; // if false, unit is dead 
         private string special; // used in UseAbility method, if unit has one
         private bool turnDone; //if a unit's turn is done
+        private int minAttackRange; //units min attack range
+        private int maxAttackRange; //units max attack range
 
-        // methods 
+        //param constructor
         public Unit(string unitType, int teamNumber, string schoolName) // creates the units with specific params
         {
             unitName = unitType;
@@ -40,6 +42,8 @@ namespace Game1
                 attack = 5;
                 defense = 1;
                 special = null; //no special
+                minAttackRange = 1;
+                maxAttackRange = 1;
             }
             else if(unitType == "Lacrosse")
             {
@@ -48,6 +52,8 @@ namespace Game1
                 attack = 5;
                 defense = 1;
                 special = null; //no special
+                minAttackRange = 1;
+                maxAttackRange = 1;
             }
             else if(unitType == "Football")
             {
@@ -56,6 +62,8 @@ namespace Game1
                 attack = 3;
                 defense = 0;
                 special = "Bulk Up";
+                minAttackRange = 1;
+                maxAttackRange = 1;
             }
             else if(unitType == "Outdoor Club")
             {
@@ -64,6 +72,8 @@ namespace Game1
                 attack = 4;
                 defense = 0;
                 special = "Movement Stage";
+                minAttackRange = 1;
+                maxAttackRange = 1;
             }
             else if (unitType == "Archery Club")
             {
@@ -72,6 +82,8 @@ namespace Game1
                 attack = 3;
                 defense = 1;
                 special = "Long Shot";
+                minAttackRange = 2;
+                maxAttackRange = 3;
             }
             else if(unitType == "Fraternity" || unitType == "Sorority")
             {
@@ -80,6 +92,8 @@ namespace Game1
                 attack = 2;
                 defense = 0;
                 special = "Newfound Strength";
+                minAttackRange = 1;
+                maxAttackRange = 1;
             }
             else if(unitType == "EMS Club")
             {
@@ -88,6 +102,8 @@ namespace Game1
                 attack = 2;
                 defense = 1;
                 special = "Heal";
+                minAttackRange = 1;
+                maxAttackRange = 1;
             }
             if (unitType == "Ritchie")
             {
@@ -96,6 +112,8 @@ namespace Game1
                 attack = 5;
                 defense = 1;
                 special = null; //has a mascot special
+                minAttackRange = 1;
+                maxAttackRange = 2;
             }
             if (unitType == "Rocky")
             {
@@ -104,6 +122,8 @@ namespace Game1
                 attack = 5;
                 defense = 1;
                 special = null; //has a mascot special
+                minAttackRange = 1;
+                maxAttackRange = 2;
             }
 
             alive = true;
@@ -193,6 +213,17 @@ namespace Game1
             get { return special; }
         }
 
+        public int MinAttackRange
+        {
+            get { return minAttackRange; }
+            set { minAttackRange = value; }
+        }
+
+        public int MaxAttackRange
+        {
+            get { return maxAttackRange; }
+            set { maxAttackRange = value; }
+        }
 
         //will need to look over these methods again*****************************************************************************************************
         public void UseAbility(string ability)

@@ -362,7 +362,18 @@ namespace Game1
 
                                             mainMap.GetTile(college1.Units[selectedUnit].MapY, college1.Units[selectedUnit].MapX).Filled = true;
 
-                                            possibleAttacks = mainMap.PossibleAttacks(1, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY);
+                                            //create a list of tiles with friendly units on it
+                                            List<MapTile> friendlyTiles = new List<MapTile>();
+                                            for (int i = 0; i < 10; i++)
+                                            {
+                                                friendlyTiles.Add(mainMap.GetTile(college1.Units[i].MapY, college1.Units[i].MapX));
+                                            }
+
+                                            possibleAttacks = mainMap.PossibleAttacks(college1.Units[selectedUnit].MinAttackRange, college1.Units[selectedUnit].MaxAttackRange, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY, friendlyTiles);
+
+                                            //clear freindly tiles
+                                            friendlyTiles.Clear();
+
                                             if (possibleAttacks.Count == 0) //if there are no possible attacks
                                             {
                                                 //switch back to move phase so another unit can do their turn
@@ -381,7 +392,18 @@ namespace Game1
 
                                             mainMap.GetTile(college2.Units[selectedUnit].MapY, college2.Units[selectedUnit].MapX).Filled = true;
 
-                                            possibleAttacks = mainMap.PossibleAttacks(1, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY);
+                                            //create a list of tiles with friendly units on it
+                                            List<MapTile> friendlyTiles = new List<MapTile>();
+                                            for(int i = 0; i < 10; i++)
+                                            {
+                                                friendlyTiles.Add(mainMap.GetTile(college2.Units[i].MapY, college2.Units[i].MapX));
+                                            }
+
+                                            possibleAttacks = mainMap.PossibleAttacks(college2.Units[selectedUnit].MinAttackRange, college2.Units[selectedUnit].MaxAttackRange, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY, friendlyTiles);
+
+                                            //clear freindly tiles
+                                            friendlyTiles.Clear();
+
                                             if (possibleAttacks.Count == 0) //if there are no possible attacks
                                             {
                                                 //switch back to move phase so another unit can do their turn

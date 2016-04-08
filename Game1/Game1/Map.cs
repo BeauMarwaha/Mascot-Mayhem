@@ -40,7 +40,7 @@ namespace Game1
         //calculates possible tile movements based on a certain number of movement points and starting location
         public List<MapTile> PossibleMoves(int mP, int y, int x)
         {
-            List<MapTile> possibleMoves = new List<MapTile>();
+            List<MapTile> possibleMoveTiles = new List<MapTile>();
             int[,] movementCosts = new int[tiles.GetLength(0),tiles.GetLength(1)]; //will hold movement costs for each tile on the board
             
             foreach(MapTile tile in tiles)
@@ -83,42 +83,44 @@ namespace Game1
                 //check if calculated mvmtCost is reachable within provided movement points
                 if(mvmtCost <= mP && !tile.Filled)
                 {
-                    possibleMoves.Add(tile);
+                    possibleMoveTiles.Add(tile);
                 }
             }
 
             //add the units spot (allows for no movement)
-            possibleMoves.Add(tiles[x,y]);
-            return possibleMoves;
+            possibleMoveTiles.Add(tiles[x,y]);
+
+            return possibleMoveTiles;
         }
 
         //calculates possible attack targets based on an attack range and starting location
-        public List<MapTile> PossibleAttacks(int aR, int y, int x)
+        public List<MapTile> PossibleAttacks(int minAR, int maxAR, int y, int x, List<MapTile> fTiles)
         {
             
-            List<MapTile> possibleAttacks = new List<MapTile>();
-            /* Implement correct attack info later*********************************************************************************************************
-            int[,] movementCosts = new int[tiles.GetLength(0), tiles.GetLength(1)]; //will hold movement costs for each tile on the board
+            List<MapTile> possibleAttackTiles = new List<MapTile>();
+            List<MapTile> friendlyTiles = fTiles;
+
+            int[,] tileCounts = new int[tiles.GetLength(0), tiles.GetLength(1)]; //will hold the number of tiles away from the unit each tile is on the board
 
             foreach (MapTile tile in tiles)
             {
                 //represents the difference of the tile from the target tile
                 int xDiff = tile.XCord - x;
                 int yDiff = tile.YCord - y;
-                int mvmtCost = 0; //individual tile  movement cost
+                int attCost = 0; //individual tile  movement cost
 
                 if (xDiff < 0) //if the tile's x-cord is below the target tile
                 {
                     for (int i = x + xDiff + 1; i <= x; i++)
                     {
-                        mvmtCost += tiles[i, tile.YCord].MovementCost;
+                        attCost += 1;
                     }
                 }
                 else if (xDiff > 0) //if the tile's x-cord is above the target tile
                 {
                     for (int i = x + xDiff - 1; i >= x; i--)
                     {
-                        mvmtCost += tiles[i, tile.YCord].MovementCost;
+                        attCost += 1;
                     }
                 }
 
@@ -126,25 +128,25 @@ namespace Game1
                 {
                     for (int i = y + yDiff; i < y; i++)
                     {
-                        mvmtCost += tiles[tile.XCord, i].MovementCost;
+                        attCost += 1;
                     }
                 }
                 else if (yDiff > 0) //if the tile's y-cord is above the target tile
                 {
                     for (int i = y + yDiff; i > y; i--)
                     {
-                        mvmtCost += tiles[tile.XCord, i].MovementCost;
+                        attCost += 1;
                     }
                 }
 
                 //check if calculated mvmtCost is reachable within provided movement points
-                if (mvmtCost <= aR && tile.Filled)
+                if (minAR <= attCost && attCost <= maxAR && tile.Filled && !friendlyTiles.Contains(tile))
                 {
-                    possibleMoves.Add(tile);
+                    possibleAttackTiles.Add(tile);
                 }
             }
-            */
-            return possibleAttacks;
+            
+            return possibleAttackTiles;
            
         }
 
