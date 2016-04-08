@@ -364,9 +364,9 @@ namespace Game1
 
                                             //create a list of tiles with friendly units on it
                                             List<MapTile> friendlyTiles = new List<MapTile>();
-                                            for (int i = 0; i < 10; i++)
+                                            foreach (Unit unit in college1.Units)
                                             {
-                                                friendlyTiles.Add(mainMap.GetTile(college1.Units[i].MapY, college1.Units[i].MapX));
+                                                friendlyTiles.Add(mainMap.GetTile(unit.MapY, unit.MapX));
                                             }
 
                                             possibleAttacks = mainMap.PossibleAttacks(college1.Units[selectedUnit].MinAttackRange, college1.Units[selectedUnit].MaxAttackRange, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY, friendlyTiles);
@@ -394,9 +394,9 @@ namespace Game1
 
                                             //create a list of tiles with friendly units on it
                                             List<MapTile> friendlyTiles = new List<MapTile>();
-                                            for(int i = 0; i < 10; i++)
+                                            foreach(Unit unit in college2.Units)
                                             {
-                                                friendlyTiles.Add(mainMap.GetTile(college2.Units[i].MapY, college2.Units[i].MapX));
+                                                friendlyTiles.Add(mainMap.GetTile(unit.MapY, unit.MapX));
                                             }
 
                                             possibleAttacks = mainMap.PossibleAttacks(college2.Units[selectedUnit].MinAttackRange, college2.Units[selectedUnit].MaxAttackRange, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY, friendlyTiles);
