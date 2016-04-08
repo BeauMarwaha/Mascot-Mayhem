@@ -128,7 +128,7 @@ namespace Game1
             }
             else if(unit.School == "UofR") //UofR Team Colors
             {
-                return Color.Blue; 
+                return Color.Aqua; 
             }
 
             return Color.White;
