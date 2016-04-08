@@ -28,6 +28,7 @@ namespace Game1
         int turn; //college's turn
         int turnPhase; //individual units turn phase
         int selectedUnit; //index of selected unit in college.units
+        int defendingUnit; //index of defending unit in college.units
         List<MapTile> possibleMoves;
         List<MapTile> possibleAttacks;
         bool displayRules;
@@ -81,6 +82,7 @@ namespace Game1
             turn = 1;
             turnPhase = 0;
             selectedUnit = -1;
+            defendingUnit = -1;
             possibleMoves = new List<MapTile>();
             possibleAttacks = new List<MapTile>();
             displayRules = false;
@@ -301,7 +303,7 @@ namespace Game1
                                 //check for a mouse click in that location
                                 if (SingleLeftMouseLocationPress(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)))
                                 {
-                                    if (mainMap.GetTile(row, col).Filled && !possibleMoves.Contains(mainMap.GetTile(row, col))) //if a unit is in that spot (2nd part of the if statement allows for a unit to not move during their turn)
+                                    if (mainMap.GetTile(row, col).Filled && !possibleMoves.Contains(mainMap.GetTile(row, col)) && !possibleAttacks.Contains(mainMap.GetTile(row, col))) //if a unit is in that spot (2nd part of the if statement allows for a unit to not move during their turn)
                                     {
                                         if (turn == 1) //if first players turn
                                         {
@@ -418,10 +420,44 @@ namespace Game1
                                     }
                                     else if (possibleAttacks.Contains(mainMap.GetTile(row, col))) //if an attack can be made
                                     {
-                                        //implement attacking/defending logic here*******************************************************************************************************
-
-                                        turnPhase = 0; //switch phase to move phase
-                                        possibleAttacks.Clear();
+                                        //attacking/defending logic 
+                                        if(turn == 1) //first players turn
+                                        {
+                                            for (int i = 0; i < 10; i++) //check each unit on team 2
+                                            {
+                                                if (college2.Units[i].MapX == col && college2.Units[i].MapY == row) //if the unit is in that space
+                                                {
+                                                    defendingUnit = i; //define that unit's index as the one being attacked
+                                                    //check to make sure the attack will actually do damage to the target
+                                                    if((college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense) > 0)
+                                                    {
+                                                        //deal the damage
+                                                        college2.Units[defendingUnit].CurrHealth = college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
+                                                        turnPhase = 0; //switch phase to move phase
+                                                        possibleAttacks.Clear();
+                                                    }
+                                                }
+                                            }
+                                            
+                                        }
+                                        else if(turn == 2) //second players turn
+                                        {
+                                            for (int i = 0; i < 10; i++) //check each unit on team 1
+                                            {
+                                                if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
+                                                {
+                                                    defendingUnit = i; //define that unit's index as the one being attacked
+                                                    //check to make sure the attack will actually do damage to the target
+                                                    if ((college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense) > 0)
+                                                    {
+                                                        //deal the damage
+                                                        college1.Units[defendingUnit].CurrHealth = college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
+                                                        turnPhase = 0; //switch phase to move phase
+                                                        possibleAttacks.Clear();
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                     else //if the spot is empty
                                     {
