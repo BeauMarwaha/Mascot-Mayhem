@@ -303,7 +303,8 @@ namespace Game1
                                 //check for a mouse click in that location
                                 if (SingleLeftMouseLocationPress(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)))
                                 {
-                                    if (mainMap.GetTile(row, col).Filled && !possibleMoves.Contains(mainMap.GetTile(row, col)) && !possibleAttacks.Contains(mainMap.GetTile(row, col))) //if a unit is in that spot (2nd part of the if statement allows for a unit to not move during their turn)
+                                    //if a unit is in that spot (2nd part of the if statement allows for a unit to not move during their turn)
+                                    if (mainMap.GetTile(row, col).Filled && !possibleMoves.Contains(mainMap.GetTile(row, col)) && !possibleAttacks.Contains(mainMap.GetTile(row, col))) 
                                     {
                                         if (turn == 1) //if first players turn
                                         {
@@ -420,7 +421,7 @@ namespace Game1
                                     }
                                     else if (possibleAttacks.Contains(mainMap.GetTile(row, col))) //if an attack can be made
                                     {
-                                        //attacking/defending logic 
+                                        //attacking/defending code
                                         if(turn == 1) //first players turn
                                         {
                                             for (int i = 0; i < 10; i++) //check each unit on team 2
@@ -434,6 +435,9 @@ namespace Game1
                                                         //deal the damage
                                                         college2.Units[defendingUnit].CurrHealth = college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
                                                         turnPhase = 0; //switch phase to move phase
+                                                        //end that units turn
+                                                        college1.Units[selectedUnit].TurnDone = true;
+                                                        selectedUnit = -1;
                                                         possibleAttacks.Clear();
                                                     }
                                                 }
@@ -453,6 +457,9 @@ namespace Game1
                                                         //deal the damage
                                                         college1.Units[defendingUnit].CurrHealth = college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
                                                         turnPhase = 0; //switch phase to move phase
+                                                        //end that units turn
+                                                        college2.Units[selectedUnit].TurnDone = true;
+                                                        selectedUnit = -1;
                                                         possibleAttacks.Clear();
                                                     }
                                                 }
@@ -533,8 +540,9 @@ namespace Game1
 
                 case GameState.Game:
                     DrawMap(); //add check for map tile scrolled over later with final art pieces
-                    college1.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn);
-                    college2.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn);
+                    college1.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn); //draws team 1's units
+                    college2.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn); //draws team 2's units
+                    DrawTileInfo(); //draws individual tile info
 
                     if(selectedUnit != -1) //if a unit is selected
                     {
@@ -542,7 +550,7 @@ namespace Game1
                         {
                             DrawOptionMenu();
                         }
-                        else //draw a units info/highlight possible moves/attacks
+                        else //highlight possible moves/attacks
                         {
                             DrawUnitActionInfo();
                         }
@@ -552,6 +560,53 @@ namespace Game1
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        //draws info related to the tile currently scrolled over and a unit that may be on it
+        public void DrawTileInfo()
+        {
+            //check for the tile currently scrolled over
+            for (int row = 0; row < 10; row++)
+            {
+                for (int col = 0; col < 10; col++)
+                {
+                    //checks to see if a tile is scrolled over by checking if it is highlighted
+                    if (ScrolledOver(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)) == Color.Orange)
+                    {
+                        //if the scrolled over tile is in the bottom left of the screen draw the info at the bottom right
+                        if (row > 7 && col > 5) 
+                        {
+                            //draw tile info
+                            spriteBatch.Draw(menu, new Rectangle(0, GraphicsDevice.Viewport.Height - 96, 273, 96), Color.White);
+                            spriteBatch.DrawString(font, "Terrain Type: " + mainMap.GetTile(row, col).TerrainType, new Vector2(GraphicsDevice.Viewport.Width / 55, GraphicsDevice.Viewport.Height - 91), Color.White);
+                            spriteBatch.DrawString(font, "Movement Cost: " + mainMap.GetTile(row, col).MovementCost, new Vector2(GraphicsDevice.Viewport.Width / 55, GraphicsDevice.Viewport.Height - 64), Color.White);
+                            spriteBatch.DrawString(font, "Def Bonus: " + mainMap.GetTile(row, col).DefBonus, new Vector2(GraphicsDevice.Viewport.Width / 55, GraphicsDevice.Viewport.Height - 37), Color.White);
+
+                            //if there is a unit in that tile
+                            if (mainMap.GetTile(row, col).Filled)
+                            {
+                                //draw unit info
+
+                            }
+                        }
+                        else //draw the info at the botom left
+                        {
+                            //draw tile info
+                            spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width - 273, GraphicsDevice.Viewport.Height - 96, 273, 96), Color.White);
+                            spriteBatch.DrawString(font, "Terrain Type: " + mainMap.GetTile(row, col).TerrainType, new Vector2(GraphicsDevice.Viewport.Width - 257, GraphicsDevice.Viewport.Height - 91), Color.White);
+                            spriteBatch.DrawString(font, "Movement Cost: " + mainMap.GetTile(row, col).MovementCost, new Vector2(GraphicsDevice.Viewport.Width - 257, GraphicsDevice.Viewport.Height - 64), Color.White);
+                            spriteBatch.DrawString(font, "Def Bonus: " + mainMap.GetTile(row, col).DefBonus, new Vector2(GraphicsDevice.Viewport.Width - 257, GraphicsDevice.Viewport.Height - 37), Color.White);
+
+                            //if there is a unit in that tile
+                            if (mainMap.GetTile(row, col).Filled)
+                            {
+                                //draw unit info
+
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         //draws the game board based on the size of the screen
