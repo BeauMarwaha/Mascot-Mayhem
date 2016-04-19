@@ -244,11 +244,11 @@ namespace Game1
                 case GameState.Game:
                     if (selectedUnit == -2) //if the option menu is brought up
                     {
-                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 13, 120, 25))) //resume game
+                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 90, GraphicsDevice.Viewport.Height / 2 - 50, 180, 25))) //resume game
                         {
                             selectedUnit = -1;
                         }
-                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6, 120, 25))) //end turn
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 65, GraphicsDevice.Viewport.Height / 2 - 25, 120, 25))) //end turn
                         {
                             if (turn == 1) //if first players turn
                             {
@@ -278,7 +278,7 @@ namespace Game1
 
                             }
                         }
-                        else if(SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4, 140, 25))) //main menu
+                        else if(SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25))) //main menu
                         {
                             //reset game
                             selectedUnit = -1;
@@ -288,7 +288,7 @@ namespace Game1
                             //change the game state back to menu
                             curState = GameState.Menu;
                         }
-                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3, 130, 25))) //exit game
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25, 130, 25))) //exit game
                         {
                             //exit the game
                             this.Exit();
@@ -433,7 +433,7 @@ namespace Game1
                                                     if((college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense) > 0)
                                                     {
                                                         //deal the damage
-                                                        college2.Units[defendingUnit].CurrHealth = college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
+                                                        college2.Units[defendingUnit].CurrHealth -= college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
                                                         turnPhase = 0; //switch phase to move phase
                                                         //end that units turn
                                                         college1.Units[selectedUnit].TurnDone = true;
@@ -455,7 +455,7 @@ namespace Game1
                                                     if ((college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense) > 0)
                                                     {
                                                         //deal the damage
-                                                        college1.Units[defendingUnit].CurrHealth = college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
+                                                        college1.Units[defendingUnit].CurrHealth -= college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
                                                         turnPhase = 0; //switch phase to move phase
                                                         //end that units turn
                                                         college2.Units[selectedUnit].TurnDone = true;
@@ -573,8 +573,8 @@ namespace Game1
                     //checks to see if a tile is scrolled over by checking if it is highlighted
                     if (ScrolledOver(new Rectangle(mainMap.GetTile(row, col).YCord * GraphicsDevice.Viewport.Width / 10, mainMap.GetTile(row, col).XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10)) == Color.Orange)
                     {
-                        //if the scrolled over tile is in the bottom left of the screen draw the info at the bottom right
-                        if (row > 7 && col > 5) 
+                        //if the scrolled over tile is in the left side of the screen draw the info at the bottom right
+                        if (col > 5) 
                         {
                             //draw tile info
                             spriteBatch.Draw(menu, new Rectangle(0, GraphicsDevice.Viewport.Height - 96, 273, 96), Color.White);
@@ -586,7 +586,9 @@ namespace Game1
                             if (mainMap.GetTile(row, col).Filled)
                             {
                                 //draw unit info
-
+                                spriteBatch.Draw(menu, new Rectangle(0, GraphicsDevice.Viewport.Height - 260, 273, 164), Color.White);
+                                college1.DrawUnitInfo(spriteBatch, GraphicsDevice, col, row, font, GraphicsDevice.Viewport.Width / 55);
+                                college2.DrawUnitInfo(spriteBatch, GraphicsDevice, col, row, font, GraphicsDevice.Viewport.Width / 55);
                             }
                         }
                         else //draw the info at the botom left
@@ -601,7 +603,9 @@ namespace Game1
                             if (mainMap.GetTile(row, col).Filled)
                             {
                                 //draw unit info
-
+                                spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width - 273, GraphicsDevice.Viewport.Height - 260, 273, 164), Color.White);
+                                college1.DrawUnitInfo(spriteBatch, GraphicsDevice, col, row, font, GraphicsDevice.Viewport.Width - 257);
+                                college2.DrawUnitInfo(spriteBatch, GraphicsDevice, col, row, font, GraphicsDevice.Viewport.Width - 257);
                             }
                         }
                     }
@@ -809,11 +813,11 @@ namespace Game1
         //draws option menu
         private void DrawOptionMenu()
         {
-            spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 20, GraphicsDevice.Viewport.Height / 20, GraphicsDevice.Viewport.Width / 3, GraphicsDevice.Viewport.Height / 2), Color.White);
-            spriteBatch.DrawString(font, "Resume Game", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 13), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 13, 180, 25)));
-            spriteBatch.DrawString(font, "End Turn", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 6, 120, 25)));
-            spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 4, 140, 25)));
-            spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 13, GraphicsDevice.Viewport.Height / 3, 130, 25)));
+            spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 125, GraphicsDevice.Viewport.Height / 2 - 55, 250, 120), Color.White);
+            spriteBatch.DrawString(font, "Resume Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 90, GraphicsDevice.Viewport.Height / 2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 90, GraphicsDevice.Viewport.Height / 2 - 50, 180, 25)));
+            spriteBatch.DrawString(font, "End Turn", new Vector2(GraphicsDevice.Viewport.Width / 2 - 65, GraphicsDevice.Viewport.Height / 2 - 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 65, GraphicsDevice.Viewport.Height / 2 - 25, 120, 25)));
+            spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25)));
+            spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25, 130, 25)));
         }
     }
 }

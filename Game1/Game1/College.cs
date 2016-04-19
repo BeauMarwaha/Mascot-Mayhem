@@ -111,6 +111,25 @@ namespace Game1
             }
         }
 
+        public void DrawUnitInfo(SpriteBatch spriteBatch, GraphicsDevice gD, int x, int y, SpriteFont font, int drawX)
+        {
+            foreach (Unit unit in units)
+            {
+                if(unit.MapX == x && unit.MapY == y && unit.Alive) //if the unit is in the specified position and is alive
+                {
+                    //draw unit info
+                    spriteBatch.DrawString(font, "Unit: " + unit.UnitName, new Vector2(drawX, gD.Viewport.Height - 255), Color.White);
+                    spriteBatch.DrawString(font, "Health: " + unit.CurrHealth + "/" + unit.TotalHealth, new Vector2(drawX, gD.Viewport.Height - 230), Color.White);
+                    spriteBatch.DrawString(font, "Attack: " + unit.Attack, new Vector2(drawX, gD.Viewport.Height - 205), Color.White);
+                    spriteBatch.DrawString(font, "Defense: " + unit.Defense, new Vector2(drawX, gD.Viewport.Height - 180), Color.White);
+                    spriteBatch.DrawString(font, "Move Points: " + unit.CurrMovePoints, new Vector2(drawX, gD.Viewport.Height - 155), Color.White);
+                    spriteBatch.DrawString(font, "School: " + unit.School, new Vector2(drawX, gD.Viewport.Height - 130), Color.White);
+                }
+                
+            }
+                
+        }
+
         //darken units when it isn't their turn or they have already used their move this turn
         public Color TurnCheck(Unit unit, int turn)
         {
