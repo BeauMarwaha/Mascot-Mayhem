@@ -23,7 +23,6 @@ namespace Game1
         private int mapX; //units x pos on the map
         private int mapY; //units y pos on the map
         private bool alive; // if false, unit is dead 
-        private string special; // used in UseAbility method, if unit has one
         private bool turnDone; //if a unit's turn is done
         private int minAttackRange; //units min attack range
         private int maxAttackRange; //units max attack range
@@ -41,7 +40,6 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                special = null; //no special
                 minAttackRange = 1;
                 maxAttackRange = 1;
             }
@@ -51,7 +49,6 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                special = null; //no special
                 minAttackRange = 1;
                 maxAttackRange = 1;
             }
@@ -61,7 +58,6 @@ namespace Game1
                 totalHealth = 15;
                 attack = 3;
                 defense = 0;
-                special = "Bulk Up";
                 minAttackRange = 1;
                 maxAttackRange = 1;
             }
@@ -71,7 +67,6 @@ namespace Game1
                 totalHealth = 7;
                 attack = 4;
                 defense = 0;
-                special = "Movement Stage";
                 minAttackRange = 1;
                 maxAttackRange = 1;
             }
@@ -81,7 +76,6 @@ namespace Game1
                 totalHealth = 6;
                 attack = 3;
                 defense = 1;
-                special = "Long Shot";
                 minAttackRange = 2;
                 maxAttackRange = 3;
             }
@@ -91,7 +85,6 @@ namespace Game1
                 totalHealth = 5;
                 attack = 2;
                 defense = 0;
-                special = "Newfound Strength";
                 minAttackRange = 1;
                 maxAttackRange = 1;
             }
@@ -101,7 +94,6 @@ namespace Game1
                 totalHealth = 10;
                 attack = 2;
                 defense = 1;
-                special = "Heal";
                 minAttackRange = 1;
                 maxAttackRange = 1;
             }
@@ -111,7 +103,6 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                special = null; //has a mascot special
                 minAttackRange = 1;
                 maxAttackRange = 2;
             }
@@ -121,7 +112,6 @@ namespace Game1
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
-                special = null; //has a mascot special
                 minAttackRange = 1;
                 maxAttackRange = 2;
             }
@@ -208,11 +198,6 @@ namespace Game1
             set { turnDone = value; }
         }
 
-        public string Special
-        {
-            get { return special; }
-        }
-
         public int MinAttackRange
         {
             get { return minAttackRange; }
@@ -224,13 +209,6 @@ namespace Game1
             get { return maxAttackRange; }
             set { maxAttackRange = value; }
         }
-
-        //will need to look over these methods again*****************************************************************************************************
-        public void UseAbility(string ability)
-        {
-            // in the brackets will contain if statements that check the string passed in and do specific things based on it
-        }
-        //*********************************************************************************************************************************************************
-
+        
     }
 }

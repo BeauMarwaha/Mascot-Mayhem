@@ -88,6 +88,7 @@ namespace Game1
             displayRules = false;
 
             this.Window.AllowUserResizing = true;
+            this.Window.Title = "Mascot Mayhem";
             this.IsMouseVisible = true;
             base.Initialize();
         }
@@ -144,6 +145,9 @@ namespace Game1
             pavementTilePic = Content.Load<Texture2D>("Grass Tile");
             forestTilePic = Content.Load<Texture2D>("Grass Tile");
             winTilePic = Content.Load<Texture2D>("Grass Tile");
+
+            //Update screen size to fullscreen
+            this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
