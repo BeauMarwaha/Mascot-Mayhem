@@ -534,14 +534,14 @@ namespace Game1
                     }
                     break;
 
-                case GameState.MapSelect:
-                    spriteBatch.DrawString(font, "Load Default Map", new Vector2(GraphicsDevice.Viewport.Width/2 - 100, GraphicsDevice.Viewport.Height/2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
-                    break;
-
                 case GameState.TeamSelect:
                     spriteBatch.DrawString(font, "Load Default Teams", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
                     break;
 
+                case GameState.MapSelect:
+                    spriteBatch.DrawString(font, "Load Default Map", new Vector2(GraphicsDevice.Viewport.Width/2 - 100, GraphicsDevice.Viewport.Height/2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
+                    break;
+                    
                 case GameState.Game:
                     DrawMap(); //add check for map tile scrolled over later with final art pieces
                     college1.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn); //draws team 1's units
