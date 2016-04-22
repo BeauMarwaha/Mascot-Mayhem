@@ -112,35 +112,35 @@ namespace Game1
             menu = Content.Load<Texture2D>("menu");
             rules = Content.Load<Texture2D>("rules");
 
-            //units - NOTE: currently using placeholder pictures
-            hockeyPlayerPic = Content.Load<Texture2D>("Chibi Base");
+            //units
+            hockeyPlayerPic = Content.Load<Texture2D>("Chibi Hockey");
             unitSprites.Add("Hockey", hockeyPlayerPic);
 
-            lacrossePlayerPic = Content.Load<Texture2D>("Chibi Base");
+            lacrossePlayerPic = Content.Load<Texture2D>("Chibi Lacrosse");
             unitSprites.Add("Lacrosse", lacrossePlayerPic);
 
-            footballPlayerPic = Content.Load<Texture2D>("Chibi Base");
+            footballPlayerPic = Content.Load<Texture2D>("Chibi Football");
             unitSprites.Add("Football", footballPlayerPic);
 
-            archeryClubPlayerPic = Content.Load<Texture2D>("Chibi Base");
+            archeryClubPlayerPic = Content.Load<Texture2D>("Chibi Base"); //NOTE: currently using placeholder picture
             unitSprites.Add("Archery Club", archeryClubPlayerPic);
 
-            outdoorClubPlayerPic = Content.Load<Texture2D>("Chibi Base");
+            outdoorClubPlayerPic = Content.Load<Texture2D>("Chibi Outdoor");
             unitSprites.Add("Outdoor Club", outdoorClubPlayerPic);
 
-            fraternityPlayerPic = Content.Load<Texture2D>("Chibi Base");
+            fraternityPlayerPic = Content.Load<Texture2D>("Chibi Sorority-Frat");
             unitSprites.Add("Fraternity", fraternityPlayerPic);
 
-            sororityPlayerPic = Content.Load<Texture2D>("Chibi Base");
+            sororityPlayerPic = Content.Load<Texture2D>("Chibi Sorority-Frat");
             unitSprites.Add("Sorority", sororityPlayerPic);
 
-            emsClubPlayerPic = Content.Load<Texture2D>("Chibi Base");
+            emsClubPlayerPic = Content.Load<Texture2D>("Chibi EMS");
             unitSprites.Add("EMS Club", emsClubPlayerPic);
 
-            ritchieMascotPic = Content.Load<Texture2D>("Chibi Base");
+            ritchieMascotPic = Content.Load<Texture2D>("Chibi Ritchie");
             unitSprites.Add("Ritchie", ritchieMascotPic);
 
-            rockyMascotPic = Content.Load<Texture2D>("Chibi Base");
+            rockyMascotPic = Content.Load<Texture2D>("Chibi Rocky");
             unitSprites.Add("Rocky", rockyMascotPic);
 
             //tiles - NOTE: currently using placeholder pictures

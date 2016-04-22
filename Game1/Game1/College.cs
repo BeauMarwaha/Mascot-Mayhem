@@ -64,7 +64,8 @@ namespace Game1
             {
                 string school = "RIT";
                 units = new Unit[10];
-                units[0] = new Unit("Hockey", team, school);
+                mascot = new Mascot("Ritchie", "Super hit", team, school);
+                units[0] = mascot;
                 units[1] = new Unit("Hockey", team, school);
                 units[2] = new Unit("Hockey", team, school);
                 units[3] = new Unit("Hockey", team, school);
@@ -74,13 +75,13 @@ namespace Game1
                 units[7] = new Unit("Fraternity", team, school);
                 units[8] = new Unit("Sorority", team, school);
                 units[9] = new Unit("EMS Club", team, school);
-                mascot = new Mascot("Ritchie", "Super hit", team, school);
             }
             else if (name == "UofR")
             {
                 string school = "UofR";
                 units = new Unit[10];
-                units[0] = new Unit("Lacrosse", team, school);
+                mascot = new Mascot("Rocky", "Super heal", team, school);
+                units[0] = mascot;
                 units[1] = new Unit("Lacrosse", team, school);
                 units[2] = new Unit("Lacrosse", team, school);
                 units[3] = new Unit("Lacrosse", team, school);
@@ -90,7 +91,7 @@ namespace Game1
                 units[7] = new Unit("Fraternity", team, school);
                 units[8] = new Unit("Sorority", team, school);
                 units[9] = new Unit("EMS Club", team, school);
-                mascot = new Mascot("Rocky", "Super heal", team, school);
+                
             }
         }
 
