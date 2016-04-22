@@ -32,6 +32,8 @@ namespace Game1
         List<MapTile> possibleMoves;
         List<MapTile> possibleAttacks;
         bool displayRules;
+        bool college1Win;
+        bool college2Win;
 
         //used as a dictionary of all unit textures
         Dictionary<string, Texture2D> unitSprites;
@@ -86,6 +88,8 @@ namespace Game1
             possibleMoves = new List<MapTile>();
             possibleAttacks = new List<MapTile>();
             displayRules = false;
+            college1Win = false;
+            college2Win = false;
 
             this.Window.AllowUserResizing = true;
             this.Window.Title = "Mascot Mayhem";
@@ -147,7 +151,7 @@ namespace Game1
             winTilePic = Content.Load<Texture2D>("Grass Tile");
 
             //Update screen size to fullscreen
-            this.graphics.IsFullScreen = true;
+            //this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -246,7 +250,7 @@ namespace Game1
                     break;
                     
                 case GameState.Game:
-                    if (selectedUnit == -2) //if the option menu is brought up
+                    if (selectedUnit == -2 && !(college1Win || college2Win)) //if the option menu is brought up
                     {
                         if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 90, GraphicsDevice.Viewport.Height / 2 - 50, 180, 25))) //resume game
                         {
@@ -283,6 +287,24 @@ namespace Game1
                             }
                         }
                         else if(SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25))) //main menu
+                        {
+                            //reset game
+                            selectedUnit = -1;
+                            turnPhase = 0;
+                            turn = 1;
+
+                            //change the game state back to menu
+                            curState = GameState.Menu;
+                        }
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25, 130, 25))) //exit game
+                        {
+                            //exit the game
+                            this.Exit();
+                        }
+                    }
+                    else if (college1Win || college2Win) //if a team has won
+                    {
+                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25))) //main menu
                         {
                             //reset game
                             selectedUnit = -1;
@@ -373,7 +395,10 @@ namespace Game1
                                             List<MapTile> friendlyTiles = new List<MapTile>();
                                             foreach (Unit unit in college1.Units)
                                             {
-                                                friendlyTiles.Add(mainMap.GetTile(unit.MapY, unit.MapX));
+                                                if (unit.Alive)
+                                                {
+                                                    friendlyTiles.Add(mainMap.GetTile(unit.MapY, unit.MapX));
+                                                }
                                             }
 
                                             possibleAttacks = mainMap.PossibleAttacks(college1.Units[selectedUnit].MinAttackRange, college1.Units[selectedUnit].MaxAttackRange, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY, friendlyTiles);
@@ -403,7 +428,11 @@ namespace Game1
                                             List<MapTile> friendlyTiles = new List<MapTile>();
                                             foreach(Unit unit in college2.Units)
                                             {
-                                                friendlyTiles.Add(mainMap.GetTile(unit.MapY, unit.MapX));
+                                                if (unit.Alive)
+                                                {
+                                                    friendlyTiles.Add(mainMap.GetTile(unit.MapY, unit.MapX));
+                                                }
+                                                    
                                             }
 
                                             possibleAttacks = mainMap.PossibleAttacks(college2.Units[selectedUnit].MinAttackRange, college2.Units[selectedUnit].MaxAttackRange, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY, friendlyTiles);
@@ -444,6 +473,16 @@ namespace Game1
                                                         selectedUnit = -1;
                                                         possibleAttacks.Clear();
                                                     }
+                                                    else //deal 0 damage
+                                                    {
+                                                        //deal the damage
+                                                        college2.Units[defendingUnit].CurrHealth -= 0;
+                                                        turnPhase = 0; //switch phase to move phase
+                                                        //end that units turn
+                                                        college1.Units[selectedUnit].TurnDone = true;
+                                                        selectedUnit = -1;
+                                                        possibleAttacks.Clear();
+                                                    }
                                                 }
                                             }
                                             
@@ -466,9 +505,22 @@ namespace Game1
                                                         selectedUnit = -1;
                                                         possibleAttacks.Clear();
                                                     }
+                                                    else
+                                                    {
+                                                        //deal the damage
+                                                        college1.Units[defendingUnit].CurrHealth -= 0;
+                                                        turnPhase = 0; //switch phase to move phase
+                                                        //end that units turn
+                                                        college2.Units[selectedUnit].TurnDone = true;
+                                                        selectedUnit = -1;
+                                                        possibleAttacks.Clear();
+                                                    }
                                                 }
                                             }
                                         }
+
+                                        RemoveDeadUnits(); //remove any units that have been killed
+                                        DominationWinCheck(); //check for a domination win
                                     }
                                     else //if the spot is empty
                                     {
@@ -546,9 +598,14 @@ namespace Game1
                     DrawMap(); //add check for map tile scrolled over later with final art pieces
                     college1.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn); //draws team 1's units
                     college2.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn); //draws team 2's units
-                    DrawTileInfo(); //draws individual tile info
 
-                    if(selectedUnit != -1) //if a unit is selected
+                    //if the menu or win screen is not currently up
+                    if (selectedUnit != -2 && !(college1Win || college2Win))
+                    {
+                        DrawTileInfo(); //draws individual tile info
+                    }
+                    
+                    if(selectedUnit != -1) //if a unit/option menu is selected
                     {
                         if(selectedUnit == -2) //bring up option menu
                         {
@@ -558,6 +615,22 @@ namespace Game1
                         {
                             DrawUnitActionInfo();
                         }
+                    }
+
+                    //if a team wins draw the victory screen
+                    if (college1Win)
+                    {
+                        spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 125, GraphicsDevice.Viewport.Height / 2 - 55, 250, 120), Color.White);
+                        spriteBatch.DrawString(font, college1.CollegeName + " Wins!", new Vector2(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 50), Color.White);
+                        spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25)));
+                        spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25, 130, 25)));
+                    }
+                    else if (college2Win)
+                    {
+                        spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 125, GraphicsDevice.Viewport.Height / 2 - 55, 250, 120), Color.White);
+                        spriteBatch.DrawString(font, college2.CollegeName + " Wins!", new Vector2(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 50), Color.White);
+                        spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25)));
+                        spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25, 130, 25)));
                     }
                     break;
             }
@@ -823,5 +896,85 @@ namespace Game1
             spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25)));
             spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25, 130, 25)));
         }
+
+        //checks for a win by defeating all enemy units
+        public void DominationWinCheck()
+        {
+            if(turn == 1) //check for an entirely dead team 2
+            {
+                int deadUnits = 0;
+                foreach(Unit unit in college2.Units)
+                {
+                    if (!unit.Alive)
+                    {
+                        deadUnits++;
+                    }
+                }
+
+                //if the entire enemy team is dead que victory screen
+                if(deadUnits == 10)
+                {
+                    college1Win = true;
+                }
+            }
+            else if(turn == 2) //check for an entirely dead team 1
+            {
+                int deadUnits = 0;
+                foreach (Unit unit in college1.Units)
+                {
+                    if (!unit.Alive)
+                    {
+                        deadUnits++;
+                    }
+                }
+
+                //if the entire enemy team is dead que victory screen
+                if (deadUnits == 10)
+                {
+                    college2Win = true;
+                }
+            }
+        }
+
+        //removes dead units frrom the board and updates their status
+        public void RemoveDeadUnits()
+        {
+            if (turn == 1) //check for dead units on team 2
+            {
+                foreach (Unit unit in college2.Units)
+                {
+                    //if the unit was alive but is now dead
+                    if (unit.Alive && unit.CurrHealth <= 0)
+                    {
+                        //remove the unit from the board
+                        mainMap.GetTile(unit.MapY, unit.MapX).Filled = false;
+
+                        //update unit info
+                        unit.Alive = false;
+                        unit.MapX = 99;
+                        unit.MapY = 99;
+                    }
+                }    
+            }
+            else if (turn == 2) //check for dead units on team 1
+            {
+                foreach (Unit unit in college1.Units)
+                {
+                    //if the unit was alive but is now dead
+                    if (unit.Alive && unit.CurrHealth <= 0)
+                    {
+                        //remove the unit from the board
+                        mainMap.GetTile(unit.MapY, unit.MapX).Filled = false;
+
+                        //update unit info
+                        unit.Alive = false;
+                        unit.MapX = 99;
+                        unit.MapY = 99;
+                    }
+                }
+            }
+            
+        }
     }
+
 }
