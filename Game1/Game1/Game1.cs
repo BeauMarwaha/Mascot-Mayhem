@@ -231,7 +231,8 @@ namespace Game1
                     break;
 
                 case GameState.MapSelect:
-                    // run through where the mouse is clicking and load that map
+                    //run through where the mouse is clicking and load that map
+                    /*//loaded the default map, no longer in use
                     if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25))) //load default map
                     {
                         LoadMap("test"); //change this for different file name
@@ -242,6 +243,7 @@ namespace Game1
                         //progress to the game
                         curState = GameState.Game;
                     }
+                    */
 
                     if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load Aliens map
                     {
@@ -687,7 +689,7 @@ namespace Game1
                     if (displayRules)
                     {
                         spriteBatch.Draw(rules, new Rectangle(10, 10, GraphicsDevice.Viewport.Width - 20, GraphicsDevice.Viewport.Height - 100), Color.White);
-                        spriteBatch.DrawString(font, "Click Anywhere to exit the rules", new Vector2(GraphicsDevice.Viewport.Width/4, GraphicsDevice.Viewport.Height - 50), Color.White);
+                        spriteBatch.DrawString(font, "Click anywhere to exit the rules", new Vector2(GraphicsDevice.Viewport.Width/2 - 200, GraphicsDevice.Viewport.Height - 60), Color.White);
                     }
                     break;
 
@@ -704,7 +706,7 @@ namespace Game1
 
                 case GameState.MapSelect:
                     spriteBatch.DrawString(font, "Map Selection", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, 100), Color.White);
-                    spriteBatch.DrawString(font, "Select Map By Clicking", new Vector2(GraphicsDevice.Viewport.Width/2 - 130, GraphicsDevice.Viewport.Height/2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
+                    spriteBatch.DrawString(font, "Select A Map By Clicking On It", new Vector2(GraphicsDevice.Viewport.Width/2 - 180, GraphicsDevice.Viewport.Height/2 - 50), Color.White);
                     
                     // load custom maps
                     spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Aliens Were Here" map preview

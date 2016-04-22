@@ -60,6 +60,7 @@ namespace Game1
             collegeName = name;
             unitSprites = sprites;
 
+            //depending on team name load the predefined team comps
             if(name == "RIT")
             {
                 string school = "RIT";
@@ -68,7 +69,7 @@ namespace Game1
                 units[0] = mascot;
                 units[1] = new Unit("Hockey", team, school);
                 units[2] = new Unit("Hockey", team, school);
-                units[3] = new Unit("Hockey", team, school);
+                units[3] = new Unit("Archery Club", team, school);
                 units[4] = new Unit("Football", team, school);
                 units[5] = new Unit("Football", team, school);
                 units[6] = new Unit("Outdoor Club", team, school);
@@ -84,7 +85,7 @@ namespace Game1
                 units[0] = mascot;
                 units[1] = new Unit("Lacrosse", team, school);
                 units[2] = new Unit("Lacrosse", team, school);
-                units[3] = new Unit("Lacrosse", team, school);
+                units[3] = new Unit("Archery Club", team, school);
                 units[4] = new Unit("Football", team, school);
                 units[5] = new Unit("Football", team, school);
                 units[6] = new Unit("Outdoor Club", team, school);
