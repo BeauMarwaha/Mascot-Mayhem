@@ -223,6 +223,7 @@ namespace Game1
                     break;
 
                 case GameState.MapSelect:
+                    // run through where the mouse is clicking and load that map
                     if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25))) //load default map
                     {
                         LoadMap("test"); //change this for different file name
@@ -230,6 +231,256 @@ namespace Game1
                         //set up starting positions
                         //set default starting positions for team 1
                         for(int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    {
+                        LoadMap("Aliens Were Here"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    {
+                        LoadMap("Checkered"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    {
+                        LoadMap("Choke Point"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    {
+                        LoadMap("Face of Evil"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    {
+                        LoadMap("Happy Face"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    {
+                        LoadMap("Pavement Plus"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    {
+                        LoadMap("Target Board"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    {
+                        LoadMap("The Three Bridges"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    {
+                        LoadMap("Wet Feet"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college1.Units[i].MapX = 0;
+                            college1.Units[i].MapY = i;
+                            mainMap.GetTile(i, 0).Filled = true;
+                        }
+
+                        //set default starting positions
+                        for (int i = 0; i < 10; i++)
+                        {
+                            college2.Units[i].MapX = 9;
+                            college2.Units[i].MapY = i;
+                            mainMap.GetTile(i, 9).Filled = true;
+                        }
+
+                        //progress to the game
+                        curState = GameState.Game;
+                    }
+
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    {
+                        LoadMap("X-Forest"); //change this for different file name
+
+                        //set up starting positions
+                        //set default starting positions for team 1
+                        for (int i = 0; i < 10; i++)
                         {
                             college1.Units[i].MapX = 0;
                             college1.Units[i].MapY = i;
@@ -592,6 +843,18 @@ namespace Game1
 
                 case GameState.MapSelect:
                     spriteBatch.DrawString(font, "Load Default Map", new Vector2(GraphicsDevice.Viewport.Width/2 - 100, GraphicsDevice.Viewport.Height/2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
+                    
+                    // load custom maps
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
                     break;
                     
                 case GameState.Game:
