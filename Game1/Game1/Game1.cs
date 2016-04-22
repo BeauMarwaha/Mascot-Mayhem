@@ -151,7 +151,7 @@ namespace Game1
             winTilePic = Content.Load<Texture2D>("Grass Tile");
 
             //Update screen size to fullscreen
-            //this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -228,272 +228,118 @@ namespace Game1
                     {
                         LoadMap("test"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for(int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load Aliens map
                     {
                         LoadMap("Aliens Were Here"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load checkered map
                     {
                         LoadMap("Checkered"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load choke map
                     {
                         LoadMap("Choke Point"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load FoE map
                     {
                         LoadMap("Face of Evil"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120))) //load Face map
                     {
                         LoadMap("Happy Face"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load Pavement map
                     {
                         LoadMap("Pavement Plus"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load Target map
                     {
                         LoadMap("Target Board"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load Bridges map
                     {
                         LoadMap("The Three Bridges"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load wet feet map
                     {
                         LoadMap("Wet Feet"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
                     }
 
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load default map
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120))) //load X-forest map
                     {
                         LoadMap("X-Forest"); //change this for different file name
 
-                        //set up starting positions
-                        //set default starting positions for team 1
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college1.Units[i].MapX = 0;
-                            college1.Units[i].MapY = i;
-                            mainMap.GetTile(i, 0).Filled = true;
-                        }
-
-                        //set default starting positions
-                        for (int i = 0; i < 10; i++)
-                        {
-                            college2.Units[i].MapX = 9;
-                            college2.Units[i].MapY = i;
-                            mainMap.GetTile(i, 9).Filled = true;
-                        }
+                        //set the units onto the board
+                        SetUnits();
 
                         //progress to the game
                         curState = GameState.Game;
@@ -917,7 +763,7 @@ namespace Game1
                         if (col > 5) 
                         {
                             //draw tile info
-                            spriteBatch.Draw(menu, new Rectangle(0, GraphicsDevice.Viewport.Height - 96, 273, 96), Color.White);
+                            spriteBatch.Draw(menu, new Rectangle(0, GraphicsDevice.Viewport.Height - 96, 350, 96), Color.White);
                             spriteBatch.DrawString(font, "Terrain Type: " + mainMap.GetTile(row, col).TerrainType, new Vector2(GraphicsDevice.Viewport.Width / 55, GraphicsDevice.Viewport.Height - 91), Color.White);
                             spriteBatch.DrawString(font, "Movement Cost: " + mainMap.GetTile(row, col).MovementCost, new Vector2(GraphicsDevice.Viewport.Width / 55, GraphicsDevice.Viewport.Height - 64), Color.White);
                             spriteBatch.DrawString(font, "Def Bonus: " + mainMap.GetTile(row, col).DefBonus, new Vector2(GraphicsDevice.Viewport.Width / 55, GraphicsDevice.Viewport.Height - 37), Color.White);
@@ -934,10 +780,10 @@ namespace Game1
                         else //draw the info at the botom left
                         {
                             //draw tile info
-                            spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width - 273, GraphicsDevice.Viewport.Height - 96, 273, 96), Color.White);
-                            spriteBatch.DrawString(font, "Terrain Type: " + mainMap.GetTile(row, col).TerrainType, new Vector2(GraphicsDevice.Viewport.Width - 257, GraphicsDevice.Viewport.Height - 91), Color.White);
-                            spriteBatch.DrawString(font, "Movement Cost: " + mainMap.GetTile(row, col).MovementCost, new Vector2(GraphicsDevice.Viewport.Width - 257, GraphicsDevice.Viewport.Height - 64), Color.White);
-                            spriteBatch.DrawString(font, "Def Bonus: " + mainMap.GetTile(row, col).DefBonus, new Vector2(GraphicsDevice.Viewport.Width - 257, GraphicsDevice.Viewport.Height - 37), Color.White);
+                            spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width - 350, GraphicsDevice.Viewport.Height - 96, 350, 96), Color.White);
+                            spriteBatch.DrawString(font, "Terrain Type: " + mainMap.GetTile(row, col).TerrainType, new Vector2(GraphicsDevice.Viewport.Width - 330, GraphicsDevice.Viewport.Height - 91), Color.White);
+                            spriteBatch.DrawString(font, "Movement Cost: " + mainMap.GetTile(row, col).MovementCost, new Vector2(GraphicsDevice.Viewport.Width - 330, GraphicsDevice.Viewport.Height - 64), Color.White);
+                            spriteBatch.DrawString(font, "Def Bonus: " + mainMap.GetTile(row, col).DefBonus, new Vector2(GraphicsDevice.Viewport.Width - 330, GraphicsDevice.Viewport.Height - 37), Color.White);
 
                             //if there is a unit in that tile
                             if (mainMap.GetTile(row, col).Filled)
@@ -1237,6 +1083,27 @@ namespace Game1
                 }
             }
             
+        }
+
+        //sets the startin of units onto the board
+        public void SetUnits()
+        {
+            //set up starting positions
+            //set default starting positions for team 1
+            for (int i = 0; i < 10; i++)
+            {
+                college1.Units[i].MapX = 0;
+                college1.Units[i].MapY = i;
+                mainMap.GetTile(i, 0).Filled = true;
+            }
+
+            //set default starting positions
+            for (int i = 0; i < 10; i++)
+            {
+                college2.Units[i].MapX = 9;
+                college2.Units[i].MapY = i;
+                mainMap.GetTile(i, 9).Filled = true;
+            }
         }
     }
 
