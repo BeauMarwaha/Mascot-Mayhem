@@ -217,7 +217,7 @@ namespace Game1
                     break;
 
                 case GameState.TeamSelect:
-                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 300, 25))) //load default teams
+                    if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height - 100, 190, 25))) //load teams
                     {
                         //create default collgege 1(RIT)
                         college1.LoadCollege("RIT", unitSprites, 1);
@@ -692,10 +692,18 @@ namespace Game1
                     break;
 
                 case GameState.TeamSelect:
-                    spriteBatch.DrawString(font, "Load Default Teams", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
+                    spriteBatch.DrawString(font, "Team Selection", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, 100), Color.White);
+                    spriteBatch.DrawString(font, "Team 1", new Vector2(395, GraphicsDevice.Viewport.Height - 200), Color.White);
+                    spriteBatch.DrawString(font, "Team 2", new Vector2(GraphicsDevice.Viewport.Width - 490, GraphicsDevice.Viewport.Height - 200), Color.White);
+                    spriteBatch.DrawString(font, "Rochester Institute of Technology", new Vector2(240, GraphicsDevice.Viewport.Height - 250), Color.White);
+                    spriteBatch.DrawString(font, "University of Rochester", new Vector2(GraphicsDevice.Viewport.Width - 580, GraphicsDevice.Viewport.Height - 250), Color.White);
+                    spriteBatch.Draw(ritLogo, new Rectangle(200, 250, 500, 500), Color.White);
+                    spriteBatch.Draw(uofrLogo, new Rectangle(GraphicsDevice.Viewport.Width - 700, 250, 500, 500), Color.White);
+                    spriteBatch.DrawString(font, "Confirm Teams", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height - 100), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height - 100, 190, 25)));
                     break;
 
                 case GameState.MapSelect:
+                    spriteBatch.DrawString(font, "Map Selection", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, 100), Color.White);
                     spriteBatch.DrawString(font, "Load Default Map", new Vector2(GraphicsDevice.Viewport.Width/2 - 100, GraphicsDevice.Viewport.Height/2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
                     
                     // load custom maps
