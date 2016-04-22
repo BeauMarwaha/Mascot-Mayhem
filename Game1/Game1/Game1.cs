@@ -62,6 +62,10 @@ namespace Game1
         Texture2D forestTilePic;
         Texture2D winTilePic;
 
+        //schools
+        Texture2D ritLogo;
+        Texture2D uofrLogo;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -149,6 +153,10 @@ namespace Game1
             pavementTilePic = Content.Load<Texture2D>("Grass Tile");
             forestTilePic = Content.Load<Texture2D>("Grass Tile");
             winTilePic = Content.Load<Texture2D>("Grass Tile");
+
+            //schools
+            ritLogo = Content.Load<Texture2D>("RIT Logo");
+            uofrLogo = Content.Load<Texture2D>("UofR Logo");
 
             //Update screen size to fullscreen
             this.graphics.IsFullScreen = true;
@@ -691,16 +699,16 @@ namespace Game1
                     spriteBatch.DrawString(font, "Load Default Map", new Vector2(GraphicsDevice.Viewport.Width/2 - 100, GraphicsDevice.Viewport.Height/2 - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 100, GraphicsDevice.Viewport.Height / 2 - 50, 220, 25)));
                     
                     // load custom maps
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White);
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // 
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); //
+                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); //
                     break;
                     
                 case GameState.Game:
