@@ -66,6 +66,18 @@ namespace Game1
         Texture2D ritLogo;
         Texture2D uofrLogo;
 
+        //maps
+        Texture2D awh; // Aliens Were Here
+        Texture2D check; // Checkered
+        Texture2D cp; // Choke Point
+        Texture2D foh; // Face of Evil
+        Texture2D hf; // Happy Face
+        Texture2D pp; // Pavement Plus
+        Texture2D tb; // Target Board
+        Texture2D ttb; // The Three Bridges
+        Texture2D wf; // Wet Feet
+        Texture2D xf; // X-Forest
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -157,6 +169,18 @@ namespace Game1
             //schools
             ritLogo = Content.Load<Texture2D>("RIT Logo");
             uofrLogo = Content.Load<Texture2D>("UofR Logo");
+
+            //maps
+            awh = Content.Load<Texture2D>("AliensWereHerePreview");
+            check = Content.Load<Texture2D>("CheckeredPreview");
+            cp = Content.Load<Texture2D>("ChokePointPreview");
+            foh = Content.Load<Texture2D>("FaceOfEvilPreview");
+            hf = Content.Load<Texture2D>("HappyFacePreview");
+            pp = Content.Load<Texture2D>("PavementPlusPreview");
+            tb = Content.Load<Texture2D>("TargetBoardPreview");
+            ttb = Content.Load<Texture2D>("TheThreeBridgesPreview");
+            wf = Content.Load<Texture2D>("WetFeetPreview");
+            xf = Content.Load<Texture2D>("XForestPreview");
 
             //Update screen size to fullscreen
             this.graphics.IsFullScreen = true;
@@ -709,25 +733,25 @@ namespace Game1
                     spriteBatch.DrawString(font, "Select A Map By Clicking On It", new Vector2(GraphicsDevice.Viewport.Width/2 - 180, GraphicsDevice.Viewport.Height/2 - 50), Color.White);
                     
                     // load custom maps
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Aliens Were Here" map preview
+                    spriteBatch.Draw(awh, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Aliens Were Here" map preview
                     spriteBatch.DrawString(font, "Aliens Were Here", new Vector2(GraphicsDevice.Viewport.Width / 6 - 98, GraphicsDevice.Viewport.Height / 6 + 140), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Checkered" map preview
+                    spriteBatch.Draw(check, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Checkered" map preview
                     spriteBatch.DrawString(font, "Checkered", new Vector2(GraphicsDevice.Viewport.Width / 4 + 105, GraphicsDevice.Viewport.Height / 6 + 140), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Choke Point" map preview
+                    spriteBatch.Draw(cp, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Choke Point" map preview
                     spriteBatch.DrawString(font, "Choke Point", new Vector2(GraphicsDevice.Viewport.Width / 2 - 67, GraphicsDevice.Viewport.Height / 6 + 140), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Face of Evil" map preview
+                    spriteBatch.Draw(foh, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Face of Evil" map preview
                     spriteBatch.DrawString(font, "Face of Evil", new Vector2(GraphicsDevice.Viewport.Width / 2 + 255, GraphicsDevice.Viewport.Height / 6 + 140), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Happy Face" map preview
+                    spriteBatch.Draw(hf, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 6, 250, 120), Color.White); // Draw "Happy Face" map preview
                     spriteBatch.DrawString(font, "Happy Face", new Vector2(GraphicsDevice.Viewport.Width / 2 + 565, GraphicsDevice.Viewport.Height / 6 + 140), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "Pavement Plus" map preview
+                    spriteBatch.Draw(pp, new Rectangle(GraphicsDevice.Viewport.Width / 6 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "Pavement Plus" map preview
                     spriteBatch.DrawString(font, "Pavement Plus", new Vector2(GraphicsDevice.Viewport.Width / 6 - 80, GraphicsDevice.Viewport.Height / 2 + 310), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "Target Board" map preview
+                    spriteBatch.Draw(tb, new Rectangle(GraphicsDevice.Viewport.Width / 4 + 47, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "Target Board" map preview
                     spriteBatch.DrawString(font, "Target Board", new Vector2(GraphicsDevice.Viewport.Width / 4 + 82, GraphicsDevice.Viewport.Height / 2 + 310), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "The Three Bridges" map preview
+                    spriteBatch.Draw(ttb, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 115, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "The Three Bridges" map preview
                     spriteBatch.DrawString(font, "The Three Bridges", new Vector2(GraphicsDevice.Viewport.Width / 2 - 102, GraphicsDevice.Viewport.Height / 2 + 310), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "Wet Feet" map preview
+                    spriteBatch.Draw(wf, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 200, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "Wet Feet" map preview
                     spriteBatch.DrawString(font, "Wet Feet", new Vector2(GraphicsDevice.Viewport.Width / 2 + 270, GraphicsDevice.Viewport.Height / 2 + 310), Color.White);
-                    spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "X-Forest" map preview
+                    spriteBatch.Draw(xf, new Rectangle(GraphicsDevice.Viewport.Width / 2 + 510, GraphicsDevice.Viewport.Height / 2 + 170, 250, 120), Color.White); // Draw "X-Forest" map preview
                     spriteBatch.DrawString(font, "X-Forest", new Vector2(GraphicsDevice.Viewport.Width / 2 + 585, GraphicsDevice.Viewport.Height / 2 + 310), Color.White);
                     break;
                     

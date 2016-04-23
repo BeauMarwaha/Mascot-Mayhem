@@ -1,7 +1,7 @@
 Pavement,Pavement,Pavement,Pavement,Pavement,Pavement,Pavement,Pavement,Pavement,Pavement
 Pavement,Pavement,Field,Field,Field,Field,Field,Field,Pavement,Pavement
 Pavement,Field,Field,Field,Field,Field,Field,Field,Field,Pavement
-Pavement,Field,Field,Pavement,Field,Field,Pavement,Field,Field
+Pavement,Field,Field,Pavement,Field,Field,Pavement,Field,Field,Pavement
 Pavement,Field,Field,Field,Field,Field,Field,Field,Field,Pavement
 Pavement,Field,Field,Field,Pavement,Field,Field,Field,Field,Pavement
 Pavement,Field,Pavement,Field,Field,Field,Field,Pavement,Field,Pavement
