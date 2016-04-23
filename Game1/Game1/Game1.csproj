@@ -61,6 +61,9 @@
     <Content Include="Content\blank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Chibi Archer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Chibi Base.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

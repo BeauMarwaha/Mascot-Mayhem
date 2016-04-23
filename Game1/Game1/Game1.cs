@@ -126,7 +126,7 @@ namespace Game1
             footballPlayerPic = Content.Load<Texture2D>("Chibi Football");
             unitSprites.Add("Football", footballPlayerPic);
 
-            archeryClubPlayerPic = Content.Load<Texture2D>("Chibi Base"); //NOTE: currently using placeholder picture
+            archeryClubPlayerPic = Content.Load<Texture2D>("Chibi Archer"); 
             unitSprites.Add("Archery Club", archeryClubPlayerPic);
 
             outdoorClubPlayerPic = Content.Load<Texture2D>("Chibi Outdoor");
