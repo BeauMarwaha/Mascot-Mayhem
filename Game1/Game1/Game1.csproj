@@ -94,9 +94,6 @@
     <Content Include="Content\Forest Tile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Grass Tile.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\menu.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
