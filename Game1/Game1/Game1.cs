@@ -147,12 +147,12 @@ namespace Game1
             rockyMascotPic = Content.Load<Texture2D>("Chibi Rocky");
             unitSprites.Add("Rocky", rockyMascotPic);
 
-            //tiles - NOTE: currently using placeholder pictures
-            fieldTilePic = Content.Load<Texture2D>("Grass Tile");
-            riverTilePic = Content.Load<Texture2D>("Grass Tile");
-            pavementTilePic = Content.Load<Texture2D>("Grass Tile");
-            forestTilePic = Content.Load<Texture2D>("Grass Tile");
-            winTilePic = Content.Load<Texture2D>("Grass Tile");
+            //tiles
+            fieldTilePic = Content.Load<Texture2D>("Field Tile");
+            riverTilePic = Content.Load<Texture2D>("River Tile");
+            pavementTilePic = Content.Load<Texture2D>("Pavement Tile");
+            forestTilePic = Content.Load<Texture2D>("Forest Tile");
+            winTilePic = Content.Load<Texture2D>("Win Tile");
 
             //schools
             ritLogo = Content.Load<Texture2D>("RIT Logo");
