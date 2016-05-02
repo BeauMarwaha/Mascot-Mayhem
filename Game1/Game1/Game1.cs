@@ -5,7 +5,7 @@ using System.IO; //needed for file IO
 using System;
 using System.Collections.Generic; //for dictionary
 
-//Author(s): Beau Marwaha, Sean Hasse
+//Author(s): Beau Marwaha, Sean Hasse, Jared Miller
 //Purpose: Runs the game
 namespace Game1
 {
@@ -31,6 +31,7 @@ namespace Game1
         int defendingUnit; //index of defending unit in college.units
         List<MapTile> possibleMoves;
         List<MapTile> possibleAttacks;
+        List<MapTile> possibleSuperAttacks;
         bool displayRules;
         bool college1Win;
         bool college2Win;
@@ -40,6 +41,7 @@ namespace Game1
 
         SpriteFont font;
         Texture2D blank;
+        Texture2D redBlank;
         Texture2D menu;
         Texture2D rules;
 
@@ -125,6 +127,7 @@ namespace Game1
             // TODO: use this.Content to load your game content here
             font = Content.Load<SpriteFont>("mainFont");
             blank = Content.Load<Texture2D>("blank");
+            redBlank = Content.Load<Texture2D>("red blank");
             menu = Content.Load<Texture2D>("menu");
             rules = Content.Load<Texture2D>("rules");
 
@@ -533,11 +536,18 @@ namespace Game1
                                             }
 
                                             possibleAttacks = mainMap.PossibleAttacks(college1.Units[selectedUnit].MinAttackRange, college1.Units[selectedUnit].MaxAttackRange, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY, friendlyTiles);
+                                            
+                                            //if a mascot unit also do a special check
+                                            if(college1.Units[selectedUnit] is Mascot)
+                                            {
+                                                Mascot mascot = (Mascot)(college1.Units[selectedUnit]);
+                                                possibleSuperAttacks = mainMap.PossibleAttacks(mascot.MinSpecialAttackRange, mascot.MaxSpecialAttackRange, college1.Units[selectedUnit].MapX, college1.Units[selectedUnit].MapY, friendlyTiles);
+                                            }
 
-                                            //clear freindly tiles
+                                            //clear friendly tiles
                                             friendlyTiles.Clear();
 
-                                            if (possibleAttacks.Count == 0) //if there are no possible attacks
+                                            if (possibleAttacks.Count == 0 && possibleSuperAttacks.Count == 0) //if there are no possible attacks
                                             {
                                                 //switch back to move phase so another unit can do their turn
                                                 turnPhase = 0; 
@@ -568,10 +578,17 @@ namespace Game1
 
                                             possibleAttacks = mainMap.PossibleAttacks(college2.Units[selectedUnit].MinAttackRange, college2.Units[selectedUnit].MaxAttackRange, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY, friendlyTiles);
 
-                                            //clear freindly tiles
+                                            //if a mascot unit also do a special check
+                                            if (college2.Units[selectedUnit] is Mascot)
+                                            {
+                                                Mascot mascot = (Mascot)(college2.Units[selectedUnit]);
+                                                possibleSuperAttacks = mainMap.PossibleAttacks(mascot.MinSpecialAttackRange, mascot.MaxSpecialAttackRange, college2.Units[selectedUnit].MapX, college2.Units[selectedUnit].MapY, friendlyTiles);
+                                            }
+
+                                            //clear friendly tiles
                                             friendlyTiles.Clear();
 
-                                            if (possibleAttacks.Count == 0) //if there are no possible attacks
+                                            if (possibleAttacks.Count == 0 && possibleSuperAttacks.Count == 0) //if there are no possible attacks
                                             {
                                                 //switch back to move phase so another unit can do their turn
                                                 turnPhase = 0; 
@@ -583,7 +600,7 @@ namespace Game1
 
                                         possibleMoves.Clear();
                                     }
-                                    else if (possibleAttacks.Contains(mainMap.GetTile(row, col))) //if an attack can be made
+                                    else if (possibleAttacks.Contains(mainMap.GetTile(row, col)) || possibleSuperAttacks.Contains(mainMap.GetTile(row, col))) //if an attack can be made
                                     {
                                         //attacking/defending code
                                         if(turn == 1) //first players turn
@@ -592,27 +609,42 @@ namespace Game1
                                             {
                                                 if (college2.Units[i].MapX == col && college2.Units[i].MapY == row) //if the unit is in that space
                                                 {
-                                                    defendingUnit = i; //define that unit's index as the one being attacked
-                                                    //check to make sure the attack will actually do damage to the target
-                                                    if((college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense) > 0)
+                                                    //if only a normal attack is possible in that location
+                                                    if (possibleAttacks.Contains(mainMap.GetTile(row, col)) && !possibleSuperAttacks.Contains(mainMap.GetTile(row, col))) 
                                                     {
-                                                        //deal the damage
-                                                        college2.Units[defendingUnit].CurrHealth -= college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
-                                                        turnPhase = 0; //switch phase to move phase
-                                                        //end that units turn
-                                                        college1.Units[selectedUnit].TurnDone = true;
-                                                        selectedUnit = -1;
-                                                        possibleAttacks.Clear();
+                                                        defendingUnit = i; //define that unit's index as the one being attacked
+
+                                                        //check to make sure the attack will actually do damage to the target
+                                                        if ((college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense) > 0)
+                                                        {
+                                                            //deal the damage
+                                                            college2.Units[defendingUnit].CurrHealth -= college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                           //end that units turn
+                                                            college1.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
+                                                        else //deal 0 damage
+                                                        {
+                                                            //deal the damage
+                                                            college2.Units[defendingUnit].CurrHealth -= 0;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                           //end that units turn
+                                                            college1.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
                                                     }
-                                                    else //deal 0 damage
+                                                    //if only a apecial attack is possible in that location
+                                                    else if (!possibleAttacks.Contains(mainMap.GetTile(row, col)) && possibleSuperAttacks.Contains(mainMap.GetTile(row, col)))
                                                     {
-                                                        //deal the damage
-                                                        college2.Units[defendingUnit].CurrHealth -= 0;
-                                                        turnPhase = 0; //switch phase to move phase
-                                                        //end that units turn
-                                                        college1.Units[selectedUnit].TurnDone = true;
-                                                        selectedUnit = -1;
-                                                        possibleAttacks.Clear();
+
+                                                    }
+                                                    //if both a normal and super attack is possible in that location
+                                                    else
+                                                    {
+
                                                     }
                                                 }
                                             }
@@ -624,27 +656,42 @@ namespace Game1
                                             {
                                                 if (college1.Units[i].MapX == col && college1.Units[i].MapY == row) //if the unit is in that space
                                                 {
-                                                    defendingUnit = i; //define that unit's index as the one being attacked
-                                                    //check to make sure the attack will actually do damage to the target
-                                                    if ((college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense) > 0)
+                                                    //if only a normal attack is possible in that location
+                                                    if (possibleAttacks.Contains(mainMap.GetTile(row, col)) && !possibleSuperAttacks.Contains(mainMap.GetTile(row, col))) 
                                                     {
-                                                        //deal the damage
-                                                        college1.Units[defendingUnit].CurrHealth -= college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
-                                                        turnPhase = 0; //switch phase to move phase
-                                                        //end that units turn
-                                                        college2.Units[selectedUnit].TurnDone = true;
-                                                        selectedUnit = -1;
-                                                        possibleAttacks.Clear();
+                                                        defendingUnit = i; //define that unit's index as the one being attacked
+
+                                                        //check to make sure the attack will actually do damage to the target
+                                                        if ((college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense) > 0)
+                                                        {
+                                                            //deal the damage
+                                                            college1.Units[defendingUnit].CurrHealth -= college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                           //end that units turn
+                                                            college2.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
+                                                        else
+                                                        {
+                                                            //deal the damage
+                                                            college1.Units[defendingUnit].CurrHealth -= 0;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                           //end that units turn
+                                                            college2.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
                                                     }
+                                                    //if only a special attack is possible in that location
+                                                    else if (!possibleAttacks.Contains(mainMap.GetTile(row, col)) && possibleSuperAttacks.Contains(mainMap.GetTile(row, col)))
+                                                    {
+
+                                                    }
+                                                    //if both a normal and super attack is possible in that location
                                                     else
                                                     {
-                                                        //deal the damage
-                                                        college1.Units[defendingUnit].CurrHealth -= 0;
-                                                        turnPhase = 0; //switch phase to move phase
-                                                        //end that units turn
-                                                        college2.Units[selectedUnit].TurnDone = true;
-                                                        selectedUnit = -1;
-                                                        possibleAttacks.Clear();
+
                                                     }
                                                 }
                                             }
@@ -675,6 +722,7 @@ namespace Game1
                                             //fixes error with trying to move a unit, pausing the game, and then trying to immediately move it again
                                             possibleMoves.Clear();
                                             possibleAttacks.Clear();
+                                            possibleSuperAttacks.Clear();
 
                                             //brings up option menu
                                             selectedUnit = -2;
@@ -1025,6 +1073,10 @@ namespace Game1
                         {
                             spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
                         }
+                        foreach (MapTile tile in possibleSuperAttacks) //highlight tiles
+                        {
+                            spriteBatch.Draw(redBlank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
+                        }
                         break;
                 }
             }
@@ -1042,6 +1094,10 @@ namespace Game1
                         foreach (MapTile tile in possibleAttacks) //highlight tiles
                         {
                             spriteBatch.Draw(blank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
+                        }
+                        foreach (MapTile tile in possibleSuperAttacks) //highlight tiles
+                        {
+                            spriteBatch.Draw(redBlank, new Rectangle(tile.YCord * GraphicsDevice.Viewport.Width / 10, tile.XCord * GraphicsDevice.Viewport.Height / 10, GraphicsDevice.Viewport.Width / 10, GraphicsDevice.Viewport.Height / 10), Color.White);
                         }
                         break;
                 }

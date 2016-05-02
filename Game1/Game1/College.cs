@@ -65,7 +65,7 @@ namespace Game1
             {
                 string school = "RIT";
                 units = new Unit[10];
-                mascot = new Mascot("Ritchie", "Super hit", team, school);
+                mascot = new Mascot("Ritchie", "Super Pounce", team, school);
                 units[0] = mascot;
                 units[1] = new Unit("Hockey", team, school);
                 units[2] = new Unit("Hockey", team, school);
@@ -81,7 +81,7 @@ namespace Game1
             {
                 string school = "UofR";
                 units = new Unit[10];
-                mascot = new Mascot("Rocky", "Super heal", team, school);
+                mascot = new Mascot("Rocky", "Super Slam", team, school);
                 units[0] = mascot;
                 units[1] = new Unit("Lacrosse", team, school);
                 units[2] = new Unit("Lacrosse", team, school);

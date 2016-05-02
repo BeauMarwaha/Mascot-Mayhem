@@ -121,6 +121,9 @@
     <Content Include="Content\PavementPlusPreview.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\red blank.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\RIT Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
