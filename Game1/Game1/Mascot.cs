@@ -13,6 +13,7 @@ namespace Game1
         private string mascotSpecial; //name of mascot's special
         private int minSpecialAttackRange; //mascot's min special attack range
         private int maxSpecialAttackRange; //mascot's max special attack range
+        private int specialAttack; //how much damage the mascot's special can do 
 
         // parameterized constructor 
         public Mascot(string unitName, string ms, int teamNumber, string schoolName) : base(unitName, teamNumber, schoolName)
@@ -22,27 +23,32 @@ namespace Game1
             //sets up mascot ability
             if (mascotSpecial == "Super Slam") //UofR Rocky special
             {
+                //a very powerful attack that also deals some damge to Rocky themself
                 minSpecialAttackRange = 1;
                 maxSpecialAttackRange = 1;
+                specialAttack = 10;
             }
             else if (mascotSpecial == "Super Pounce") //RIT Ritchie special
             {
-                minSpecialAttackRange = 2;
+                //a powerful leaping attack that allows ritchie to attack 1 extra space away
+                minSpecialAttackRange = 1;
                 maxSpecialAttackRange = 2;
+                specialAttack = 7;
             }
         }
 
-        // method to use a mascots ability
+        //handles some special things with mascot special abilities
         public void UseMascotAbility()
         {
-            //sets up mascot ability
+            //do something depending on mascot ability
             if (mascotSpecial == "Super Slam") //UofR Rocky special
             {
-                
+                //deal some self-damage
+                CurrHealth -= 3;
             }
             else if (mascotSpecial == "Super Pounce") //RIT Ritchie special
             {
-                
+                //nothing special occurs with this one
             }
             
         }
@@ -56,13 +62,16 @@ namespace Game1
         public int MinSpecialAttackRange
         {
             get { return minSpecialAttackRange; }
-            set { minSpecialAttackRange = value; }
         }
 
         public int MaxSpecialAttackRange
         {
             get { return maxSpecialAttackRange; }
-            set { maxSpecialAttackRange = value; }
+        }
+
+        public int SpecialAttack
+        {
+            get { return specialAttack; }
         }
     }
 }

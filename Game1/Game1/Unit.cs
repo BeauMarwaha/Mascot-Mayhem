@@ -104,7 +104,7 @@ namespace Game1
                 attack = 5;
                 defense = 1;
                 minAttackRange = 1;
-                maxAttackRange = 2;
+                maxAttackRange = 1;
             }
             if (unitType == "Rocky")
             {
@@ -113,7 +113,7 @@ namespace Game1
                 attack = 5;
                 defense = 1;
                 minAttackRange = 1;
-                maxAttackRange = 2;
+                maxAttackRange = 1;
             }
 
             alive = true;
