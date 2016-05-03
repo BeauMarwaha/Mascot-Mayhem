@@ -36,6 +36,11 @@ namespace Game1
         bool college1Win;
         bool college2Win;
 
+        //used when a normal or special attack could be made
+        bool attackChoice;
+        int specialCol;
+        int specialRow;
+
         //used as a dictionary of all unit textures
         Dictionary<string, Texture2D> unitSprites;
 
@@ -109,6 +114,10 @@ namespace Game1
             displayRules = false;
             college1Win = false;
             college2Win = false;
+
+            attackChoice = false;
+            specialCol = 0;
+            specialRow = 0;
 
             this.Window.AllowUserResizing = true;
             this.Window.Title = "Mascot Mayhem";
@@ -652,6 +661,9 @@ namespace Game1
                                                             //run mascot special ability method
                                                             mascot.UseMascotAbility();
 
+                                                            //reapply mascot stats to the selected unit
+                                                            college1.Units[selectedUnit] = mascot;
+
                                                             turnPhase = 0; //switch phase to move phase
                                                                            //end that units turn
                                                             college1.Units[selectedUnit].TurnDone = true;
@@ -666,6 +678,9 @@ namespace Game1
                                                             //run mascot special ability method
                                                             mascot.UseMascotAbility();
 
+                                                            //reapply mascot stats to the selected unit
+                                                            college1.Units[selectedUnit] = mascot;
+
                                                             turnPhase = 0; //switch phase to move phase
                                                                            //end that units turn
                                                             college1.Units[selectedUnit].TurnDone = true;
@@ -676,7 +691,10 @@ namespace Game1
                                                     //if both a normal and super attack is possible in that location
                                                     else
                                                     {
-
+                                                        //open up the special option menu and save the defending unit's location
+                                                        attackChoice = true;
+                                                        specialCol = col;
+                                                        specialRow = row;
                                                     }
                                                 }
                                             }
@@ -704,7 +722,7 @@ namespace Game1
                                                             selectedUnit = -1;
                                                             possibleAttacks.Clear();
                                                         }
-                                                        else
+                                                        else //deal 0 damage
                                                         {
                                                             //deal the damage
                                                             college1.Units[defendingUnit].CurrHealth -= 0;
@@ -719,7 +737,7 @@ namespace Game1
                                                     else if (!possibleAttacks.Contains(mainMap.GetTile(row, col)) && possibleSuperAttacks.Contains(mainMap.GetTile(row, col)))
                                                     {
                                                         defendingUnit = i; //define that unit's index as the one being attacked
-                                                        Mascot mascot = (Mascot)(college1.Units[selectedUnit]); //explicitly cast the mascot unit
+                                                        Mascot mascot = (Mascot)(college2.Units[selectedUnit]); //explicitly cast the mascot unit
 
                                                         //check to make sure the attack will actually do damage to the target
                                                         if ((mascot.SpecialAttack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense) > 0)
@@ -730,19 +748,25 @@ namespace Game1
                                                             //run mascot special ability method
                                                             mascot.UseMascotAbility();
 
+                                                            //reapply mascot stats to the selected unit
+                                                            college2.Units[selectedUnit] = mascot;
+
                                                             turnPhase = 0; //switch phase to move phase
                                                                            //end that units turn
                                                             college2.Units[selectedUnit].TurnDone = true;
                                                             selectedUnit = -1;
                                                             possibleSuperAttacks.Clear();
                                                         }
-                                                        else
+                                                        else //deal 0 damage
                                                         {
                                                             //deal the damage
                                                             college1.Units[defendingUnit].CurrHealth -= 0;
 
                                                             //run mascot special ability method
                                                             mascot.UseMascotAbility();
+
+                                                            //reapply mascot stats to the selected unit
+                                                            college2.Units[selectedUnit] = mascot;
 
                                                             turnPhase = 0; //switch phase to move phase
                                                                            //end that units turn
@@ -754,7 +778,10 @@ namespace Game1
                                                     //if both a normal and super attack is possible in that location
                                                     else
                                                     {
-
+                                                        //open up the special option menu and save the defending unit's location
+                                                        attackChoice = true;
+                                                        specialCol = col;
+                                                        specialRow = row;
                                                     }
                                                 }
                                             }
@@ -762,6 +789,198 @@ namespace Game1
 
                                         RemoveDeadUnits(); //remove any units that have been killed
                                         DominationWinCheck(); //check for a domination win
+                                    }
+                                    else if (attackChoice) //if either a special attack or normal attack could be made
+                                    {
+                                        //depending on which choice is made in the option menu
+                                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 80, GraphicsDevice.Viewport.Height / 2 - 0, 170, 25))) //normal attack
+                                        {
+                                            //attacking/defending code
+                                            if (turn == 1) //first players turn
+                                            {
+                                                for (int i = 0; i < 10; i++) //check each unit on team 2
+                                                {
+                                                    if (college2.Units[i].MapX == specialCol && college2.Units[i].MapY == specialRow) //if the unit is in that space
+                                                    {
+                                                        //perform a normal attack
+                                                        defendingUnit = i; //define that unit's index as the one being attacked
+
+                                                        //check to make sure the attack will actually do damage to the target
+                                                        if ((college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense) > 0)
+                                                        {
+                                                            //deal the damage
+                                                            college2.Units[defendingUnit].CurrHealth -= college1.Units[selectedUnit].Attack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college1.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
+                                                        else //deal 0 damage
+                                                        {
+                                                            //deal the damage
+                                                            college2.Units[defendingUnit].CurrHealth -= 0;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college1.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                            else if (turn == 2) //second players turn
+                                            {
+                                                for (int i = 0; i < 10; i++) //check each unit on team 1
+                                                {
+                                                    if (college1.Units[i].MapX == specialCol && college1.Units[i].MapY == specialRow) //if the unit is in that space
+                                                    {
+                                                        //perform a normal attack
+                                                        defendingUnit = i; //define that unit's index as the one being attacked
+
+                                                        //check to make sure the attack will actually do damage to the target
+                                                        if ((college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense) > 0)
+                                                        {
+                                                            //deal the damage
+                                                            college1.Units[defendingUnit].CurrHealth -= college2.Units[selectedUnit].Attack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college2.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
+                                                        else //deal 0 damage
+                                                        {
+                                                            //deal the damage
+                                                            college1.Units[defendingUnit].CurrHealth -= 0;
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college2.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleAttacks.Clear();
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            RemoveDeadUnits(); //remove any units that have been killed
+                                            DominationWinCheck(); //check for a domination win
+
+                                            //reset attack choice and defending unit loc
+                                            attackChoice = false;
+                                            specialCol = 0;
+                                            specialRow = 0;
+                                        }
+                                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 81, GraphicsDevice.Viewport.Height / 2 + 25, 170, 25))) //special attack
+                                        {
+                                            //attacking/defending code
+                                            if (turn == 1) //first players turn
+                                            {
+                                                for (int i = 0; i < 10; i++) //check each unit on team 2
+                                                {
+                                                    if (college2.Units[i].MapX == specialCol && college2.Units[i].MapY == specialRow) //if the unit is in that space
+                                                    {
+                                                        //perform a special attack
+                                                        defendingUnit = i; //define that unit's index as the one being attacked
+                                                        Mascot mascot = (Mascot)(college1.Units[selectedUnit]); //explicitly cast the mascot unit
+
+                                                        //check to make sure the attack will actually do damage to the target
+                                                        if ((mascot.SpecialAttack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense) > 0)
+                                                        {
+                                                            //deal the damage
+                                                            college2.Units[defendingUnit].CurrHealth -= mascot.SpecialAttack - mainMap.GetTile(college2.Units[defendingUnit].MapY, college2.Units[defendingUnit].MapX).DefBonus - college2.Units[defendingUnit].Defense;
+
+                                                            //run mascot special ability method
+                                                            mascot.UseMascotAbility();
+
+                                                            //reapply mascot stats to the selected unit
+                                                            college1.Units[selectedUnit] = mascot;
+
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college1.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleSuperAttacks.Clear();
+                                                        }
+                                                        else //deal 0 damage
+                                                        {
+                                                            //deal the damage
+                                                            college2.Units[defendingUnit].CurrHealth -= 0;
+
+                                                            //run mascot special ability method
+                                                            mascot.UseMascotAbility();
+
+                                                            //reapply mascot stats to the selected unit
+                                                            college1.Units[selectedUnit] = mascot;
+
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college1.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleSuperAttacks.Clear();
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                            else if (turn == 2) //second players turn
+                                            {
+                                                for (int i = 0; i < 10; i++) //check each unit on team 1
+                                                {
+                                                    if (college1.Units[i].MapX == specialCol && college1.Units[i].MapY == specialRow) //if the unit is in that space
+                                                    {
+                                                        //perform a special attack
+                                                        defendingUnit = i; //define that unit's index as the one being attacked
+                                                        Mascot mascot = (Mascot)(college2.Units[selectedUnit]); //explicitly cast the mascot unit
+
+                                                        //check to make sure the attack will actually do damage to the target
+                                                        if ((mascot.SpecialAttack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense) > 0)
+                                                        {
+                                                            //deal the damage
+                                                            college1.Units[defendingUnit].CurrHealth -= mascot.SpecialAttack - mainMap.GetTile(college1.Units[defendingUnit].MapY, college1.Units[defendingUnit].MapX).DefBonus - college1.Units[defendingUnit].Defense;
+
+                                                            //run mascot special ability method
+                                                            mascot.UseMascotAbility();
+
+                                                            //reapply mascot stats to the selected unit
+                                                            college2.Units[selectedUnit] = mascot;
+
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college2.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleSuperAttacks.Clear();
+                                                        }
+                                                        else //deal 0 damage
+                                                        {
+                                                            //deal the damage
+                                                            college1.Units[defendingUnit].CurrHealth -= 0;
+
+                                                            //run mascot special ability method
+                                                            mascot.UseMascotAbility();
+
+                                                            //reapply mascot stats to the selected unit
+                                                            college2.Units[selectedUnit] = mascot;
+
+                                                            turnPhase = 0; //switch phase to move phase
+                                                                            //end that units turn
+                                                            college2.Units[selectedUnit].TurnDone = true;
+                                                            selectedUnit = -1;
+                                                            possibleSuperAttacks.Clear();
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            RemoveDeadUnits(); //remove any units that have been killed
+                                            DominationWinCheck(); //check for a domination win
+
+                                            //reset attack choice
+                                            attackChoice = false;
+                                            specialCol = 0;
+                                            specialRow = 0;
+                                        }
                                     }
                                     else //if the spot is empty
                                     {
@@ -887,6 +1106,12 @@ namespace Game1
                         {
                             DrawUnitActionInfo();
                         }
+                    }
+
+                    //if the player has clicked on an attack space that could either be a normal or special attack draw a special options menu
+                    if (attackChoice)
+                    {
+                        DrawAttackOptionMenu();
                     }
 
                     //if a team wins draw the victory screen
@@ -1175,6 +1400,15 @@ namespace Game1
             spriteBatch.DrawString(font, "End Turn", new Vector2(GraphicsDevice.Viewport.Width / 2 - 65, GraphicsDevice.Viewport.Height / 2 - 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 65, GraphicsDevice.Viewport.Height / 2 - 25, 120, 25)));
             spriteBatch.DrawString(font, "Main Menu", new Vector2(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 75, GraphicsDevice.Viewport.Height / 2 - 0, 140, 25)));
             spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 70, GraphicsDevice.Viewport.Height / 2 + 25, 130, 25)));
+        }
+
+        //draws attack option menu
+        private void DrawAttackOptionMenu()
+        {
+            spriteBatch.Draw(menu, new Rectangle(GraphicsDevice.Viewport.Width / 2 - 125, GraphicsDevice.Viewport.Height / 2 - 55, 250, 120), Color.White);
+            spriteBatch.DrawString(font, "Choose An Attack", new Vector2(GraphicsDevice.Viewport.Width / 2 - 110, GraphicsDevice.Viewport.Height / 2 - 50), Color.White);
+            spriteBatch.DrawString(font, "Normal Attack", new Vector2(GraphicsDevice.Viewport.Width / 2 - 80, GraphicsDevice.Viewport.Height / 2 - 0), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 80, GraphicsDevice.Viewport.Height / 2 - 0, 170, 25)));
+            spriteBatch.DrawString(font, "Special Attack", new Vector2(GraphicsDevice.Viewport.Width / 2 - 81, GraphicsDevice.Viewport.Height / 2 + 25), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 81, GraphicsDevice.Viewport.Height / 2 + 25, 170, 25)));
         }
 
         //checks for a win by defeating all enemy units
