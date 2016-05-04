@@ -2,8 +2,8 @@ Pavement,Pavement,Pavement,Pavement,Field,Field,Pavement,Pavement,Pavement,Pavem
 Pavement,Pavement,Pavement,Pavement,Field,Field,Pavement,Pavement,Pavement,Pavement
 Pavement,Pavement,Pavement,Pavement,Field,Field,Pavement,Pavement,Pavement,Pavement
 Pavement,Pavement,Pavement,Pavement,Field,Field,Pavement,Pavement,Pavement,Pavement
-River,River,River,River,Field,Field,River,River,River,River
-River,River,River,River,Field,Field,River,River,River,River
+Pavement,River,River,River,Win Tile,Win Tile,River,River,River,Pavement
+Pavement,River,River,River,Win Tile,Win Tile,River,River,River,Pavement
 Pavement,Pavement,Pavement,Pavement,Field,Field,Pavement,Pavement,Pavement,Pavement
 Pavement,Pavement,Pavement,Pavement,Field,Field,Pavement,Pavement,Pavement,Pavement
 Pavement,Pavement,Pavement,Pavement,Field,Field,Pavement,Pavement,Pavement,Pavement
