@@ -190,13 +190,13 @@ namespace Game1
             //maps
             awh = Content.Load<Texture2D>("AliensWereHerePreview");
             check = Content.Load<Texture2D>("CheckeredPreview");
-            cp = Content.Load<Texture2D>("ChokePointPreview");
+            cp = Content.Load<Texture2D>("NewChokePointPreview");
             foh = Content.Load<Texture2D>("FaceOfEvilPreview");
             hf = Content.Load<Texture2D>("HappyFacePreview");
             pp = Content.Load<Texture2D>("PavementPlusPreview");
             tb = Content.Load<Texture2D>("TargetBoardPreview");
             ttb = Content.Load<Texture2D>("TheThreeBridgesPreview");
-            wf = Content.Load<Texture2D>("WetFeetPreview");
+            wf = Content.Load<Texture2D>("NewWetFeetPreview");
             xf = Content.Load<Texture2D>("XForestPreview");
 
             //menus
