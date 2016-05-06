@@ -85,6 +85,10 @@ namespace Game1
         Texture2D wf; // Wet Feet
         Texture2D xf; // X-Forest
 
+        //menus
+        Texture2D mainMenu;
+        Texture2D standardMenu;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -195,8 +199,12 @@ namespace Game1
             wf = Content.Load<Texture2D>("WetFeetPreview");
             xf = Content.Load<Texture2D>("XForestPreview");
 
-            //Update screen size to fullscreen
-            //this.graphics.IsFullScreen = true;
+            //menus
+            mainMenu = Content.Load<Texture2D>("Main menu");
+            standardMenu = Content.Load<Texture2D>("Standard Menu");
+
+            //Update screen size to fullscreen (coment out this line during testing)
+            this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -227,17 +235,17 @@ namespace Game1
                 case GameState.Menu:
                     if (!displayRules)
                     {
-                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 100, 140, 25))) //play game
+                        if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 190, GraphicsDevice.Viewport.Height - 50, 140, 25))) //play game
                         {
                             //progress to team selection
                             curState = GameState.TeamSelect;
                         }
-                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 20, GraphicsDevice.Viewport.Height / 2 - 55, 75, 25))) //rules
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50, 75, 25))) //rules
                         {
                             //display the rules image on the screen
                             displayRules = true;
                         }
-                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 10, 140, 25))) //exit game
+                        else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 110, GraphicsDevice.Viewport.Height - 50, 140, 25))) //exit game
                         {
                             //exit the game
                             this.Exit();
@@ -1037,9 +1045,10 @@ namespace Game1
             switch (curState)
             {
                 case GameState.Menu:
-                    spriteBatch.DrawString(font, "Play Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 100), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 100, 140, 25)));
-                    spriteBatch.DrawString(font, "Rules", new Vector2(GraphicsDevice.Viewport.Width / 2 - 20, GraphicsDevice.Viewport.Height / 2 - 55), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 20, GraphicsDevice.Viewport.Height / 2 - 55, 75, 25)));
-                    spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 10), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 50, GraphicsDevice.Viewport.Height / 2 - 10, 140, 25)));
+                    spriteBatch.Draw(mainMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
+                    spriteBatch.DrawString(font, "Play Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 190, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 190, GraphicsDevice.Viewport.Height - 50, 140, 25)));
+                    spriteBatch.DrawString(font, "Rules", new Vector2(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50, 75, 25)));
+                    spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 + 110, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 110, GraphicsDevice.Viewport.Height - 50, 140, 25)));
                     if (displayRules)
                     {
                         spriteBatch.Draw(rules, new Rectangle(10, 10, GraphicsDevice.Viewport.Width - 20, GraphicsDevice.Viewport.Height - 100), Color.White);
@@ -1048,6 +1057,7 @@ namespace Game1
                     break;
 
                 case GameState.TeamSelect:
+                    spriteBatch.Draw(standardMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                     spriteBatch.DrawString(font, "Team Selection", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, 100), Color.White);
                     spriteBatch.DrawString(font, "Team 1", new Vector2(395, GraphicsDevice.Viewport.Height - 200), Color.White);
                     spriteBatch.DrawString(font, "Team 2", new Vector2(GraphicsDevice.Viewport.Width - 490, GraphicsDevice.Viewport.Height - 200), Color.White);
@@ -1059,6 +1069,7 @@ namespace Game1
                     break;
 
                 case GameState.MapSelect:
+                    spriteBatch.Draw(standardMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
                     spriteBatch.DrawString(font, "Map Selection", new Vector2(GraphicsDevice.Viewport.Width / 2 - 100, 100), Color.White);
                     spriteBatch.DrawString(font, "Select A Map By Clicking On It", new Vector2(GraphicsDevice.Viewport.Width/2 - 180, GraphicsDevice.Viewport.Height/2 - 50), Color.White);
                     
@@ -1086,12 +1097,12 @@ namespace Game1
                     break;
                     
                 case GameState.Game:
-                    DrawMap(); //add check for map tile scrolled over later with final art pieces
+                    DrawMap(); //draws the game board
                     college1.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn); //draws team 1's units
                     college2.DrawCollegeUnits(spriteBatch, GraphicsDevice, turn); //draws team 2's units
 
                     //if the menu or win screen is not currently up
-                    if (selectedUnit != -2 && !(college1Win || college2Win))
+                    if (selectedUnit != -2 || !(college1Win || college2Win))
                     {
                         DrawTileInfo(); //draws individual tile info
                     }
