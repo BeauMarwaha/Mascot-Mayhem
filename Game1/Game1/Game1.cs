@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.IO; //needed for file IO
 using System;
 using System.Collections.Generic; //for dictionary
+using Microsoft.Xna.Framework.Audio; // needed for music 
 
 //Author(s): Beau Marwaha, Sean Hasse, Jared Miller
 //Purpose: Runs the game
@@ -88,6 +89,11 @@ namespace Game1
         //menus
         Texture2D mainMenu;
         Texture2D standardMenu;
+
+        // music 
+        SoundEffect menuMusic;
+        SoundEffect gameMusic;
+        SoundEffect victoryMusic; // still needs implementing
 
         public Game1()
         {
@@ -203,6 +209,11 @@ namespace Game1
             mainMenu = Content.Load<Texture2D>("Main menu");
             standardMenu = Content.Load<Texture2D>("Standard Menu");
 
+            //sounds
+            menuMusic = Content.Load<SoundEffect>("Les Toreadors");
+            gameMusic = Content.Load<SoundEffect>("Can Can");
+            victoryMusic = Content.Load<SoundEffect>("Overture 1812"); 
+
             //Update screen size to fullscreen (coment out this line during testing)
             this.graphics.IsFullScreen = true;
         }
@@ -228,7 +239,15 @@ namespace Game1
 
             // TODO: Add your update logic here
             mState = Mouse.GetState();
-            
+            /*if(curState == GameState.Menu)
+            {
+                menuMusic.Play(); 
+            }
+            else if(curState == GameState.Game)
+            {
+                gameMusic.Play(); 
+            } */
+
             //check for the current game state
             switch (curState)
             {
@@ -258,7 +277,7 @@ namespace Game1
                             //remove the rules image on the screen
                             displayRules = false;
                         }
-                    }
+                    } 
                     break;
 
                 case GameState.TeamSelect:
