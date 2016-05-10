@@ -31,7 +31,7 @@ namespace Game1
             else if (mascotSpecial == "Super Pounce") //RIT Ritchie special
             {
                 //a powerful leaping attack that allows ritchie to attack 1 extra space away
-                minSpecialAttackRange = 1;
+                minSpecialAttackRange = 2;
                 maxSpecialAttackRange = 2;
                 specialAttack = 7;
             }
@@ -44,7 +44,7 @@ namespace Game1
             if (mascotSpecial == "Super Slam") //UofR Rocky special
             {
                 //deal some self-damage
-                CurrHealth -= 3;
+                CurrHealth -= 2;
             }
             else if (mascotSpecial == "Super Pounce") //RIT Ritchie special
             {

@@ -74,7 +74,7 @@ namespace Game1
             {
                 totalMovePoints = 4;
                 totalHealth = 6;
-                attack = 3;
+                attack = 4;
                 defense = 1;
                 minAttackRange = 2;
                 maxAttackRange = 3;
@@ -83,7 +83,7 @@ namespace Game1
             {
                 totalMovePoints = 4;
                 totalHealth = 5;
-                attack = 2;
+                attack = 5;
                 defense = 0;
                 minAttackRange = 1;
                 maxAttackRange = 1;
