@@ -36,6 +36,9 @@ namespace Game1
         bool displayRules;
         bool college1Win;
         bool college2Win;
+        //used in tracking the number of turns the capture point has benn captured by a specific team
+        int college1WintTileCaptureTurns; 
+        int college2WintTileCaptureTurns;
 
         //used when a normal or special attack could be made
         bool attackChoice;
@@ -124,6 +127,8 @@ namespace Game1
             displayRules = false;
             college1Win = false;
             college2Win = false;
+            college1WintTileCaptureTurns = 0;
+            college2WintTileCaptureTurns = 0;
 
             attackChoice = false;
             specialCol = 0;
@@ -215,7 +220,7 @@ namespace Game1
             victoryMusic = Content.Load<SoundEffect>("Overture 1812"); 
 
             //Update screen size to fullscreen (coment out this line during testing)
-            this.graphics.IsFullScreen = true;
+            //this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -258,6 +263,8 @@ namespace Game1
                         {
                             //progress to team selection
                             curState = GameState.TeamSelect;
+                            college1Win = false;
+                            college2Win = false;
                         }
                         else if (SingleLeftMouseLocationPress(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50, 75, 25))) //rules
                         {
@@ -272,7 +279,7 @@ namespace Game1
                     }
                     else
                     {
-                        if (SingleLeftMouseLocationPress(new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))) //play game
+                        if (SingleLeftMouseLocationPress(new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height))) //remove the rules from the screen
                         {
                             //remove the rules image on the screen
                             displayRules = false;
@@ -431,6 +438,9 @@ namespace Game1
                         {
                             if (turn == 1) //if first players turn
                             {
+                                //check for a capture win
+                                CaptureWinCheck();
+
                                 //switch turn
                                 selectedUnit = -1;
                                 turnPhase = 0;
@@ -444,6 +454,9 @@ namespace Game1
                             }
                             else if (turn == 2) //if second players turn
                             {
+                                //check for a capture win
+                                CaptureWinCheck();
+
                                 //switch turn
                                 selectedUnit = -1;
                                 turnPhase = 0;
@@ -1484,6 +1497,94 @@ namespace Game1
                 }
             }
         }
+
+        //checks for a win by capturing the win tiles
+        public void CaptureWinCheck()
+        {
+            //get a list of all win tiles on the map
+            List<MapTile> winTiles = new List<MapTile>();
+            for (int row = 0; row < 10; row++) //check each map row
+            {
+                for (int col = 0; col < 10; col++) //check each map col
+                {
+                    if(mainMap.GetTile(row, col).TerrainType == "Win Tile")
+                    {
+                        winTiles.Add(mainMap.GetTile(col, row));
+                    }
+                }
+            }
+
+            //check to see how many of the win tiles have been captured by team 1
+            int winTilesTeam1Occupied = 0;
+            foreach (MapTile wTiles in winTiles)
+            {
+                foreach (Unit unit in college1.Units)
+                {
+                    if(wTiles.XCord == unit.MapX && wTiles.YCord == unit.MapY)
+                    {
+                        winTilesTeam1Occupied++;
+                    }
+                }
+            }
+
+            //check to see how many of the win tiles have been captured by team 2
+            int winTilesTeam2Occupied = 0;
+            foreach (MapTile wTiles in winTiles)
+            {
+                foreach (Unit unit in college2.Units)
+                {
+                    if (wTiles.XCord == unit.MapX && wTiles.YCord == unit.MapY)
+                    {
+                        winTilesTeam2Occupied++;
+                    }
+                }
+            }
+            
+            //at the end of all this update capture turns and check to see if either team has won
+            if(turn == 1)
+            {
+                //if all 4 win tiles have been captured by team 1 add 1 to the team 1 win check
+                if (winTilesTeam1Occupied == 4)
+                {
+                    college1WintTileCaptureTurns += 1;
+                }
+                //capture turns have to be back to back so if this isn't true reset the team 1 win check
+                else
+                {
+                    college1WintTileCaptureTurns = 0;
+                }
+
+                //a team can only win after 2 full turns so only check for a win after the other teams turn
+                if (college2WintTileCaptureTurns == 2)
+                {
+                    college1WintTileCaptureTurns = 0;
+                    college2WintTileCaptureTurns = 0;
+                    college2Win = true;
+                }
+            }
+            else if(turn == 2)
+            {
+                //if all 4 win tiles have been captured by team 2 add 1 to the team 2 win check
+                if (winTilesTeam2Occupied == 4)
+                {
+                    college2WintTileCaptureTurns += 1;
+                }
+                //capture turns have to be back to back so if this isn't true reset the team 2 win check
+                else
+                {
+                    college2WintTileCaptureTurns = 0;
+                }
+
+                //a team can only win after 2 full turns so only check for a win after the other teams turn
+                if (college1WintTileCaptureTurns == 2)
+                {
+                    college1WintTileCaptureTurns = 0;
+                    college2WintTileCaptureTurns = 0;
+                    college1Win = true;
+                }
+            }
+            
+        } 
 
         //removes dead units frrom the board and updates their status
         public void RemoveDeadUnits()
