@@ -36,7 +36,7 @@ namespace Game1
 
             if(unitType == "Hockey")
             {
-                totalMovePoints = 4;
+                totalMovePoints = 3;
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
@@ -45,7 +45,7 @@ namespace Game1
             }
             else if(unitType == "Lacrosse")
             {
-                totalMovePoints = 4;
+                totalMovePoints = 3;
                 totalHealth = 10;
                 attack = 5;
                 defense = 1;
@@ -54,7 +54,7 @@ namespace Game1
             }
             else if(unitType == "Football")
             {
-                totalMovePoints = 4;
+                totalMovePoints = 3;
                 totalHealth = 15;
                 attack = 3;
                 defense = 0;
@@ -72,7 +72,7 @@ namespace Game1
             }
             else if (unitType == "Archery Club")
             {
-                totalMovePoints = 4;
+                totalMovePoints = 3;
                 totalHealth = 6;
                 attack = 4;
                 defense = 1;
@@ -81,21 +81,21 @@ namespace Game1
             }
             else if(unitType == "Fraternity" || unitType == "Sorority")
             {
-                totalMovePoints = 4;
+                totalMovePoints = 3;
                 totalHealth = 5;
-                attack = 5;
+                attack = 6;
                 defense = 0;
                 minAttackRange = 1;
                 maxAttackRange = 1;
             }
             else if(unitType == "EMS Club")
             {
-                totalMovePoints = 4;
-                totalHealth = 10;
-                attack = 2;
+                totalMovePoints = 3;
+                totalHealth = 9;
+                attack = 3;
                 defense = 1;
                 minAttackRange = 1;
-                maxAttackRange = 1;
+                maxAttackRange = 2;
             }
             if (unitType == "Ritchie")
             {
