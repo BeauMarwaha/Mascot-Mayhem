@@ -1065,13 +1065,16 @@ namespace Game1
             {
                 case GameState.Menu:
                     spriteBatch.Draw(mainMenu, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
-                    spriteBatch.DrawString(font, "Play Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 190, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 190, GraphicsDevice.Viewport.Height - 50, 140, 25)));
-                    spriteBatch.DrawString(font, "Rules", new Vector2(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50, 75, 25)));
-                    spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 + 110, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 110, GraphicsDevice.Viewport.Height - 50, 140, 25)));
                     if (displayRules)
                     {
                         spriteBatch.Draw(rules, new Rectangle(10, 10, GraphicsDevice.Viewport.Width - 20, GraphicsDevice.Viewport.Height - 100), Color.White);
                         spriteBatch.DrawString(font, "Click anywhere to exit the rules", new Vector2(GraphicsDevice.Viewport.Width/2 - 200, GraphicsDevice.Viewport.Height - 60), Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(font, "Play Game", new Vector2(GraphicsDevice.Viewport.Width / 2 - 190, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 190, GraphicsDevice.Viewport.Height - 50, 140, 25)));
+                        spriteBatch.DrawString(font, "Rules", new Vector2(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 - 10, GraphicsDevice.Viewport.Height - 50, 75, 25)));
+                        spriteBatch.DrawString(font, "Exit Game", new Vector2(GraphicsDevice.Viewport.Width / 2 + 110, GraphicsDevice.Viewport.Height - 50), ScrolledOver(new Rectangle(GraphicsDevice.Viewport.Width / 2 + 110, GraphicsDevice.Viewport.Height - 50, 140, 25)));
                     }
                     break;
 

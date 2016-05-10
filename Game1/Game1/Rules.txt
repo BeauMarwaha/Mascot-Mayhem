@@ -1,30 +1,28 @@
-Mascot Mayhem Rules: *Note these rules apply to ONLY the Milestone 2 version of the game
+Mascot Mayhem Rules: 
 
-Once you select "Play Game" in the menu you will be taken to a map selection screen.
+Once you select "Play Game" in the menu you will be taken to a map selection screen. 
 Once you select a map you will be taken to a team selection screen where each player will select a team to play.
 Once both teams are selected the game begins.
 
-The first player will go first and their units will be stationed on the left side of the screen and will not be darkened out.
-To move a unit first click on its tile and the possible tiles that it can move to will be highlighted with a white box.
-Click on a highlighted tile to move there. 
+The first player will go first. Their units are stationed on the left side of the screen and won't be darkened out.
+To move a unit, first click on its title. The possible tiles that it can move to will be highlighted. Click on a 
+highlighted tile to move to that tile.
 
-After the player has selected a tile to move to they would normally be able to attack enemy units within range, 
-however, this has not been implemented yet.
+After the player has selected a tile to move to, they have the ability to attack an enemy within its range. 
+Available enemies to attack will have a highlighted tile beneath them, normal attacks will be marked by a 
+white square, special attacks by a red X. Clicking the tile results in the attack. 
 
-Each unit type on a player's team has unique characteristics which will be displayed to the player in a later version
-of the game.
+Each unit type on a player's team has unique characteristic's and stats associated with it. These are displayed
+on the bottom left and right corners of the screen. 
 
-Each team also has one special mascot unit which is typically more powerful than other units and also has a special move, 
-which can be used instead of an attack.
-(Note: the mascots' special moves have not yet been added to the game)
+Each team also has one special mascot unit. This unit is more powerful than other units and also has a special move, 
+which may be used instead of an attack.
 
-Once you have moved all your units or you decide that your turn is done click on an empty tile on the board.
-From there you can resume the game, end your turn, return to the menu (this will reset the game), or exit the game.
+Once you have moved all your units or you decide to end your turn, click on an empty tile on the board.
+This will bring up a menu where you can resume the game, end your turn, return to the main menu, or exit the game. 
 
-In order to win a college team will have to either kill the enemy mascot unit and/or, depending on the map, capture a 
-specially marked "Win Tile" located somewhere on the board by occupying its space with one of its units for a number of turns.
-(Win states and their checks also still need to be implemented in the game)
-
+In order to win, a college will have to either kill the enemy mascot unit and/or, depending on the map chosen, capture
+a specially marked "Win Tile" located on the map by occupying the full 2x2 space for 2 full continuous turns. 
 
 
 
