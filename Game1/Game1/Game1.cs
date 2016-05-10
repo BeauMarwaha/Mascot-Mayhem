@@ -92,12 +92,12 @@ namespace Game1
         //menus
         Texture2D mainMenu;
         Texture2D standardMenu;
-
+        /*
         // music 
         SoundEffect menuMusic;
         SoundEffect gameMusic;
         SoundEffect victoryMusic; // still needs implementing
-
+        */
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -213,14 +213,14 @@ namespace Game1
             //menus
             mainMenu = Content.Load<Texture2D>("Main menu");
             standardMenu = Content.Load<Texture2D>("Standard Menu");
-
+            /*
             //sounds
             menuMusic = Content.Load<SoundEffect>("Les Toreadors");
             gameMusic = Content.Load<SoundEffect>("Can Can");
-            victoryMusic = Content.Load<SoundEffect>("Overture 1812"); 
-
+            victoryMusic = Content.Load<SoundEffect>("Overture 1812");
+            */
             //Update screen size to fullscreen (coment out this line during testing)
-            //this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -244,15 +244,17 @@ namespace Game1
 
             // TODO: Add your update logic here
             mState = Mouse.GetState();
-            /*if(curState == GameState.Menu)
+            /*
+            //music handler
+            if(curState == GameState.Menu)
             {
-                menuMusic.Play(); 
+                //menuMusic.Play();
             }
             else if(curState == GameState.Game)
             {
-                gameMusic.Play(); 
-            } */
-
+                //gameMusic.Play(); 
+            } 
+            */
             //check for the current game state
             switch (curState)
             {
