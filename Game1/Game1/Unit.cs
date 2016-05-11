@@ -100,7 +100,7 @@ namespace Game1
             if (unitType == "Ritchie")
             {
                 totalMovePoints = 4;
-                totalHealth = 10;
+                totalHealth = 12;
                 attack = 5;
                 defense = 1;
                 minAttackRange = 1;
@@ -109,7 +109,7 @@ namespace Game1
             if (unitType == "Rocky")
             {
                 totalMovePoints = 4;
-                totalHealth = 10;
+                totalHealth = 12;
                 attack = 5;
                 defense = 1;
                 minAttackRange = 1;

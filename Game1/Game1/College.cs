@@ -66,32 +66,32 @@ namespace Game1
                 string school = "RIT";
                 units = new Unit[10];
                 mascot = new Mascot("Ritchie", "Super Pounce", team, school);
-                units[0] = mascot;
-                units[1] = new Unit("Hockey", team, school);
-                units[2] = new Unit("Hockey", team, school);
-                units[3] = new Unit("Archery Club", team, school);
-                units[4] = new Unit("Football", team, school);
-                units[5] = new Unit("Football", team, school);
-                units[6] = new Unit("Outdoor Club", team, school);
-                units[7] = new Unit("Fraternity", team, school);
+                units[0] = new Unit("Football", team, school);
+                units[1] = new Unit("Fraternity", team, school);
+                units[2] = new Unit("Archery Club", team, school);
+                units[3] = new Unit("Hockey", team, school);
+                units[4] = new Unit("EMS Club", team, school);
+                units[5] = mascot;
+                units[6] = new Unit("Hockey", team, school);
+                units[7] = new Unit("Outdoor Club", team, school);
                 units[8] = new Unit("Sorority", team, school);
-                units[9] = new Unit("EMS Club", team, school);
+                units[9] = new Unit("Football", team, school);
             }
             else if (name == "UofR")
             {
                 string school = "UofR";
                 units = new Unit[10];
                 mascot = new Mascot("Rocky", "Super Slam", team, school);
-                units[0] = mascot;
-                units[1] = new Unit("Lacrosse", team, school);
-                units[2] = new Unit("Lacrosse", team, school);
-                units[3] = new Unit("Archery Club", team, school);
-                units[4] = new Unit("Football", team, school);
-                units[5] = new Unit("Football", team, school);
-                units[6] = new Unit("Outdoor Club", team, school);
-                units[7] = new Unit("Fraternity", team, school);
-                units[8] = new Unit("Sorority", team, school);
-                units[9] = new Unit("EMS Club", team, school);
+                units[0] = new Unit("Football", team, school);
+                units[1] = new Unit("Sorority", team, school);
+                units[2] = new Unit("Outdoor Club", team, school);
+                units[3] = new Unit("Lacrosse", team, school);
+                units[4] = mascot;
+                units[5] = new Unit("EMS Club", team, school);
+                units[6] = new Unit("Lacrosse", team, school);
+                units[7] = new Unit("Archery Club", team, school);
+                units[8] = new Unit("Fraternity", team, school);
+                units[9] = new Unit("Football", team, school);
                 
             }
         }
